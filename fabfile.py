@@ -15,9 +15,9 @@ env.port = '22222'
 env.user = 'root'
 env.hosts = ['6zu4']
 env.webserver = '/opt/webserver/buildout.webserver'
-env.code_root = '/opt/sites/xpose/buildout.xpose'
-env.local_root = '/Users/cb/dev/xpose/buildout.xpose'
-env.sitename = 'xpose'
+env.code_root = '/opt/sites/xposeo/buildout.xposeo'
+env.local_root = '/Users/cb/dev/seodash/xdash'
+env.sitename = 'xposeo'
 env.code_user = 'root'
 env.prod_user = 'www'
 
