@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Setup Seotool</h1>
+        </div>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <div class="statuspanel-no-data statuspanel-no-data-lg">
+            <div class="no-data-sign">
+                <i class="fa fa-bar-chart-o"></i>
+            </div>
+            <h2>
+                The XPOSE414 Seotool has not been initialized yet
+            </h2>
+            <p>Settings up the system should only take a couple of moments. Go ahead
+                and setup the system now. Let's get to work:
+            </p>
+            <a class="btn btn-primary"
+                tal:attributes="href string:${context/absolute_url}/@@setup-tool">
+                Setup
+            </a>
+        </div>
+    </div>
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

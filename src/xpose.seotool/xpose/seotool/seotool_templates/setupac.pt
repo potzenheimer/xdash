@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Setup Active Collab</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Select the desired functionality from Active Collab API
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Available Projects</h3>
+        </div>
+        <tal:block tal:condition="context/projects_ac">
+            <tal:item tal:repeat="item view/available_projects">
+                <div class="panel-body">
+                    <h4 class="list-group-item-heading">
+                        <small tal:content="item/company_id" />
+                        <span tal:content="item/name" />
+                    </h4>
+                     <pre tal:content="item" />
+                </div>
+                <div class="list-group"
+                    tal:define="item_idx repeat/item/index;
+                                pid item/id">
+                    <div class="list-group-item"
+                        tal:repeat="data python:view.recent_activity(pid)">
+                        <span class="badge" tal:content="data/value">0</span>
+                        <div class="h5"
+                            tal:define="timestamp data/record_date;
+                                                actor data/user">
+                            <span tal:content="timestamp/formatted_date" />
+                            <small tal:content="actor/display_name" />
+                        </div>
+                        <p tal:content="data/summary" />
+                        <pre tal:content="data" />
+                    </div>
+                </div>
+            </tal:item>
+        </tal:block>
+        <div tal:condition="not:context/projects_ac">
+            <div class="statuspanel-no-data statuspanel-no-data-lg">
+                <div class="no-data-sign">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </div>
+                <h2 i18n:translate="">
+                    API access has not been configured yet
+                </h2>
+                <p i18n:translate="">Please initialize activeCollab
+                </p>
+                <form class="app-form app-create-form"
+                    method="post" role="form"
+                    tal:define="errors view/errors"
+                    tal:attributes="action request/URL">
+                    <div class="form-group">
+                        <span tal:replace="structure context/@@authenticator/authenticator"/>
+                        <button class="btn btn-primary"
+                            name="form.button.Submit"
+                            id="form.button.Submit"
+                            i18n:translate="">Refresh configuration</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

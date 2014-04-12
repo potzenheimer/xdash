@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.workspaces">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 tal:content="context/Title" />
+        </div>
+        <p class="lead app-page-lead" tal:condition="context/Description"
+            tal:content="context/Description" />
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <h2>Create new workspace</h2>
+        <hr>
+        <form class="app-form" method="post" role="form"
+            tal:attributes="action request/URL">
+            <div class="form-group">
+                <label for="title">Workspace Title</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter workspace title">
+                <span class="help-block">
+                    Please provide a human readable title for this workspace. Normally this
+                    would be a project or client name. Be aware though that the application
+                    follows a internal naming scheme and convention that might be
+                    exposed to users throughout the system anyway.
+                </span>
+            </div>
+            <div class="form-group">
+                <span tal:replace="structure context/@@authenticator/authenticator"/>
+                <button class="btn btn-primary"
+                    name="form.button.Submit"
+                    id="form.button.Submit">Create workspace</button>
+            </div>
+        </form>
+    </div>    
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

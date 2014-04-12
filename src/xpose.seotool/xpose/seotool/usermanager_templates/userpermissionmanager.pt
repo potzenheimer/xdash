@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="container">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Configure access to dashboards</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Users have restricted access to dashboards they have been asigned to
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+       <form class="app-form"
+            method="post" role="form"
+            tal:define="errors view/errors"
+            tal:attributes="action request/URL">
+            <p class="text-muted" i18n:translate="">
+                Make a selection from the available dashboards
+            </p>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group field"
+                        tal:define="error errors/dashboard | nothing;
+                                    err_msg python:error and error['active'] == True;
+                                    value request/dashboard | nothing"
+                        tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
+                        <label class="sr-only" for="title" i18n:translate="">Title</label>
+                            <select class="form-control" name="dashboard"
+                                tal:attributes="value python:error and view.default_value(error) or value">
+                                <option name="no-panel" id="no-panel"
+                                    i18n:translate="">None</option>
+                                <tal:items tal:repeat="item view/dashboards">
+                                    <option tal:define="value item/UID;
+                                                        is_selected python:view.is_selected(value)"
+                                        tal:attributes="value item/UID;
+                                                        name item/UID;
+                                                        id item/UID;
+                                                        selected python:is_selected and 'selected'">
+                                        <span class="h5" tal:content="item/Title" />
+                                    </option>
+                                </tal:items>
+                            </select>
+                            <div class="help-block error"
+                                tal:condition="err_msg">
+                              <i class="fa fa-exclamation-triangle"></i>
+                              <span tal:replace="python:error['msg']" />
+                            </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" type="text"
+                            id="user"
+                            name="user"
+                            placeholder="Panel UID"
+                            tal:attributes="value request/user | nothing" />
+                        <span tal:replace="structure context/@@authenticator/authenticator"/>
+                        <button class="btn btn-primary btn-editpanel"
+                            name="form.button.Submit"
+                            id="form.button.Submit"
+                            i18n:translate="">Save selection</button>
+                        <tal:item tal:condition="view/has_asignment">
+                            <button class="btn btn-link"
+                                name="form.button.Clear"
+                                id="form.button.Clear"
+                                i18n:translate="">Remove panel asignment</button>
+                        </tal:item>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>    
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

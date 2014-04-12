@@ -1,0 +1,122 @@
+---
+layout: default
+title: Xposeo
+slug: workspace
+lead: "Personal workspace for authenticated members"
+base_url: "../../"
+---
+<div class="app-content-body">
+  <div class="app-page app-page-dashboard" id="content">
+    {% include datapanel.html %}
+    <div class="container app-page-header">
+        <div class="app-page-title">
+            <h1>Xposeo Dashboard</h1>
+        </div>
+    </div>
+    <div class="container app-page-body">
+        <p class="lead app-page-lead">
+            This is the new default theme
+        </p>
+        <div class="well well-primary pull-right" id="xapp-menu-trigger">
+            <button data-effect="app-effect-4">
+                Show
+            </button>
+        </div>
+        <hr>
+        <p>These are infoboxes displaying key values for quick overviews. All
+            the dashboard components should probably be editable.</p>
+        <hr>
+        {% include panel-services.html %}
+        <hr>
+      </div>
+
+        <div class="container">
+            <div class="page-header">
+                <h3>Visitor Trends <small>December 2013</small></h3>
+            </div>
+            <div id="app-graph-1"></div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <div class="page-header">
+                        <h3>Visitor Distribution <small>December 2013</small></h3>
+                    </div>
+                    <p>The distribution between new and returning visitors is
+                        significant for the perfomance of the new app</p>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div id="app-graph-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top">
+                    <h6>CPI</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">236</h2>
+                    <h6>Core values in listing</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top danger">
+                    <h6>Time on Site</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">01:12min</h2>
+                        <h6>Core values in listing</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top warning">
+                    <h6>Site Visits</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">12987</h2>
+                    <h6>Site visits in line chart</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="statuspanel-no-data">
+            <div class="row">
+                <div class="col-xs-12 col-sm-1">
+                    <div class="no-data-sign">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <h3 class="no-data-title">Introductional Text</h3>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <a hre="#edit">edit</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="statuspanel-no-data statuspanel-no-data-lg">
+            <div class="no-data-sign">
+                <i class="fa fa-th"></i>
+            </div>
+            <h2>Heads up - looks like you have not added any configuration parameters yes</h2>
+            <p>Now problem. just use the administration link in the toolbar to
+            add basic system setup information</p>
+        </div>
+    </div>
+</div>

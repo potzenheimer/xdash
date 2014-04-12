@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="container">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Archive Reports</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Hier finden Sie alle archivierten Reports zu allen Ihren Projekten
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <div class="list-group app-list">
+            <div class="list-group-item app-list-item-title">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        Datum
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        Projekt
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        Report
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item app-list-item">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        04.01.2014
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        Mustermann Shop (mustershop.de)
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <a class="btn btn-default pull-right" href="#app-container"
+                            tal:attributes="href string:${context/absolute_url}">
+                            Show report
+                        </a>
+                        <div class="h4">
+                            Report Dezember 2013
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item app-list-item">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        7.12.2013
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        Mustermann Shop (mustershop.de)
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">
+                            Show report
+                        </button>
+                        <div class="h4">
+                            Report November 2013
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item app-list-item">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        01.11.2013
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        Mustermann Shop (mustershop.de)
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <a class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">
+                            Show report
+                        </a>
+                        <div class="h4">
+                            Report Oktober 2013
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

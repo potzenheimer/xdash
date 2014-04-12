@@ -1,0 +1,298 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>
+  
+    Xposeo
+  
+</title>
+
+<!-- Bootstrap core CSS -->
+<link href="../../dist/css/xposeo.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="../../bower_components/html5shiv/dist/html5shiv.js"></script>
+  <script src="../../bower_components/respond/respond.min.js"></script>
+<![endif]-->
+
+<!-- Favicons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+                               <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+  <body class="app-theme-workspace">
+    <a class="sr-only" href="#content">Skip navigation</a>
+    <nav class="navbar navbar-inverse navbar-fixed-top app-navbar" id="app-navbar" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand navbar-right app-navbar-brand" href="/">Xpose414</a>
+  </div>
+  <div class="collapse navbar-collapse navbar-ex1-collapse" id="app-navbar-nav">
+        <ul class="nav navbar-nav pull-right">
+          <li id="plone-personal-actions" class="dropdown dropdown-userinfo">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="/author/123456789">
+              <span>John Doe</span>
+              <b class="caret">
+            </b></a>
+            <ul class="dropdown-menu"><li id="plone-personal-actions-dashboard">
+                <a href="/dashboard">My workspace</a>
+              </li>
+              <li id="plone-personal-actions-preferences">
+                <a href="/preferences">Settings</a>
+              </li>
+              <li id="plone-personal-actions-plone_setup">
+                <a href="/controlpanel">Configuration</a>
+              </li>
+              <li id="plone-personal-actions-logout">
+                <a href="/logout">Signout</a>
+              </li>
+            </ul></li>
+        </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Help</a></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+    <div id="app-sidebar" class="app-sidebar">
+    <h3 class="app-nav-heading app-sidebar-heading">
+        <a href="http://localhost:8499/plonesite">
+            Seodash
+        </a>
+    </h3>
+    <div class="app-sidebar-content dim-in dim-in-1">
+        <div class="app-sidebar-block">
+            <h4>zope-admin</h4>
+            <p><a href="http://localhost:8499/plonesite/logout"><small>
+                <i class="fa fa-sign-out"></i>abmelden</small></a></p>
+        </div>
+        <ul class="nav ws-nav bs-docs-sidenav app-sidebar-nav">
+            <li><a href="#css" class="nav-header">Administration</a></li>
+            <li class="active"><a href="#css-overview">Services</a></li>
+            <li><a href="#css-overview">Dashboards</a></li>
+            <li><a href="#grid">Settings</a></li>
+            <li><a href="#grid">Latest Activity</a></li>
+        </ul>
+    </div>
+</div>
+    <main class="app-content app-content-workspace dim-in dim-in-2" id="app-content" role="main">
+        <div class="app-content-body">
+  <div class="app-page" id="content">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Xposeo Dashboard</h1>
+        </div>
+    </div>
+    <div class="app-page-body">
+        <p class="lead app-page-lead">
+            This is the new default theme
+        </p>
+        <p>These are infoboxes displaying key values for quick overviews. All
+            the dashboard components should probably be editable.</p>
+        <hr>
+        <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Services</h3>
+    </div>
+    <div class="list-group">
+        <div data-appui-uri="http://brain.xpose414.de/api.php" data-appui-target="#app-statusmsg-0" data-appui="ajaxcxn" class="list-group-item">
+            <h4 class="list-group-item-heading">
+                <small id="app-statusmsg-0" class="pull-right text-success">
+                    <span>available</span>
+                </small>
+                <span>activeCollab</span>
+            </h4>
+            <p class="list-group-item-text">http://brain.xpose414.de/api.php</p>
+        </div>
+        <div data-appui-uri="https://www.googleapis.com/auth/analytics.readonly" data-appui-target="#app-statusmsg-1" data-appui="ajaxcxn" class="list-group-item">
+            <h4 class="list-group-item-heading">
+                <small id="app-statusmsg-1" class="pull-right text-success">
+                    <span>available</span>
+                </small>
+                <span>Google Analytics</span>
+            </h4>
+            <p class="list-group-item-text">https://www.googleapis.com/auth/analytics.readonly</p>
+        </div>
+        <div data-appui-uri="https://api.xovi.net/index.php" data-appui-target="#app-statusmsg-2" data-appui="ajaxcxn" class="list-group-item">
+            <h4 class="list-group-item-heading">
+                <small id="app-statusmsg-2" class="pull-right text-success">
+                    <span>available</span>
+                </small>
+                <span>XOVI</span>
+            </h4>
+            <p class="list-group-item-text">https://api.xovi.net/index.php</p>
+        </div>
+    </div>
+</div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top">
+                    <h6>CPI</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">236</h2>
+                    <h6>Core values in listing</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top danger">
+                    <h6>Time on Site</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">01:12min</h2>
+                        <h6>Core values in listing</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top warning">
+                    <h6>Site Visits</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">12987</h2>
+                    <h6>Site visits in line chart</h6>
+                        <a href="" class="btn btn-default">
+                            Details</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="statuspanel-no-data">
+            <div class="row">
+                <div class="col-xs-12 col-sm-1">
+                    <div class="no-data-sign">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <h3 class="no-data-title">Introductional Text</h3>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <a hre="#edit">edit</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="statuspanel-no-data statuspanel-no-data-lg">
+            <div class="no-data-sign">
+                <i class="fa fa-th"></i>
+            </div>
+            <h2>Heads up - looks like you have not added any configuration parameters yes</h2>
+            <p>Now problem. just use the administration link in the toolbar to
+            add basic system setup information</p>
+        </div>
+        <hr>
+        <div class="datapanel" id="main-stats">
+    <div class="row datapanel-row">
+        <div class="col-md-3 col-sm-3 datapanel-item">
+            <div class="item-data">
+                <span class="numberic">2457</span>
+                visits
+            </div>
+            <span class="item-date">Today</span>
+        </div>
+        <div class="col-md-3 col-sm-3 datapanel-item">
+            <div class="item-data">
+                <span class="numberic">3240</span>
+                users
+            </div>
+            <span class="item-date">February 2013</span>
+        </div>
+        <div class="col-md-3 col-sm-3 datapanel-item">
+            <div class="item-data">
+                <span class="numberic">322</span>
+                orders
+            </div>
+            <span class="item-date">This week</span>
+        </div>
+        <div class="col-md-3 col-sm-3 datapanel-item last">
+            <div class="item-data">
+                <span class="numberic">$2,340</span>
+                sales
+            </div>
+            <span class="item-date">last 30 days</span>
+        </div>
+    </div>
+</div>
+    </div>
+  </div>
+</div>
+    </main>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript">
+function downloadJSAtOnload() {
+var element = document.createElement("script");
+element.src = "../../dist/js/xposeo.js";
+document.body.appendChild(element);
+}
+if (window.addEventListener)
+window.addEventListener("load", downloadJSAtOnload, false);
+else if (window.attachEvent)
+window.attachEvent("onload", downloadJSAtOnload);
+else window.onload = downloadJSAtOnload;
+</script>
+<!-- <script src="../../dist/js/xposeo.js"></script>-->
+    <div class="app-js-slot">
+        <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Lato:300,400,700:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+  </script>
+    </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Hinweis</h4>
+      </div>
+      <div class="modal-body">
+        <p>Diese Funktion wurde noch nicht fertiggestellt oder es liegen
+            im Augenblick noch keine verwertbaren Daten vor.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  </body>
+</html>

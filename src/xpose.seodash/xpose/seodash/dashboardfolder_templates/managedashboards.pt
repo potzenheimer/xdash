@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Acount Dashboards</h1>
+        </div>
+        <p class="lead" i18n:translate="">
+            Overview of all available account dashboards
+            <small class="text-danger">Authorization required</small>
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <tal:block tal:condition="view/has_dashboards">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Dashboards</h3>
+                </div>
+                <div class="list-group">
+                    <div class="list-group-item" tal:repeat="item view/dashboards">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-10">
+                                <h4 class="list-group-item-heading">
+                                    <span tal:replace="item/Title" />
+                                </h4>
+                            </div>
+                            <div class="col-xs-12 col-sm-2">
+                                <a tal:attributes="href item/getURL">item details</a>
+                            </div>
+                        </div>
+                        <p tal:content="item/Description">Gibt verlorene Keywords einer Domain im Vergleich zur Vorwoche zurück.</p>
+                    </div>
+                </div>
+            </div>
+        </tal:block>
+
+        <tal:block tal:condition="not:view/has_dashboards">
+            <div class="statuspanel-no-data statuspanel-no-data-lg"
+                tal:define="portal_url context/portal_url">
+                <div class="no-data-sign">
+                    <i class="fa fa-th-large"></i>
+                </div>
+                <h2>Nothing to see here yet</h2>
+                <p>Huh? Looks like you have not added any dashboards yet.</p>
+                <p>You can go on and
+                    <a tal:attributes="href string:${portal_url}/xd/@@create-dashboard">
+                        just do it now</a>
+                </p>
+            </div>
+        </tal:block>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>

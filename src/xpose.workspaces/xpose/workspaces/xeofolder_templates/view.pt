@@ -1,0 +1,89 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.workspaces">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 tal:content="context/Title" />
+        </div>
+        <p class="lead app-page-lead" tal:condition="context/Description"
+            tal:content="context/Description" />
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <h2>Application dashboard</h2>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Services</h3>
+        </div>
+        <div class="list-group"
+            tal:define="services view/available_services">
+            <tal:block tal:repeat="item services">
+                <div class="list-group-item"
+                    data-appui="ajaxcxn"
+                    tal:define="idx repeat/item/index"
+                    tal:attributes="data-appui-uri item/uri;
+                                    data-appui-target string:#app-statusmsg-${idx}">
+                    <h4 class="list-group-item-heading">
+                        <small class="pull-right text-success"
+                            tal:attributes="id string:app-statusmsg-${idx}">
+                            <span tal:define="status python:view.service_status(item)"
+                                tal:content="status">
+                                available</span>
+                        </small>
+                        <span tal:content="item/name">Google API</span>
+                    </h4>
+                    <p class="list-group-item-text" tal:content="item/uri"></p>
+                </div>
+            </tal:block>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+        <div class="panel-heading">
+            <a class="pull-right" tal:attributes="href string:${context/absolute_url}/@@create-workspace">
+                Add dashboard</a>
+            <h3 class="panel-title">Project dashboards</h3>
+        </div>
+      <div class="panel-body">
+        <p class="text-muted">Projects are organized in dedicated dashboards which in term function
+            as a user acount providing authentication.
+        </p>
+      </div>
+    
+        <ul class="list-group" tal:define="
+          Batch python:modules['Products.CMFPlone'].Batch;
+          b_size python:int(request.get('b_size', 20));
+          b_start python:int(request.get('b_start', 0));
+          results python:context.restrictedTraverse('@@folderListing')(batch=True, b_size=b_size, b_start=b_start);
+          batch python:Batch(results, b_size, b_start);">
+          <tal:block tal:repeat="item results">
+              <li class="list-group-item"><span class="h5" tal:content="item/Title" />
+                  <small tal:content="item/getId" />
+                  <a class="pull-right" href="" tal:attributes="href item/getURL">
+                      show
+                  </a>
+              </li>
+              <div metal:use-macro="context/batch_macros/macros/navigation" />
+          </tal:block>
+        </ul>
+    </div>
+
+    
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

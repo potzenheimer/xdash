@@ -1,0 +1,6 @@
+<layers>
+  <layer
+    name="xpose.seotool.layer"
+    interface="xpose.seotool.interfaces.IXposeoTool"
+  />
+</layers>

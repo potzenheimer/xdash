@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+   <div class="container app-page-header"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="app-page-title" tal:define="timestamp context/modified">
+            <h1>Report
+                <small tal:define="timestamp python:context.modified().ISO()" class="text-discreet">
+                  <span i18n:translate="">Last changed:</span>
+                  <span tal:attributes="data-livestamp timestamp"
+                    tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
+                </small>
+            </h1>
+        </div>
+        <p class="lead" i18n:translate="">
+            This is a single report available for projects. The latest report will
+            always show in the project dashboard. Further details are available
+            on subsequent requests.
+        </p>
+    </div>
+
+    <div class="container app-page-content" id="content-core">
+        <div class="page-header">
+            <a class="btn btn-danger pull-right"
+                tal:attributes="href string:${context/absolute_url}/@@build-report">
+                Build new report (credits required)
+            </a>
+            <h2>Report Data</h2>
+        </div>
+        <h3>activeCollab</h3>
+        <div tal:replace="structure view/tracking_report" />
+        <h3>Xovi</h3>
+        <pre tal:condition="context/report_xovi"
+            tal:content="context/report_xovi" />
+
+    </div>
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

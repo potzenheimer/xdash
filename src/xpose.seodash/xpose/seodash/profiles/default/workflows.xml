@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_workflow">
+  <object name="xpose_seodash_workflow" meta_type="Workflow" />
+  <bindings>
+    <type type_id="xpose.seodash.dashboard">
+      <bound-workflow workflow_id="xpose_seodash_workflow" />
+    </type>
+  </bindings>
+</object>

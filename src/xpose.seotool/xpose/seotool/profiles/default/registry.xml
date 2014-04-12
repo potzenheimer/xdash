@@ -1,0 +1,16 @@
+<registry>
+    <records interface="xpose.seotool.interfaces.IXeoSettings" prefix="xeo.cxn">
+        <value key="google_api_uri">https://www.googleapis.com/auth/analytics.readonly</value>
+        <value key="google_auth_uri">https://accounts.google.com/o/oauth2/auth</value>
+        <value key="google_token_uri">https://accounts.google.com/o/oauth2/token</value>
+        <value key="google_auth_provider_x509_cert_url">https://www.googleapis.com/oauth2/v1/certs</value>
+        <value key="google_client_x509_cert_url"></value>value
+        <value key="google_client_id"></value>
+        <value key="google_client_email"></value>
+        <value key="google_client_secret"></value>
+        <value key="xovi_api_uri">https://api.xovi.net/index.php</value>
+        <value key="xovi_client_key"></value>
+        <value key="ac_api_uri">http://brain.xpose414.de/api.php</value>
+        <value key="ac_client_key"></value>
+    </records>
+</registry>

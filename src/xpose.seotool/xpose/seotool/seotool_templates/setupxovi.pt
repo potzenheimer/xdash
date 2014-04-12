@@ -1,0 +1,307 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Setup XOVI</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Select the desired metrics and statistics from the XOVI API
+        </p>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <form class="app-form pull-right"
+                method="post" role="form"
+                tal:attributes="action request/URL">
+                <span tal:replace="structure context/@@authenticator/authenticator"/>
+                <button class="btn btn-primary btn-xs"
+                    name="form.button.Submit"
+                    id="form.button.Submit"
+                    i18n:translate="">Refresh</button>          
+            </form>
+            <h3 class="panel-title">Service Status</h3>
+        </div>
+        <div class="app-service-details"
+            tal:define="status_info view/service_status;
+                        status status_info/status">
+            <tal:block tal:condition="python:status == '0k.'">
+                <div class="datapanel datapanel-embedded" id="main-stats"
+                    tal:define="details status_info/response">
+                    <div class="row datapanel-row">
+                        <div class="col-xs-12 col-sm-3 datapanel-item">
+                            <div class="item-data">
+                                <span class="numberic"
+                                    tal:content="python:details['creditamount']">50 000</span>
+                                Credits
+                            </div>
+                            <span class="item-date"
+                                tal:content="python:details['lastrefill']">Today</span>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 datapanel-item">
+                            <div class="item-data">
+                                <span class="numberic"
+                                    tal:content="python:details['creditsused']">50 000</span>
+                                Credits Used
+                            </div>
+                            <span class="item-date">Today</span>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 datapanel-item">
+                            <div class="item-data">
+                                <span class="numberic"
+                                    tal:content="python:details['creditsleft']">50 000</span>
+                                Credits Left
+                            </div>
+                            <span class="item-date">Today</span>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 datapanel-item">
+                            <div class="item-data">
+                                <span class="numberic" tal:condition="not:context/projects_xovi">0</span>
+                                <span class="numberic" tal:condition="context/projects_xovi"
+                                    tal:content="python:len(view.available_projects())">0</span>
+                                Projects
+                            </div>
+                            <span class="item-date">Today</span>
+                        </div>
+                    </div>
+                </div>
+            </tal:block>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" tal:condition="context/projects_xovi">
+         <div class="panel-heading">
+            <h3 class="panel-title" i18n:translate="">Available Projects</h3>
+        </div>
+        <div class="list-group app-list-group">
+            <tal:block tal:repeat="item view/available_projects">
+                <div class="list-group-item">
+                    <div class="pull-right">
+                        <p class="text-muted"
+                            tal:content="item/id">Today</p>
+                    </div>
+                    <h4 tal:content="item/project" />
+                </div>
+            </tal:block>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" tal:condition="context/domains_xovi">
+         <div class="panel-heading">
+            <h3 class="panel-title" i18n:translate="">Available Domains</h3>
+        </div>
+        <div class="list-group app-list-group">
+            <tal:block tal:repeat="item view/available_domains">
+                <div class="list-group-item">
+                    <h4 tal:content="item/domain" />
+                </div>
+            </tal:block>
+        </div>
+    </div>
+    
+
+    <div class="app-page-content" id="content-core">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Metrics</h3>
+        </div>
+        <div class="list-group">
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    <small class="pull-right">50/100 rows</small>
+                    getLostKeywords
+                    <small>SEO</small>
+                </h4>
+                <div class="pull-right">
+                    <label class="switch">
+                      <input type="checkbox" class="switch-input" />
+                      <span data-off="Off" data-on="On" class="switch-label"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <p>Gibt verlorene Keywords einer Domain im Vergleich zur Vorwoche zurück.</p>
+            </div>
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    <small class="pull-right">50/call</small>
+                    getRankingColumn
+                    <small>SEO</small>
+                </h4>
+                <div class="pull-right">
+                    <label class="switch">
+                      <input type="checkbox" class="switch-input">
+                      <span data-off="Off" data-on="On" class="switch-label"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <p>
+                    Die Funktion gibt die Rankingverteilung der Domain zurück, also mit wie vielen Suchbegriffen die URL auf den Seiten 1 - 10 bei Google rankt.
+                </p>
+            </div>
+            <table class="table table-striped table-bordered table-responsive">
+                <tbody>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getNewKeywords" href="http://developers.xovi.net/api/seo/getnewkeywords/"><b>getNewKeywords</b></a></td>
+                            <td>Gibt alle neu rankenden Keywords einer Domain aus einer Suchmaschine zurück.</td>
+                            <td>50/ 100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getPages" href="http://developers.xovi.net/api/seo/getpages/"><b>getPages</b></a></td>
+                            <td>Gibt alle Unterseiten einer URL zurück.</td>
+                            <td>20/1 row</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Links ansehen" href="http://developers.xovi.net/service/api/links/">Links</a></td>
+                            <td><a title="getBacklinks" href="http://developers.xovi.net/api/links/getbacklinks/"><b>getBacklinks</b></a></td>
+                            <td>Gibt alle Link-Details eines Backlinks zu einer Domain zurück.</td>
+                            <td>10/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getDailyKeywordRankings" href="http://developers.xovi.net/api/seo/getdailykeywordrankings/"><b>getDailyKeywordRankings</b></a></td>
+                            <td>Gibt die TOP 100 Suchergebnisse zu einem angelegten Keyword.</td>
+                            <td>25/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Links ansehen" href="http://developers.xovi.net/service/api/links/">Links</a></td>
+                            <td><a title="getDomainTrend" href="http://developers.xovi.net/api/links/getdomaintrend/"><b>getDomainTrend</b></a></td>
+                            <td>Gibt den Verlauf wichtiger Kennzahlen einer Domain zurück.</td>
+                            <td>15/ 1 row</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Links ansehen" href="http://developers.xovi.net/service/api/links/">Links</a></td>
+                            <td><a title="getHrefs" href="http://developers.xovi.net/api/links/gethrefs/"><b>getHrefs</b></a></td>
+                            <td>Gibt alle Ziel-URLs der Backlinks einer Domain zurück. Das Linkziel wird mit Get-Parameter und Anker ausgegeben. Siehe hierzu: getLinkedPages</td>
+                            <td>20/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Links ansehen" href="http://developers.xovi.net/service/api/links/">Links</a></td>
+                            <td><a title="getLinkedPages" href="http://developers.xovi.net/api/links/getlinkedpages/"><b>getLinkedPages</b></a></td>
+                            <td>Gibt alle Ziel-URLs der Backlinks einer Domain zurück. Das Linkziel wird ohne Get-Parameter und ohne Anker ausgegeben. Siehe hierzu: getHrefs</td>
+                            <td>20/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Links ansehen" href="http://developers.xovi.net/service/api/links/">Links</a></td>
+                            <td><a title="getLinktexts" href="http://developers.xovi.net/api/links/getlinktexts/"><b>getLinktexts</b></a></td>
+                            <td>Gibt alle Ankertexte der Backlinks zu einer Domain zurück.</td>
+                            <td>20/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getRankingValue" href="http://developers.xovi.net/api/seo/getrankingvalue/"><b>getRankingValue</b></a></td>
+                            <td>Gibt den Wert einer Domain errechnet aus Position, Suchvolumen, CPC und Trafficfaktor zu einem bestimmten Zeitpunkt zurück.</td>
+                            <td>15/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Project ansehen" href="http://developers.xovi.net/service/api/project/">Project</a></td>
+                            <td><a title="getLabels" href="http://developers.xovi.net/api/project/getlabels/"><b>getLabels</b></a></td>
+                            <td>Gibt alle angelegten Labels zurück.</td>
+                            <td>15/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Project ansehen" href="http://developers.xovi.net/service/api/project/">Project</a></td>
+                            <td><a title="getProjects" href="http://developers.xovi.net/api/project/getprojects/"><b>getProjects</b></a></td>
+                            <td>Gibt alle angelegten Projekte zurück. (Enthält für andere Funktionen relevante Daten.)</td>
+                            <td>5/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Report ansehen" href="http://developers.xovi.net/service/api/report/">Report</a></td>
+                            <td><a title="getDownloads" href="http://developers.xovi.net/api/report/getdownloads/"><b>getDownloads</b></a></td>
+                            <td>Gibt eine Übersicht über alle downloadbaren, bereits erstellten Reports zurück.</td>
+                            <td>5/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Report ansehen" href="http://developers.xovi.net/service/api/report/">Report</a></td>
+                            <td><a title="getPdf" href="http://developers.xovi.net/api/report/getpdf/"><b>getPdf</b></a></td>
+                            <td>Gibt einen bereits erstellten Report als PDF zurück.</td>
+                            <td>5/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getDailyDomains" href="http://developers.xovi.net/api/seo/getdailydomains/"><b>getDailyDomains</b></a></td>
+                            <td>Gibt die angelegten Domains aus dem täglichen Crawling zurück.</td>
+                            <td>10/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getDailyKeywords" href="http://developers.xovi.net/api/seo/getdailykeywords/"><b>getDailyKeywords</b></a></td>
+                            <td>Gibt die angelegten Keywords aus dem täglichen Crawling zurück.</td>
+                            <td>20/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getDailyKeywordTrend" href="http://developers.xovi.net/api/seo/getdailykeywordtrend/"><b>getDailyKeywordTrend</b></a></td>
+                            <td>Gibt den täglichen Rankingverlauf eines Keywords zu einer Domain zurück.</td>
+                            <td>15/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getOviTrend" href="http://developers.xovi.net/api/seo/getovitrend/"><b>getOviTrend</b></a></td>
+                            <td>Gibt den OVI-Verlauf einer Domain zurück.</td>
+                            <td>5/row</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getSearchEngines" href="http://developers.xovi.net/api/seo/getsearchengines/"><b>getSearchEngines</b></a></td>
+                            <td>Gibt alle täglich gecrawlten, oder wöchentlich gecrawlten Suchmaschinen zurück. (Enthält für andere Funktionen relevante Daten.)</td>
+                            <td>5/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Project ansehen" href="http://developers.xovi.net/service/api/project/">Project</a></td>
+                            <td><a title="addLabels" href="http://developers.xovi.net/api/project/addlabels/"><b>addLabels</b></a></td>
+                            <td>Fügt neue Labels hinzu.</td>
+                            <td>5/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in User ansehen" href="http://developers.xovi.net/service/api/user/">User</a></td>
+                            <td><a title="getCreditState" href="http://developers.xovi.net/api/user/getcreditstate/"><b>getCreditState</b></a></td>
+                            <td>Gibt den aktuellen Zustand Ihrer Creditdaten zurück.</td>
+                            <td>0/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getKeywordRankings" href="http://developers.xovi.net/api/seo/getkeywordrankings/"><b>getKeywordRankings</b></a></td>
+                            <td>Gibt alle URLs für ein einzelnes Keyword aus den SERPs (Suchergebnisseite).</td>
+                            <td>20/call</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getKeywords" href="http://developers.xovi.net/api/seo/getkeywords/"><b>getKeywords</b></a></td>
+                            <td>Gibt alle rankenden Keywords für eine Domain zurück.</td>
+                            <td>20/100 rows</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Seo ansehen" href="http://developers.xovi.net/service/api/seo/">Seo</a></td>
+                            <td><a title="getKeywordTrend" href="http://developers.xovi.net/api/seo/getkeywordtrend/"><b>getKeywordTrend</b></a></td>
+                            <td>Gibt den Rankingverlauf eines Keywords zu einer Domain zurück.</td>
+                            <td>15/1 row</td>
+                          </tr>
+                          <tr>
+                            <td><a rel="category tag" title="Alle Beiträge in Project ansehen" href="http://developers.xovi.net/service/api/project/">Project</a></td>
+                            <td><a title="addProjects" href="http://developers.xovi.net/api/project/addproject/"><b>addProjects</b></a></td>
+                            <td>Fügt neue Projekte hinzu.</td>
+                            <td>15/call</td>
+                          </tr>
+                          </tbody>
+                        </table>
+        </div>
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

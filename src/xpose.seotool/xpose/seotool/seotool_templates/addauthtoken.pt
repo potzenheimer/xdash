@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Add Auth Token</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Select the desired service to add the required authentication and
+            access tokens
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Available Services</h3>
+        </div>
+        <div class="list-group">
+
+        </div>
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

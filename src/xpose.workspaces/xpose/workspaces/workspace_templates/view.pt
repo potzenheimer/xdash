@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.workspaces">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Member Workspace <small tal:content="context/Title" /></h1>
+        </div>
+        <p class="lead app-page-lead" tal:condition="context/Description"
+            tal:content="context/Description" />
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <h2>Information</h2>
+        <p>The member workspace is the central editing unit and provides dummy
+            access to all the demo and test views</p>
+
+        <hr>
+
+         <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top">
+                    <h6>Google</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">Analytics Setup</h2>
+                    <h6>Configure custom access</h6>
+                        <a href="" class="btn btn-default"
+                            tal:attributes="href string:${context/portal_url}/portal_analytics/@@analytics-controlpanel">
+                            configure</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top">
+                    <h6>Xovi</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">Report Setup</h2>
+                    <h6>Configure access</h6>
+                        <a href="#content-core" class="btn btn-default"
+                            disabled="disabled">
+                            configure</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="statuspanel panel-full">
+                  <div class="top">
+                    <h6>Active Collab</h6>
+                  </div>
+                  <div class="bottom">
+                    <h2 class="bergamoRegular">Intranet Setup</h2>
+                    <h6>Configure intranet toolchain</h6>
+                        <a href="#content-core" class="btn btn-default"
+                            disabled="disabled">
+                            configure</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

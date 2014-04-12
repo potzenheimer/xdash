@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 tal:content="context/Title">Project Dashboard
+                <small>http://example.tld</small>
+            </h1>
+        </div>
+        <p class="lead" i18n:translate="">
+            This is the dashboard for <strong>http://example.tld</strong> site
+            providing statistics and task overviews.
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <div class="page-header">
+            <h2>Available Reports
+            </h2>
+        </div>
+
+        <!-- <div>User detals: <span tal:content="view/user_details" /></div>-->
+        <ul tal:define="
+            Batch python:modules['Products.CMFPlone'].Batch;
+            b_size python:int(request.get('b_size', 20));
+            b_start python:int(request.get('b_start', 0));
+            results python:context.restrictedTraverse('@@folderListing')(batch=True, b_size=b_size, b_start=b_start);
+            batch python:Batch(results, b_size, b_start);">
+            <li tal:repeat="item results">
+              <a tal:attributes="href item/getURL"
+                    tal:content="item/Title" />
+            </li>
+          <div metal:use-macro="context/batch_macros/macros/navigation" />
+        </ul>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>

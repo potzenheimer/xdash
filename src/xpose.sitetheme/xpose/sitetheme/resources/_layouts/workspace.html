@@ -1,0 +1,40 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    {% include head.html %}
+  </head>
+  <body class="app-theme-workspace">
+    <a class="sr-only" href="#content">Skip navigation</a>
+    {% include navbar.html %}
+    {% include sidebar.html %}
+    <main class="app-content app-content-workspace dim-in dim-in-2" id="app-content" role="main">
+        {{ content }}
+    </main>
+
+    {% include javascript.html %}
+    <div class="app-js-slot">
+        {% include gfont.html %}
+    </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Hinweis</h4>
+      </div>
+      <div class="modal-body">
+        <p>Diese Funktion wurde noch nicht fertiggestellt oder es liegen
+            im Augenblick noch keine verwertbaren Daten vor.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  </body>
+</html>

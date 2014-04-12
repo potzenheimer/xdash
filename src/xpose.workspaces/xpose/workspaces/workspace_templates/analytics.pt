@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.workspaces">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="page-header">
+            <h1>Google Analytics
+                <small class="text-danger">Authorization required</small>
+            </h1>
+        </div>
+        <p class="lead" i18n:translate="">
+            Before you can use Google Analytics, you need to authorize
+            this site to access your Google Analytics account. Follow the steps
+            below to complete the authorization process.
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <ol>
+            <li i18n:translate="">
+                To begin, log into the Google account that you use to access Google
+                Analytics if you have not done so already. To log in, you can
+                <a href="http://www.google.com/analytics">visit Google Analytics</a>
+                and sign in as usual.
+            </li>
+            <li i18n:translate="">
+                Once you have signed into your Google account, click this link
+                to begin the authorization process:
+                <div style="margin: 1em 0;">
+                    <a class="btn btn-primary btn-lg" style="font-size:1.3em; font-weight: bold;"
+                        href="https://www.google.com/analytics/feeds/"
+                        tal:attributes="href view/auth_url">
+                        Authorize with Google
+                    </a>
+                </div>
+            </li>
+            <li i18n:translate="">
+                Google will ask you if you want to allow this site to access your
+                Google Analytics data. If the URL displayed matches the one below,
+                click the Grant Access button.<br />
+                <div style="margin: 1em 0;">
+                    <strong style="font-size:1.3em;"
+                        tal:content="string:${context/portal_url}/analytics-auth">
+                        Analytics authorization URL
+                    </strong>
+                </div>
+            </li>
+            <li i18n:translate="">
+                After you click Grant Access, you will be returned to this page where
+                you can configure Google Analytics for further useage.
+            </li>
+            <li i18n:translate="">
+                If you ever decide that you no longer want this site to have access
+                to your Google Analytics data, you can remove its authorization by
+                clicking the Revoke Access link in this control panel or by visiting
+                the Change Authorized Websites link in your Google account preferences.
+            </li>
+        </ol>
+
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

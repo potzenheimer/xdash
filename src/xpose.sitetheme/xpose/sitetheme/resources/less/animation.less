@@ -1,0 +1,45 @@
+//
+// CSS animations
+// ----------------------------------------------
+
+
+// Dimmer to gradually fade or dim in areas
+// ----------------------------------------
+
+// Mixin class to construct vendor prefixed versions
+.app-frame-dimmer () {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+// make keyframes that tell the start state and the end state of our object
+@-webkit-keyframes dimmer-animation {.app-frame-dimmer;}
+@-moz-keyframes dimmer-animation {.app-frame-dimmer;}
+@-ms-keyframes dimmer-animation {.app-frame-dimmer;}
+@-o-keyframes dimmer-animation {.app-frame-dimmer;}
+@keyframes dimmer-animation {.app-frame-dimmer;}
+
+// Apply this class to animated content areas
+.dim-in {
+    opacity:0;  /* make things invisible upon start */
+    -webkit-animation:dimmer-animation ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:dimmer-animation ease-in 1;
+    animation:dimmer-animation ease-in 1;
+    
+    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+    
+    -webkit-animation-duration:1s;
+    -moz-animation-duration:1s;
+    animation-duration:1s;
+    &.dim-in-1 {
+        .transition-delay(0.5s);
+    }
+    &.dim-in-2 {
+        .transition-delay(1.2s);
+    }
+    &.dim-in-3 {
+        .transition-delay(1.8s);
+    }
+}

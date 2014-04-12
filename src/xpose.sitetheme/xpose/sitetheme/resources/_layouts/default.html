@@ -1,0 +1,48 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    {% include head.html %}
+  </head>
+  <body class="app-theme-default">
+    <a class="sr-only" href="#content">Skip navigation</a>
+    {% include navbar.html %}
+    <div class="app-container app-effect-4" id="app-container">
+        <div class="app-aside app-effect-4">
+            <div class="app-aside-close">
+                <a class="closeMenu app-aside-toggle-close" id="closeMenu" href="#app-container">
+                    <i class="fa fa-times-circle-o"></i>
+                </a>
+            </div>
+            {% include sidebar.html %}
+        </div>
+        <div class="app-pusher">
+            <div class="app-aside-actionbar">
+                <div class="app-aside-toggle-wrapper" id="app-menu-trigger">
+                    <a class="btn btn-link app-aside-toggle-open" href="#app-container">
+                        <i class="fa fa-list"></i>
+                    </a>
+                    <!--<button class="btn btn-link app-aside-toggle" data-effect="app-effect-4">
+                        <i class="fa fa-list"></i>
+                    </button>-->
+                </div>
+                <!-- <a class="app-aside-toggle closeMenu" id="closeMenu" href="#app-container">
+                    <i class="fa fa-list"></i>
+                    <i class="fa fa-chevron-right"></i>
+                </a>-->
+            </div>
+            <main class="app-content app-content-dashboard" id="app-content" role="main">
+                {{ content }}
+            </main>
+        </div>
+    </div>
+    {% include javascript.html %}
+    <div class="app-js-slot">
+        {% include gfont.html %}
+    </div>
+
+  </body>
+</html>

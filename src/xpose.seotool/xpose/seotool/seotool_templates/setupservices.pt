@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 tal:content="context/Title" />
+        </div>
+        <p class="lead app-page-lead" tal:condition="context/Description"
+            tal:content="context/Description" />
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Services</h3>
+            </div>
+            <div class="list-group"
+                tal:define="services view/available_services">
+                <tal:block tal:repeat="item services">
+                    <div class="list-group-item"
+                        data-appui="ajaxcxn"
+                        tal:define="idx repeat/item/index"
+                        tal:attributes="data-appui-uri item/uri;
+                                        data-appui-target string:#app-statusmsg-${idx}">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <h4 class="list-group-item-heading">
+                                    <span tal:content="item/name">API Name</span>
+                                </h4>
+                                <p class="list-group-item-text" tal:content="item/uri">API Service URI</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <p tal:define="status python:view.service_status(item);
+                                               statusinfo python:view.get_state_klass(status)"
+                                    tal:attributes="id string:app-statusmsg-${idx}">
+                                    <span tal:content="statusinfo/statuscode"
+                                        tal:attributes="class statusinfo/klass">
+                                        available</span>
+                                    <pre tal:content="status" />
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-2">
+                                <div class="text-right">
+                                    <a href="#" tal:attributes="href string:${context/absolute_url}/@@setup-${item/sid}">
+                                        setup
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tal:block>
+            </div>
+        </div>
+    </div>
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+<div class="app-sidebar" id="app-sidebar">
+    <h3 class="app-nav-heading app-sidebar-heading">
+        <a tal:attributes="href viewlet/portal_url">Dashboard</a>
+    </h3>
+    <div class="app-sidebar-block">
+        <h4>Januar 2014</h4>
+    </div>
+    <ul class="nav ws-nav bs-docs-sidenav app-sidebar-nav"
+        tal:condition="viewlet/is_dashboard">
+        <li><a class="nav-header"
+            tal:attributes="href viewlet/user_homeurl"
+            i18n:translate="">Reports</a></li>
+        <li class="active"><a tal:attributes="href string:${context/absolute_url}/">Dezember 2013</a></li>
+        <li><a data-toggle="modal" data-target="#myModal" href="#myModal">November 2013</a></li>
+        <li><a tal:attributes="href string:${context/absolute_url}/">Oktober 2013</a></li>
+        <li><a tal:attributes="href string:${context/absolute_url}/@@reports">more</a></li>
+    </ul>
+  <ul class="nav ws-nav bs-docs-sidenav app-sidebar-nav"
+    tal:condition="viewlet/is_seotool_setup">
+    <li><a class="nav-header"
+        tal:attributes="href viewlet/user_homeurl">Overview</a></li>
+    <tal:admin tal:condition="viewlet/is_administrator">
+        <li><a tal:attributes="href string:${viewlet/adm_url}/@@setup-services">Services</a></li>
+        <li><a tal:attributes="href string:${viewlet/adm_url}/@@manage-users">Users</a></li>
+        <li><a tal:attributes="href string:${viewlet/adm_url}/@@manage-dashboards">Dashboards</a></li>
+    </tal:admin>
+    <tal:admin tal:condition="not:viewlet/is_administrator">
+        <li><a class="nav-header" href="#css">SEO</a></li>
+        <li><a href="#css-overview">Overview</a></li>
+        <li><a href="#grid">Tasks</a></li>
+        <li><a href="#grid">Latest Activity</a></li>
+    </tal:admin>
+  </ul>
+</div>

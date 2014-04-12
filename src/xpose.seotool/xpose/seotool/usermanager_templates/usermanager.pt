@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Manage User Accounts</h1>
+        </div>
+        <p class="lead app-page-lead" i18n:translate="">
+           Add and edit customer user accounts
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <tal:block tal:condition="view/has_users">
+            <div class="page-header">
+                <a class="btn btn-primary pull-right"
+                    i18n:translate=""
+                    tal:attributes="href string:${context/absolute_url}/@@create-user">
+                    Add new user</a>
+                <h2 i18n:translate="">Registered Users</h2>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item" tal:repeat="user view/customers">
+                    <tal:item tal:define="info python:view.get_userdetails(user)">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                <div class="h4"><span tal:content="info/name" />
+                                    <small tal:content="info/email" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div tal:condition="info/dashboard">
+                                    <p tal:define="code info/dashboard;
+                                                   dashboard python:view.compute_dashboard(code)">
+                                        Dashboard:
+                                        <span tal:content="dashboard/Title" />
+                                        <a tal:attributes="href dashboard/absolute_url">
+                                            show
+                                        </a>
+                                    </p>
+                                </div>
+                                <p tal:condition="not:info/dashboard" class="text-warning">
+                                    No access granted 
+                                    <a tal:attributes="href string:${context/absolute_url}/@@manage-user-permissions?user=${info/user_id}">
+                                        change
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </tal:item>
+                </div>
+            </div>
+        </tal:block>
+        <div class="statuspanel-bummer" data-appui="bummer">
+            <div class="statuspanel-no-data statuspanel-no-data-lg"
+                tal:condition="not:view/has_users">
+                <div class="no-data-sign">
+                    <i class="fa fa-ellipsis-h"></i>
+                </div>
+                <h2 i18n:translate="">
+                    Ups...bummer. Noone is here yet.
+                </h2>
+                <p i18n:translate="">
+                    Since you look like some smart human, we asume you are capable
+                    of dealing with this situation grafefully.
+                </p>
+                <p>
+                    <a i18n:translate=""
+                        tal:attributes="href string:${context/absolute_url}/@@create-user">
+                        Huh, why not add the first user account now?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+
