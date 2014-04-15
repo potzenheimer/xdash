@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     grunt.util.linefeed = '\n';
 
     RegExp.quote = function (string) {
-        return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+      return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
     };
 
     // load all grunt tasks
@@ -19,12 +19,12 @@ module.exports = function (grunt) {
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
         banner: '/*!\n' +
-                  '* Xposeo Theme v<%= pkg.version %> by meetshaus\n' +
-                  '* Copyright <%= pkg.author %>\n' +
-                  '* Licensed under <%= pkg.licenses %>.\n' +
-                  '*\n' +
-                  '* Designed and built by meetshaus\n' +
-                  '*/\n',
+        '* Xposeo Theme v<%= pkg.version %> by meetshaus\n' +
+        '* Copyright <%= pkg.author %>\n' +
+        '* Licensed under <%= pkg.licenses %>.\n' +
+        '*\n' +
+        '* Designed and built by meetshaus\n' +
+        '*/\n',
         jqueryCheck: 'if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery") }\n\n',
 
         // Task configuration.
@@ -54,29 +54,29 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: [
-                    'bower_components/jquery/jquery.js',
-                    'bower_components/modernizr/modernizr.js',
-                    'bower_components/bootstrap/dist/js/bootstrap.js',
-                    'bower_components/momentjs/moment.js',
-                    'bower_components/momentjs/lang/de.js',
-                    'bower_components/livestampjs/livestamp.js',
-                    'bower_components/raphael/raphael.js',
-                    'bower_components/morris.js/morris.js',
-                    'assets/js/classie.js',
-                    'js/application.js'
+                'bower_components/jquery/jquery.js',
+                'bower_components/modernizr/modernizr.js',
+                'bower_components/bootstrap/dist/js/bootstrap.js',
+                'bower_components/momentjs/moment.js',
+                'bower_components/momentjs/lang/de.js',
+                'bower_components/livestampjs/livestamp.js',
+                'bower_components/raphael/raphael.js',
+                'bower_components/morris.js/morris.js',
+                'assets/js/classie.js',
+                'js/application.js'
                 ],
                 dest: 'dist/js/<%= pkg.name %>.js'
             },
             theme: {
                 src: [
-                    'bower_components/bootstrap/dist/js/bootstrap.js',
-                    'bower_components/momentjs/moment.js',
-                    'bower_components/momentjs/lang/de.js',
-                    'bower_components/livestampjs/livestamp.js',
-                    'bower_components/raphael/raphael.js',
-                    'bower_components/morris.js/morris.js',
-                    'assets/js/classie.js',
-                    'js/application.js'
+                'bower_components/bootstrap/dist/js/bootstrap.js',
+                'bower_components/momentjs/moment.js',
+                'bower_components/momentjs/lang/de.js',
+                'bower_components/livestampjs/livestamp.js',
+                'bower_components/raphael/raphael.js',
+                'bower_components/morris.js/morris.js',
+                'assets/js/classie.js',
+                'js/application.js'
                 ],
                 dest: 'dist/js/main.js'
             }
@@ -150,8 +150,8 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: [
-                    'bower_components/font-awesome/fonts/*',
-                    'assets/font/*'
+                'bower_components/font-awesome/fonts/*',
+                'assets/font/*'
                 ],
                 dest: 'dist/assets/fonts/'
             },
@@ -236,8 +236,8 @@ module.exports = function (grunt) {
                 failHard: true,
                 reset: true,
                 relaxerror: [
-                  'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
-                  'Element img is missing required attribute src.'
+                'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
+                'Element img is missing required attribute src.'
                 ]
             },
             files: {
@@ -324,10 +324,11 @@ module.exports = function (grunt) {
     grunt.registerTask('dist-js', ['concat', 'uglify']);
 
     // CSS distribution task.
-    grunt.registerTask('dist-css', ['less', 'csscomb']);
+    grunt.registerTask('less-compile', ['less:compileTheme']);
+    grunt.registerTask('dist-css', ['less-compile', 'csscomb', 'less:minify']);
 
     // Assets distribution task.
-    grunt.registerTask('dist-assets', ['copy']);
+    grunt.registerTask('dist-assets', ['newer:copy', 'newer:imagemin']);
 
     // Cache buster distribution task.
     grunt.registerTask('dist-cb', ['rev']);
@@ -337,6 +338,9 @@ module.exports = function (grunt) {
 
     // Concurrent distribution task
     grunt.registerTask('dist-cc', ['test', 'concurrent:cj', 'concurrent:ha']);
+
+    // Development task.
+    grunt.registerTask('dev', ['dist-css', 'dist-js', 'dist-html']);
 
     // Full distribution task.
     grunt.registerTask('dist', ['clean', 'dist-css', 'dist-js', 'dist-html', 'dist-assets']);

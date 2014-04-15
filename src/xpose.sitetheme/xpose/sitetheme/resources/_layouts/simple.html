@@ -7,12 +7,11 @@
     <!-- Meta, title, CSS, favicons, etc. -->
     {% include head.html %}
   </head>
-  <body class="app-theme-signin">
+  <body class="app-layout-simple">
     <a class="sr-only" href="#content">Skip navigation</a>
-
-    <main class="app-content" role="main">
-        {{ content }}
-    </main>
+    <div class="app-content app-content-simple" role="main">
+          {{ content }}
+    </div>
     <!-- JS and analytics only. -->
     {% include javascript.html %}
 

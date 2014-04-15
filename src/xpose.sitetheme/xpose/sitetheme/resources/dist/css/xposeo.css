@@ -9061,25 +9061,44 @@ dd.image-caption {
     -webkit-transition-delay: 1.8s;
             transition-delay: 1.8s;
 }
-.app-simple {
-    margin-top: 50px;
-    border-top: 11px solid #92c83e;
+.app-layout-simple {
+    background: #5a5f64;
 }
 .app-signin {
-    display: block;
-    max-width: 768px;
     margin-top: 100px;
-    margin-right: auto;
-    margin-left: auto;
-    background: #fff;
-    background-image: -webkit-linear-gradient(top, #fff 0%, #eee 100%);
-    background-image:      -o-linear-gradient(top, #fff 0%, #eee 100%);
-    background-image:         linear-gradient(to bottom, #fff 0%, #eee 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
-    background-repeat: repeat-x;
-    border: 1px solid #fff;
     border-radius: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+}
+.app-signin-header {
+    color: #eee;
+    background: #5a5f64;
+}
+.app-signin-title {
+    font-weight: 300;
+}
+.app-signin-content {
+    padding: 22px 0;
+    background: #f2f2f2;
+}
+.app-signin-group {
+    padding: 0;
+    margin-bottom: 0;
+    background: #f2f2f2;
+}
+.app-signin-group.app-signin-group-text {
+    padding: 44px 0;
+    margin-top: 22px;
+    border-top: 1px dotted #999;
+}
+.app-signin-group label,
+.app-signin-group .signin-label {
+    font-weight: 300;
+    color: #555;
+}
+.app-signin-control {
+    padding: 22px 0 44px;
+}
+.app-signin-control.app-signin-control-bordered {
+    border-bottom: 1px dotted #999;
 }
 .page-aside {
     position: relative;
@@ -9087,15 +9106,6 @@ dd.image-caption {
 }
 .page-signin {
     color: #999;
-    background: #fff;
-}
-.page-signin .page-content {
-    padding: 22px;
-}
-@media (min-width: 768px) {
-    .page-signin {
-        border-left: 1px solid #eee;
-    }
 }
 .page-signin .documentDescription {
     margin-bottom: 22px;
@@ -9107,8 +9117,9 @@ dd.image-caption {
     margin-bottom: 50px;
     border-bottom: 5px solid #637b2d;
 }
+.app-signin-actions,
 .app-register-actions {
-    padding: 22px 0;
+    padding: 22px;
 }
 /*
  * Copyright (c) 2013 Thibaut Courouble

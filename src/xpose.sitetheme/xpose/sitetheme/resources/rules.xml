@@ -4,29 +4,26 @@
     xmlns:css="http://namespaces.plone.org/diazo/css"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-    <!-- Add alternativ theme templates -->
-    <!--<theme href="frontpage.html" css:if-content="body.template-frontpage-view" />-->
-    <!-- xpose to add minimal theme template for the
-         tiles editiong overlays -->
-    <!--<theme href="minimal.html" if-path="@@edit-tile" />-->
-
     <!-- Setup custom login form -->
     <theme href="dist/signin.html" css:if-content="body.template-login_form" />
     <theme href="dist/signin.html" css:if-content="body.template-logged_out" />
     <theme href="dist/signin.html" css:if-content="body.template-login_failed" />
     <theme href="dist/signin.html" css:if-content="body.template-mail_password_form" />
-    
+    <theme href="dist/signin.html" css:if-content="body.template-mail_password_response" />
+    <theme href="dist/signin.html" css:if-content="body.template-pwreset_form" />
+    <theme href="dist/signin.html" css:if-content="body.template-pwreset_finish" />
+
     <theme href="dist/dashboard.html" css:if-content="body.section-xd" />
-    
+
     <!-- Rules applying to a standard Plone web page -->
     <rules css:if-content="#visual-portal-wrapper">
 
-        <notheme if="$ajax_load" />          
+        <notheme if="$ajax_load" />
         <theme href="dist/theme.html" />
-        
+
         <!-- Add meta tags -->
         <drop theme="/html/head/meta" />
-        
+
         <after content="/html/head/meta" theme-children="/html/head" />
         <!-- Copy style, script and link tags in the order they appear in the content -->
         <after
@@ -78,7 +75,7 @@
 
         <!-- Login form rules -->
         <replace css:content-children="#content-core"
-                css:theme-children="#app-signin-content"
+                css:theme-children="#app-signin-body"
                 css:if-content="body.template-login_form" />
         <replace css:content-children="#content-core"
                 css:theme-children="#app-signin-content"
@@ -89,9 +86,18 @@
         <replace css:content-children="#content"
                 css:theme-children="#app-signin-content"
                 css:if-content="body.template-mail_password_form" />
+        <replace css:content-children="#content"
+                css:theme-children="#app-signin-content"
+                css:if-content="body.template-mail_password_response" />
+        <replace css:content-children="#content"
+                css:theme-children="#app-signin-content"
+                css:if-content="body.template-pwreset_form" />
+        <replace css:content-children="#content"
+                css:theme-children="#app-signin-content"
+                css:if-content="body.template-pwreset_finish" />
 
         <!-- Document Content -->
-        <replace css:content-children="#content" 
+        <replace css:content-children="#content"
             css:theme-children="#content" />
 
         <rules css:if-content="body.template-frontpage-view">
@@ -102,7 +108,7 @@
             <replace css:theme-children="#fp-service-row-2"
                 css:content-children="#fp-service-row-2" />
         </rules>
-        
+
         <before css:content=".portalMessage" css:theme="#content" />
         <replace css:content-children="#viewlet-below-content"
             css:theme-children="#below-main-content" />
