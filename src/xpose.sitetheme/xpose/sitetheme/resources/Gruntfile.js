@@ -3,15 +3,8 @@
 
 module.exports = function (grunt) {
 
-  // Force use of Unix newlines
-  grunt.util.linefeed = '\n';
-
-  RegExp.quote = function (string) {
-    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
-  };
-
   // load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  require('load-grunt-tasks')(grunt);
 
   // Project configuration.
   grunt.initConfig({
@@ -19,13 +12,13 @@ module.exports = function (grunt) {
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-    '* Xposeo Theme v<%= pkg.version %> by meetshaus\n' +
-    '* Copyright <%= pkg.author %>\n' +
-    '* Licensed under <%= pkg.licenses %>.\n' +
-    '*\n' +
-    '* Designed and built by meetshaus\n' +
-    '*/\n',
-    jqueryCheck: 'if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery") }\n\n',
+            '* Xposeo Theme v<%= pkg.version %> by meetshaus\n' +
+            '* Copyright <%= pkg.author %>\n' +
+            '* Licensed under <%= pkg.licenses %>.\n' +
+            '*\n' +
+            '* Designed and built by meetshaus\n' +
+            '*/\n',
+    jqueryCheck: 'if (typeof jQuery === "undefined") { throw new Error(\"We require jQuery\") }\n\n',
 
     // Task configuration.
     clean: {
@@ -54,16 +47,16 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
-        'bower_components/jquery/jquery.js',
-        'bower_components/modernizr/modernizr.js',
-        'bower_components/bootstrap/dist/js/bootstrap.js',
-        'bower_components/momentjs/moment.js',
-        'bower_components/momentjs/lang/de.js',
-        'bower_components/livestampjs/livestamp.js',
-        'bower_components/raphael/raphael.js',
-        'bower_components/morris.js/morris.js',
-        'assets/js/classie.js',
-        'js/application.js'
+          'bower_components/jquery/jquery.js',
+          'bower_components/modernizr/modernizr.js',
+          'bower_components/bootstrap/dist/js/bootstrap.js',
+          'bower_components/momentjs/moment.js',
+          'bower_components/momentjs/lang/de.js',
+          'bower_components/livestampjs/livestamp.js',
+          'bower_components/raphael/raphael.js',
+          'bower_components/morris.js/morris.js',
+          'assets/js/classie.js',
+          'js/application.js'
         ],
         dest: 'dist/js/<%= pkg.name %>.js'
       },
@@ -89,23 +82,6 @@ module.exports = function (grunt) {
       dist: {
         src: ['<%= concat.dist.dest %>'],
         dest: 'dist/js/<%= pkg.name %>.min.js'
-      }
-    },
-
-    recess: {
-      options: {
-        compile: true
-      },
-      theme: {
-        src: ['less/styles.less'],
-        dest: 'dist/css/styles.css'
-      },
-      min: {
-        options: {
-          compress: true
-        },
-        src: ['less/styles.less'],
-        dest: 'dist/css/styles.min.css'
       }
     },
 
@@ -173,6 +149,16 @@ module.exports = function (grunt) {
         flatten: true,
         src: ['bower_components/animate.css/*.css'],
         dest: 'dist/css/'
+      }
+    },
+    imagemin: {
+      dynamic: {
+        files: [{
+          expand: true,
+          cwd: 'assets/img/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'dist/assets/img/'
+        }]
       }
     },
     rev: {
