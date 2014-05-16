@@ -36,6 +36,7 @@
             </a>
             <h2>Report Data</h2>
         </div>
+        <code tal:content="view/build_report_ga" />
         <h3>activeCollab</h3>
         <div tal:replace="structure view/tracking_report" />
         <h3>Xovi</h3>

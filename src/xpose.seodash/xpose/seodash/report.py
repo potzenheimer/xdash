@@ -86,6 +86,12 @@ class View(grok.View):
         context = aq_inner(self.context)
         return context.restrictedTraverse('@@report-tracking')()
 
+    def build_report_ga(self):
+        context = aq_inner(self.context)
+        tool = getUtility(IGATool)
+        data = tool.get()
+        return data
+
     def filter_tracking(self):
         context = aq_inner(self.context)
         metrics = getattr(context, 'report_ac')

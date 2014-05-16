@@ -9,6 +9,7 @@ from plone import api
 from zope.interface import Interface
 from apiclient.discovery import build
 from oauth2client.client import SignedJwtAssertionCredentials
+from oauth2client.client import AccessTokenRefreshError
 
 DEFAULT_SERVICE_TIMEOUT = socket.getdefaulttimeout()
 
@@ -28,12 +29,14 @@ class GATool(grok.GlobalUtility):
             client_email,
             keyfile,
             scope=service_url)
-        http = httplib2.Http()
-        http = credentials.authorize(http)
+        http = credentials.authorize(httplib2.Http())
+        import pdb; pdb.set_trace()
         service = build('analytics', 'v3', http=http)
         # params = urlencode(sorted(kwargs.iteritems()))
-        accounts = service.management().accounts().list().execute()
-        import pdb; pdb.set_trace( )
+        try:
+            accounts = service.management().accounts().list().execute()
+        except AccessTokenRefreshError:
+            import pdb; pdb.set_trace()
         data_query = service.data().ga().get(**{
             'ids': 'ga:YOUR_PROFILE_ID_NOT_UA',
             'metrics': 'ga:visitors',

@@ -180,7 +180,9 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 3000,
-          base: '.'
+          base: '.',
+          hostname: 'localhost',
+          path: '/?base_uri=http://localhost:4200'
         }
       }
     },
@@ -284,6 +286,11 @@ module.exports = function (grunt) {
   var testSubtasks = ['dist-css', 'jshint', 'validate-html'];
 
   grunt.registerTask('test', testSubtasks);
+
+  grunt.registerTask('server', [
+    'connect:server',
+    'watch'
+  ]);
 
   // JS distribution task.
   grunt.registerTask('dist-js', ['concat', 'uglify']);
