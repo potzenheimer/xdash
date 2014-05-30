@@ -46,6 +46,9 @@ class IXeoSettings(Interface):
     google_client_key = schema.TextLine(
         title=_(u"Google Client Private Key")
     )
+    ga_client_secret = schema.TextLine(
+        title=_(u"Google Client Secret JSON File")
+    )
     xovi_api_uri = schema.TextLine(
         title=_(u"Xovi API URI"),
         default=u"https://api.xovi.net/index.php"

@@ -1,3 +1,4 @@
+import json
 import os
 import socket
 import requests
@@ -8,8 +9,11 @@ from five import grok
 from plone import api
 from zope.interface import Interface
 from apiclient.discovery import build
+from apiclient.errors import HttpError
 from oauth2client.client import SignedJwtAssertionCredentials
 from oauth2client.client import AccessTokenRefreshError
+
+from xpose.seotool import MessageFactory as _
 
 DEFAULT_SERVICE_TIMEOUT = socket.getdefaulttimeout()
 
@@ -22,29 +26,32 @@ class GATool(grok.GlobalUtility):
     grok.provides(IGATool)
 
     def get(self, **kwargs):
-        service_url = self.get_config('api_uri')
-        client_email = self.get_config('client_email')
-        keyfile = self.get_keyfile()
-        credentials = SignedJwtAssertionCredentials(
-            client_email,
-            keyfile,
-            scope=service_url)
-        http = credentials.authorize(httplib2.Http())
-        import pdb; pdb.set_trace()
-        service = build('analytics', 'v3', http=http)
-        # params = urlencode(sorted(kwargs.iteritems()))
+        service = self.initialize_service()
+        params = sorted(kwargs.iteritems())
         try:
             accounts = service.management().accounts().list().execute()
+            if accounts.get('items'):
+                account_items = accounts.get('items')
+            if 'profile_id' in params:
+                profile = params['profile_id']
+            else:
+                profile = account_items[0].get('id')
+                # profile_name = accounts.get('items')[0].get('name')
+            results = self.get_results(service, profile)
+            return results
+        except TypeError as error:
+            # Handle errors in constructing a query.
+            return 'There was an error constructing your query : {0}'.format(
+                error)
+        except HttpError as error:
+            # Handle API errors.
+            return ('Arg, there was an API error : {0} : {1}'.format(
+                error.resp.status, error._get_reason()))
         except AccessTokenRefreshError:
-            import pdb; pdb.set_trace()
-        data_query = service.data().ga().get(**{
-            'ids': 'ga:YOUR_PROFILE_ID_NOT_UA',
-            'metrics': 'ga:visitors',
-            'start_date': '2013-01-01',
-            'end_date': '2015-01-01'
-        })
-        feed = data_query.execute()
-        return feed['rows'][0][0]
+            msg = _(u"The credentials have been revoked or expired,"
+                    u"please re-run the application to re-authorize")
+            return {'status': _(u"Error"),
+                    'msg': msg}
 
     def status(self):
         info = {}
@@ -58,6 +65,31 @@ class GATool(grok.GlobalUtility):
         else:
             info['code'] = 'unreachable endpoint'
         return info
+
+    def initialize_service(self):
+        service_url = self.get_config('api_uri')
+        # client_email = self.get_config('client_email')
+        keyfile = self.get_keyfile()
+        record_key = 'xeo.cxn.ga_client_secret'
+        record = api.portal.get_registry_record(record_key)
+        gas = json.loads(record)
+        access_data = gas['web']
+        credentials = SignedJwtAssertionCredentials(
+            access_data['client_email'],
+            keyfile,
+            scope=service_url)
+        http = credentials.authorize(httplib2.Http())
+        service = build('analytics', 'v3', http=http)
+        return service
+
+    def get_results(self, service, profile_id):
+        query = service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='2012-03-03',
+            end_date='2012-03-03',
+            metrics='ga:sessions')
+        feed = query.execute()
+        return feed
 
     def get_analytics_visitors():
         f = open('ga-privatekey.p12', 'rb')
@@ -86,7 +118,7 @@ class GATool(grok.GlobalUtility):
 
     def get_keyfile(self):
         p12_file = os.path.join(os.path.dirname(__file__),
-                                'ga-privatekey.p12')
+                                'ga-pk.p12')
         return open(p12_file).read()
 
     def get_month_timerange(self):

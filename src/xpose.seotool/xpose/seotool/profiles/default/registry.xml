@@ -8,6 +8,7 @@
         <value key="google_client_id"></value>
         <value key="google_client_email"></value>
         <value key="google_client_secret"></value>
+        <value key="ga_client_secret"></value>
         <value key="xovi_api_uri">https://api.xovi.net/index.php</value>
         <value key="xovi_client_key"></value>
         <value key="ac_api_uri">http://brain.xpose414.de/api.php</value>
