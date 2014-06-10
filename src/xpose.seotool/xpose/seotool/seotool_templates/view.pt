@@ -47,7 +47,7 @@
                                 <span tal:content="statusinfo/statuscode"
                                     tal:attributes="class statusinfo/klass">
                                     available</span>
-                                <pre tal:content="status" />
+                                <!--<pre tal:content="status" /> -->
                             </p>
                         </div>
                         <div class="col-xs-12 col-sm-2">

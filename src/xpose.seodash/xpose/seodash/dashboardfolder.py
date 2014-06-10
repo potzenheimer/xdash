@@ -112,14 +112,14 @@ class ManageDashboards(grok.View):
 
     def _update_dashboard(self, data):
         context = aq_inner(self.context)
-        setattr(context, 'ga_id', data['ga.profile'])
+        setattr(context, 'ga_id', data['ga-profile'])
         modified(context)
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
             _(u"GA configuration has sucessfully been refreshed"),
             type='info')
         portal_url = api.portal.get().absolute_url()
-        url = '{0}/adm/@@setup-google'.format(portal_url)
+        url = '{0}/adm/@@manage-dashboards'.format(portal_url)
         return self.request.response.redirect(url)
 
     def can_edit(self):

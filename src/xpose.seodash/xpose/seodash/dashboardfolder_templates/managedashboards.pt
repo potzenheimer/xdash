@@ -34,13 +34,17 @@
                                 <div class="col-xs-12 col-sm-8">
                                     <select class="form-control"
                                         id="ga.profile"
-                                        tal:attributes="name item/id">
+                                        name="ga-profile">
                                         <tal:block tal:repeat="item items">
                                             <option
                                                 tal:attributes="value item/id;"
                                                 tal:content="item/name" />
                                         </tal:block>
                                     </select>
+                                    <input type="text"
+                                        name="uuid"
+                                        id="uuid"
+                                        tal:attributes="value request/uuid | nothing" />
                                 </div>
                                 <div class="col-xs-12 col-sm-4">
                                     <span tal:replace="structure context/@@authenticator/authenticator"/>
