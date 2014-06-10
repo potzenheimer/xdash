@@ -1,14 +1,10 @@
 import json
 import contextlib
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
+
 try:
     from urllib.request import urlopen
 except ImportError:
     from urllib2 import urlopen
-from urllib2 import HTTPError
 
 from Acquisition import aq_inner
 from AccessControl import Unauthorized
@@ -40,6 +36,11 @@ class ISeoTool(form.Schema, IImageScaleTraversable):
         title=_(u"activeCollab Projects"),
         description=_(u"A list of available projects from the configured "
                       u"activeCollab account. Do not change this manually"),
+        required=False,
+    )
+    projects_ga = schema.TextLine(
+        title=_(u"GA profiles"),
+        description=_(u"List of available Google Analytics profiles."),
         required=False,
     )
     projects_xovi = schema.TextLine(
@@ -226,8 +227,42 @@ class SetupAnalytics(grok.View):
     grok.require('zope2.View')
     grok.name('setup-google')
 
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('service')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._refresh_configuration(form)
+
     def get_metrics(self):
-        url = 'https://www.googleapis.com/analytics/v3/metadata/ga/columns?pp=1'
+        base_uri = 'https://www.googleapis.com/analytics/v3/'
+        url = '{0}metadata/ga/columns?pp=1'.format(base_uri)
         with contextlib.closing(urlopen(url)) as response:
             resp = response.read().decode('utf-8')
             data = json.loads(resp)
@@ -238,6 +273,30 @@ class SetupAnalytics(grok.View):
         if code == 'DEPRECATED':
             klass = 'text-danger'
         return klass
+
+    def _refresh_configuration(self, data):
+        context = aq_inner(self.context)
+        tool = getUtility(IGATool)
+        project_list = tool.get()
+        projects = json.dumps(project_list)
+        import pdb; pdb.set_trace()
+        setattr(context, 'projects_ga', projects)
+        daily_domains = xovi_tool.get(
+            service=u'seo',
+            method=u'getDailyDomains',
+            limit=50
+        )
+        domains = json.dumps(daily_domains)
+        setattr(context, 'domains_xovi', domains)
+        modified(context)
+        context.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The Xovi configuration has sucessfully been refreshed"),
+            type='info')
+        portal_url = api.portal.get().absolute_url()
+        param = '/adm/@@setup-xovi'
+        url = portal_url + param
+        return self.request.response.redirect(url)
 
 
 class SetupXovi(grok.View):
@@ -386,7 +445,7 @@ class SetupAC(grok.View):
         modified(context)
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
-            _(u"The activeCollab configuration has sucessfully been refreshed"),
+            _(u"The activeCollab configuration was sucessfully refreshed"),
             type='info')
         portal_url = api.portal.get().absolute_url()
         param = '/adm/@@setup-ac'

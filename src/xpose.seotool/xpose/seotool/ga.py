@@ -34,10 +34,10 @@ class GATool(grok.GlobalUtility):
                 account_items = accounts.get('items')
             if 'profile_id' in params:
                 profile = params['profile_id']
+                results = self.get_results(service, profile)
             else:
-                profile = account_items[0].get('id')
+                results = account_items
                 # profile_name = accounts.get('items')[0].get('name')
-            results = self.get_results(service, profile)
             return results
         except TypeError as error:
             # Handle errors in constructing a query.
