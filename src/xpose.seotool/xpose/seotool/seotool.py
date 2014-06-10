@@ -260,6 +260,17 @@ class SetupAnalytics(grok.View):
             else:
                 self._refresh_configuration(form)
 
+    def available_profiles(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'projects_ga')
+        data = json.loads(stored)
+        return data
+
+    def webproperties(self, acc_id):
+        tool = getUtility(IGATool)
+        data = tool.get(account_id=acc_id)
+        return data
+
     def get_metrics(self):
         base_uri = 'https://www.googleapis.com/analytics/v3/'
         url = '{0}metadata/ga/columns?pp=1'.format(base_uri)

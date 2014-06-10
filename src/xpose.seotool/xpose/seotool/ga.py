@@ -27,17 +27,25 @@ class GATool(grok.GlobalUtility):
 
     def get(self, **kwargs):
         service = self.initialize_service()
-        params = sorted(kwargs.iteritems())
         try:
             accounts = service.management().accounts().list().execute()
+            results = []
             if accounts.get('items'):
-                account_items = accounts.get('items')
-            if 'profile_id' in params:
-                profile = params['profile_id']
-                results = self.get_results(service, profile)
-            else:
-                results = account_items
-                # profile_name = accounts.get('items')[0].get('name')
+                results = accounts.get('items')
+                if 'account_id' in kwargs:
+                    account_id = kwargs['account_id']
+                    results = self.get_webproperties(service, account_id)
+                elif 'property_id' in kwargs:
+                    account_id = kwargs['account_id']
+                    property_id = kwargs['property_id']
+                    results = self.get_profiles(service,
+                                                account_id,
+                                                property_id)
+                elif 'profile_id' in kwargs:
+                    profile = kwargs['profile_id']
+                    results = self.get_results(service, profile)
+                else:
+                    results = accounts.get('items')
             return results
         except TypeError as error:
             # Handle errors in constructing a query.
@@ -81,6 +89,19 @@ class GATool(grok.GlobalUtility):
         http = credentials.authorize(httplib2.Http())
         service = build('analytics', 'v3', http=http)
         return service
+
+    def get_webproperties(self, service, account_id):
+        query = service.management().webproperties().list(
+            accountId=account_id)
+        feed = query.execute()
+        return feed
+
+    def get_profiles(self, service, account_id, property_id):
+        query = service.management().profiles().list(
+            accountId=account_id,
+            webPropertyId=property_id)
+        feed = query.execute()
+        return feed
 
     def get_results(self, service, profile_id):
         query = service.data().ga().get(

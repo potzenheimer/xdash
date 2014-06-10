@@ -20,17 +20,38 @@
 
     <div class="app-page-content" id="content-core">
 
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <form class="app-form pull-right"
+              method="post" role="form"
+              tal:attributes="action request/URL">
+              <span tal:replace="structure context/@@authenticator/authenticator"/>
+              <button class="btn btn-primary btn-xs"
+                  name="form.button.Submit"
+                  id="form.button.Submit"
+                  i18n:translate="">Refresh</button>
+          </form>
+          <h3 class="panel-title" i18n:translate="">Accounts</h3>
+        </div>
+        <div class="list-group"
+            tal:define="data view/available_profiles">
+          <tal:block tal:repeat="item data">
+            <div class="list-group-item"
+              tal:define="id item/id">
+              <h4 class="list-group-item-heading">
+                  <span tal:content="item/name">Google API profile name</span><br>
+                  <small tal:content="id" />
+              </h4>
+              <p tal:define="props python:view.webproperties(acc_id=id)">
+                <span tal:content="props" />
+              </p>
+            </div>
+          </tal:block>
+        </div>
+      </div>
+
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form class="app-form pull-right"
-                method="post" role="form"
-                tal:attributes="action request/URL">
-                <span tal:replace="structure context/@@authenticator/authenticator"/>
-                <button class="btn btn-primary btn-xs"
-                    name="form.button.Submit"
-                    id="form.button.Submit"
-                    i18n:translate="">Refresh</button>
-            </form>
             <h3 class="panel-title">Dimensions and Metrics <small>JSON</small></h3>
         </div>
         <div class="list-group"
