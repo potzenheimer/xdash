@@ -279,23 +279,14 @@ class SetupAnalytics(grok.View):
         tool = getUtility(IGATool)
         project_list = tool.get()
         projects = json.dumps(project_list)
-        import pdb; pdb.set_trace()
         setattr(context, 'projects_ga', projects)
-        daily_domains = xovi_tool.get(
-            service=u'seo',
-            method=u'getDailyDomains',
-            limit=50
-        )
-        domains = json.dumps(daily_domains)
-        setattr(context, 'domains_xovi', domains)
         modified(context)
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
-            _(u"The Xovi configuration has sucessfully been refreshed"),
+            _(u"GA configuration has sucessfully been refreshed"),
             type='info')
         portal_url = api.portal.get().absolute_url()
-        param = '/adm/@@setup-xovi'
-        url = portal_url + param
+        url = '{0}/adm/@@setup-xovi'.format(portal_url)
         return self.request.response.redirect(url)
 
 
