@@ -42,9 +42,6 @@
                   <span tal:content="item/name">Google API profile name</span><br>
                   <small tal:content="id" />
               </h4>
-              <p tal:define="props python:view.webproperties(acc_id=id)">
-                <span tal:content="props" />
-              </p>
             </div>
           </tal:block>
         </div>

@@ -271,6 +271,41 @@ class SetupAnalytics(grok.View):
         data = tool.get(account_id=acc_id)
         return data
 
+    def profiles(self, acc_id, property_id):
+        tool = getUtility(IGATool)
+        data = tool.get(
+            account_id=acc_id,
+            property_id=property_id
+        )
+        return data
+
+    def get_profiles(self):
+        tool = getUtility(IGATool)
+        accounts = tool.get(qt='accounts')
+        data = []
+        idx = 0
+        if accounts.get('items'):
+            for item in accounts.get('items'):
+                item_id = item.get('id')
+                props = tool.get(
+                    qt='properties',
+                    account_id=item_id)
+                if props.get('items'):
+                    for x in props.get('items'):
+                        profiles = tool.get(
+                            qt='profiles',
+                            account_id=item_id,
+                            property_id=x.get('id'))
+                        if profiles.get('items'):
+                            for x in profiles.get('items'):
+                                idx += 1
+                                info = {}
+                                info['idx'] = idx
+                                info['id'] = x['id']
+                                info['name'] = x['name']
+                                data.append(info)
+        return data
+
     def get_metrics(self):
         base_uri = 'https://www.googleapis.com/analytics/v3/'
         url = '{0}metadata/ga/columns?pp=1'.format(base_uri)
@@ -287,8 +322,7 @@ class SetupAnalytics(grok.View):
 
     def _refresh_configuration(self, data):
         context = aq_inner(self.context)
-        tool = getUtility(IGATool)
-        project_list = tool.get()
+        project_list = self.get_profiles()
         projects = json.dumps(project_list)
         setattr(context, 'projects_ga', projects)
         modified(context)
@@ -297,7 +331,7 @@ class SetupAnalytics(grok.View):
             _(u"GA configuration has sucessfully been refreshed"),
             type='info')
         portal_url = api.portal.get().absolute_url()
-        url = '{0}/adm/@@setup-xovi'.format(portal_url)
+        url = '{0}/adm/@@setup-google'.format(portal_url)
         return self.request.response.redirect(url)
 
 

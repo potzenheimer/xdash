@@ -28,25 +28,21 @@ class GATool(grok.GlobalUtility):
     def get(self, **kwargs):
         service = self.initialize_service()
         try:
-            accounts = service.management().accounts().list().execute()
-            results = []
-            if accounts.get('items'):
-                results = accounts.get('items')
-                if 'account_id' in kwargs:
-                    account_id = kwargs['account_id']
-                    results = self.get_webproperties(service, account_id)
-                elif 'property_id' in kwargs:
-                    account_id = kwargs['account_id']
-                    property_id = kwargs['property_id']
-                    results = self.get_profiles(service,
-                                                account_id,
-                                                property_id)
-                elif 'profile_id' in kwargs:
-                    profile = kwargs['profile_id']
-                    results = self.get_results(service, profile)
-                else:
-                    results = accounts.get('items')
-            return results
+            if 'qt' in kwargs:
+                qt = kwargs['qt']
+                # return self._get_data(service, kwargs['qt'], kwargs['id'])
+                if qt == 'accounts':
+                    query = service.management().accounts().list()
+                if qt == 'properties':
+                    query = service.management().webproperties().list(
+                        accountId=kwargs['account_id'])
+                if qt == 'profiles':
+                    query = service.management().profiles().list(
+                        accountId=kwargs['account_id'],
+                        webPropertyId=kwargs['property_id'])
+                return query.execute()
+            else:
+                return self.get_results(service, kwargs['profile_id'])
         except TypeError as error:
             # Handle errors in constructing a query.
             return 'There was an error constructing your query : {0}'.format(
@@ -89,19 +85,6 @@ class GATool(grok.GlobalUtility):
         http = credentials.authorize(httplib2.Http())
         service = build('analytics', 'v3', http=http)
         return service
-
-    def get_webproperties(self, service, account_id):
-        query = service.management().webproperties().list(
-            accountId=account_id)
-        feed = query.execute()
-        return feed
-
-    def get_profiles(self, service, account_id, property_id):
-        query = service.management().profiles().list(
-            accountId=account_id,
-            webPropertyId=property_id)
-        feed = query.execute()
-        return feed
 
     def get_results(self, service, profile_id):
         query = service.data().ga().get(
