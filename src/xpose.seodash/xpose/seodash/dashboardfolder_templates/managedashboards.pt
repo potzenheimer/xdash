@@ -27,20 +27,33 @@
                     </div>
                     <div class="panel-body" tal:define="items view/ga_profiles">
                         <h4>Settings</h4>
-                        <ul>
-                            <li tal:repeat="item items">
-                                <span tal:replace="item" />
-                            </li>
-                        </ul>
-                        <select class="form-control">
-                            <tal:block tal:repeat="item items">
-                                <option tal:attributes="value item/id;
-                                                        name item/id"
-                                    tal:content="item/name">
-                                    1
-                                </option>
-                            </tal:block>
-                        </select>
+                        <form class="app-form"
+                            method="post" role="form"
+                            tal:attributes="action request/URL">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-8">
+                                    <select class="form-control"
+                                        id="ga.profile"
+                                        tal:attributes="name item/id">
+                                        <tal:block tal:repeat="item items">
+                                            <option
+                                                tal:attributes="value item/id;"
+                                                tal:content="item/name" />
+                                        </tal:block>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                    <button class="btn btn-primary"
+                                        name="form.button.Submit"
+                                        id="form.button.Submit"
+                                        i18n:translate="">Store</button>
+                                    <a class="btn btn-link"
+                                        tal:attributes="href string:${context/absolute_url}/@@manage-dashboards"
+                                        i18n:translate="">cancel</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </tal:item>
             </div>
