@@ -21,6 +21,8 @@ from Products.CMFPlone.utils import safe_unicode
 from plone.namedfile.interfaces import IImageScaleTraversable
 from Products.statusmessages.interfaces import IStatusMessage
 
+from xpose.seodash.dashboard import IDashboard
+
 from xpose.seotool.ac import IACTool
 from xpose.seotool.ga import IGATool
 from xpose.seotool.xovi import IXoviTool
@@ -63,6 +65,9 @@ class View(grok.View):
     grok.context(ISeoTool)
     grok.require('zope2.View')
     grok.name('view')
+
+    def update(self):
+        self.has_dashboards = len(self.dashboards()) > 0
 
     def available_services(self):
         services = {
@@ -119,6 +124,13 @@ class View(grok.View):
             },
         }
         return data
+
+    def dashboards(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IDashboard.__identifier__,
+                        sort_on='modified',
+                        sort_order='reverse')
+        return items
 
 
 class SetupServices(grok.View):

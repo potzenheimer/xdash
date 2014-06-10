@@ -1,3 +1,4 @@
+import json
 from Acquisition import aq_inner
 from AccessControl import Unauthorized
 from five import grok
@@ -52,12 +53,28 @@ class ManageDashboards(grok.View):
     def update(self):
         self.has_dashboards = len(self.dashboards()) > 0
 
+    def has_token(self):
+        token = False
+        if self.request.get('uuid'):
+            token = True
+        return token
+
+    def dashboard(self):
+        uuid = self.request.get('uuid')
+        return api.content.get(UID=uuid)
+
     def dashboards(self):
         catalog = api.portal.get_tool(name='portal_catalog')
         items = catalog(object_provides=IDashboard.__identifier__,
                         sort_on='modified',
                         sort_order='reverse')
         return items
+
+    def ga_profiles(self):
+        portal = api.portal.get()
+        item = portal['adm']
+        stored = getattr(item, 'projects_ga')
+        return json.loads(stored)
 
     def can_edit(self):
         context = aq_inner(self.context)

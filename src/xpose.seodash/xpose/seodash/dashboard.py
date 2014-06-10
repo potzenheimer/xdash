@@ -36,6 +36,10 @@ class IDashboard(form.Schema, IImageScaleTraversable):
     """
     A project dashboard
     """
+    ga_id = schema.TextLine(
+        title=_(u"GA Site ID"),
+        required=False,
+    )
     logo = NamedBlobImage(
         title=_(u"Logo Image"),
         description=_(u"Upload optional customer logo"),
