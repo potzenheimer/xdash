@@ -111,7 +111,8 @@ class ManageDashboards(grok.View):
         return json.loads(stored)
 
     def _update_dashboard(self, data):
-        context = aq_inner(self.context)
+        uuid = data['uuid']
+        context = api.content.get(UID=uuid)
         setattr(context, 'ga_id', data['ga-profile'])
         modified(context)
         context.reindexObject(idxs='modified')
