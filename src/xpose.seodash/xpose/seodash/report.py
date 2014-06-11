@@ -1,27 +1,19 @@
 import json
 from datetime import datetime
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from five import grok
-from plone import api
 from zope.component import getUtility
 
-from z3c.form import group, field
 from zope import schema
 from zope.lifecycleevent import modified
-from zope.interface import invariant, Invalid
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 from plone.dexterity.content import Container
 
-from plone.directives import dexterity, form
-from plone.app.textfield import RichText
-from plone.namedfile.field import NamedImage, NamedFile
-from plone.namedfile.field import NamedBlobImage, NamedBlobFile
+from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
 
-from z3c.relationfield.schema import RelationList, RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
+from xpose.seodash.dashboard import IDashboard
 
 from xpose.seotool.ac import IACTool
 from xpose.seotool.ga import IGATool
@@ -86,8 +78,16 @@ class View(grok.View):
         context = aq_inner(self.context)
         return context.restrictedTraverse('@@report-tracking')()
 
-    def build_report_ga(self):
+    def project_id(self):
         context = aq_inner(self.context)
+        parent = aq_parent(context)
+        if IDashboard.providedBy(parent):
+            container = parent
+        else:
+            container = aq_parent(parent)
+        return getattr(container, 'ga_id')
+
+    def build_report_ga(self):
         tool = getUtility(IGATool)
         data = tool.get()
         return data

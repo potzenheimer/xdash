@@ -40,5 +40,4 @@ class View(grok.View):
 
     def user_details(self):
         user = api.user.get_current()
-        import pdb; pdb.set_trace( )
         return user

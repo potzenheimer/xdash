@@ -69,7 +69,9 @@
 
     <tal:projects tal:condition="view/has_projects">
         <tal:block tal:condition="not:view/show_projectlist">
-            <div tal:define="item view/active_project">
+            <div tal:define="item view/active_project;
+                             item_uid item/UID"
+                tal:condition="python:view.has_reports(item_uid)">
                 <div class="page-header">
                     <h2>Report Dezember 2013
                         <small tal:content="item/Title" />
@@ -832,7 +834,7 @@
             </div>
             <h2>No project has been added yet</h2>
             <p>Why not
-                <a tal:attributes="href string:${portal_url}/xd/@@create-project">
+                <a tal:attributes="href string:${context/absolute_url}/@@create-project">
                     generate one now</a>
                 to finalize the dashboard setup
             </p>

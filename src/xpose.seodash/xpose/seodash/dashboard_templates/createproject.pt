@@ -14,9 +14,9 @@
         <div class="app-page-title">
             <h1 i18n:translate="">Add new project</h1>
         </div>
-        <p class="lead app-page-lead">
+        <p class="lead app-page-lead" i18n:translate="">
             Each dashboard can hold one or more projects. Most of the time one
-            project should be enough to make the reposting tool usable.
+            project should be enough to make the reporting tool usable.
         </p>
     </div>
 
@@ -24,10 +24,11 @@
         <form class="app-form" method="post" role="form"
             tal:attributes="action request/URL">
             <h4 i18n:translate="">
-                Please provide a human readable title for this dashboard
+                Project name or title
             </h4>
             <p class="text-muted" i18n:translate="">
-                Normally this would be either a single domain names
+                Normally this would be either a single domain name or an internal
+                project id
             </p>
             <div class="row">
                 <div class="col-xs-12 col-md-6">
@@ -41,7 +42,7 @@
                                 id="title"
                                 type="text"
                                 name="title"
-                                placeholder="Please enter dashboard title"
+                                placeholder="Please enter title"
                                 tal:attributes="value python:error and view.default_value(error) or value" />
                             <div class="help-block error"
                                 tal:condition="err_msg">
@@ -59,9 +60,9 @@
                             i18n:translate="">Create project</button>
                     </div>
                 </div>
-            </div>            
+            </div>
         </form>
-    </div>    
+    </div>
     </div>
   </metal:content-core>
 </metal:main>

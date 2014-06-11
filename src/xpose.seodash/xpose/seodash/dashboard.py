@@ -3,24 +3,13 @@ from AccessControl import Unauthorized
 from five import grok
 from plone import api
 
-from z3c.form import group, field
 from zope import schema
 from zope.component import getMultiAdapter
-from zope.interface import invariant, Invalid
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 from plone.dexterity.content import Container
-from plone.directives import dexterity, form
-from plone.app.textfield import RichText
-from plone.namedfile.field import NamedImage, NamedFile
-from plone.namedfile.field import NamedBlobImage, NamedBlobFile
+from plone.directives import form
+from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
-
-from z3c.relationfield.schema import RelationList, RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
-
-from dexterity.membrane.membrane_helpers import validate_unique_email
 
 from plone.keyring import django_random
 from Products.CMFPlone.utils import safe_unicode
@@ -59,6 +48,10 @@ class View(grok.View):
     def update(self):
         self.has_projects = len(self.projects()) > 0
         self.show_projectlist = len(self.projects()) > 1
+
+    def has_reports(self, uuid):
+        container = api.content.get(UID=uuid)
+        return len(container.items()) > 0
 
     def get_latest_report(self, uuid):
         item = uuidToObject(uuid)
@@ -160,24 +153,18 @@ class CreateProject(grok.View):
             if errorIdx > 0:
                 self.errors = form_errors
             else:
-                self._create_dashboard(form)
+                self._create_project(form)
 
-    def _create_dashboard(self, data):
+    def _create_project(self, data):
         context = aq_inner(self.context)
         new_title = data['title']
         token = django_random.get_random_string(length=12)
-        item = api.content.create(
-            type='xpose.seodash.dashboard',
+        api.content.create(
+            type='xpose.seodash.project',
             id=token,
             title=new_title,
             container=context,
             safe_id=True
         )
-        uuid = api.content.get_uuid(obj=item)
-        #item_id = item.getId()
-        #api.content.rename(obj=context[item_id],
-        #                   new_id=uuid)
         url = context.absolute_url()
-        base_url = url + '/@@setup-workspace?uuid=' + uuid
-        next_url = base_url + '&token=' + token
-        return self.request.response.redirect(next_url)
+        return self.request.response.redirect(url)
