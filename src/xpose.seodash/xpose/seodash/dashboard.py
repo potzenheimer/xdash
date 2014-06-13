@@ -29,9 +29,12 @@ class IDashboard(form.Schema, IImageScaleTraversable):
         title=_(u"GA Site ID"),
         required=False,
     )
-    projects = schema.TextLine(
+    projects = schema.List(
         title=_(u"Dashboard settings"),
         description=_(u"Settings containing a project list"),
+        value_type=schema.TextLine(
+            title=_(u"Project"),
+        ),
         required=False,
     )
     logo = NamedBlobImage(

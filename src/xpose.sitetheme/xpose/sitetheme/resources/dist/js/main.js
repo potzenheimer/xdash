@@ -14116,6 +14116,20 @@ if ( typeof define === 'function' && define.amd ) {
   $(document).ready(function () {
     if ($('body').hasClass('lt-ie7')) { return; }
 
+    $('a[data-appui="contextmenu"]').on({
+      click: function (e) {
+        e.preventDefault();
+        var $contextMenu = $(this).data('target');
+        $($contextMenu).toggleClass('cbp-spmenu-open');
+      }
+    });
+    $('a[data-appui="contextmenu-close"]').on({
+      click: function (e) {
+        e.preventDefault();
+        $(this).closest('.cbp-spmenu').removeClass('cbp-spmenu-open');
+      }
+    });
+
     var $targetContainer = $('#app-container');
     $('.app-aside-toggle-close').on('click', function () {
       $targetContainer.removeClass('app-aside-open');

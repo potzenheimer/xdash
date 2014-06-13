@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seotool">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Dashboard
+                <small tal:content="view/dashboard_name" />
+            </h1>
+        </div>
+        <p class="lead" i18n:translate="">
+            Add project to dashboard
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <tal:block tal:condition="view/dashboard">
+            <div class="panel panel-primary">
+                <tal:item tal:define="item view/dashboard">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span i18n:translate="" tal:omit-tag="">Settings</span>
+                            <span tal:content=="item/Title" />
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <form class="app-form"
+                            method="post" role="form"
+                            tal:attributes="action request/URL">
+                            <h4 i18n:translate="">Project title</h4>
+                            <p class="text-muted" i18n:translate="">
+                                Note: The project title will be displayed to
+                                logged in users
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-8">
+                                    <input type="text"
+                                        name="title"
+                                        id="title" />
+                                </div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                    <button class="btn btn-primary"
+                                        name="form.button.Submit"
+                                        id="form.button.Submit"
+                                        i18n:translate="">Add project</button>
+                                    <a class="btn btn-link"
+                                        tal:attributes="href string:${context/absolute_url}/@@manage-dashboards"
+                                        i18n:translate="">cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </tal:item>
+            </div>
+        </tal:block>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>

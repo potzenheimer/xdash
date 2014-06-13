@@ -23,7 +23,7 @@
             Add dashboard</a>
         <a class="btn btn-primary pull-right"
             tal:condition="view/has_token"
-            tal:attributes="href string:${context/portal_url}/xd/@@add-project"
+            tal:attributes="href string:${context/absolute_url}/@@add-project/${request/uuid}"
             i18n:translate="">
             Add project</a>
         <p class="lead" i18n:translate=""
@@ -47,44 +47,118 @@
                             <span tal:content=="item/Title" />
                         </h3>
                     </div>
-                    <div class="panel-body"
-                        tal:condition="view/dashboard_settings">
+                    <div class="list-group"
+                        tal:condition="view/dashboard_settings"
                         tal:define="profiles view/ga_profiles;
                                     projects view/dashboard_settings">
-                        <form class="app-form"
-                            method="post" role="form"
-                            tal:attributes="action request/URL">
-                            <div class="row">
+                        <div class="list-group-item" tal:repeat="project view/dashboard_settings">
+                            <div class="row"
+                                tal:define="idx repeat/project/index">
                                 <div class="col-xs-12 col-sm-8">
-                                    <select class="form-control"
-                                        id="ga.profile"
-                                        name="ga-profile">
-                                        <tal:block tal:repeat="profile profiles">
-                                            <option
-                                                tal:define="item_id profile/id;
-                                                            ga_id item/ga_id | nothing"
-                                                tal:attributes="value item_id;
-                                                                selected python:item_id == ga_id and 'selected' or ''"
-                                                tal:content="profile/name" />
-                                        </tal:block>
-                                    </select>
-                                    <input type="text"
-                                        name="uuid"
-                                        id="uuid"
-                                        tal:attributes="value request/uuid | nothing" />
+                                    <h4 tal:content="project/title" />
                                 </div>
                                 <div class="col-xs-12 col-sm-4">
-                                    <span tal:replace="structure context/@@authenticator/authenticator"/>
-                                    <button class="btn btn-primary"
-                                        name="form.button.Submit"
-                                        id="form.button.Submit"
-                                        i18n:translate="">Store</button>
-                                    <a class="btn btn-link"
-                                        tal:attributes="href string:${context/absolute_url}/@@manage-dashboards"
-                                        i18n:translate="">cancel</a>
+                                    <a class="btn btn-link pull-right"
+                                      data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
+                                      tal:attributes="data-target string:#cbp-spmenu-p${idx} ;
+                                                      href string:${context/absolute_url}/edit-dashboard/${request/uuid}/delete/${idx}">
+                                        delete
+                                    </a>
+                                    <button type="button" class="btn btn-link pull-right"
+                                        data-toggle="collapse" data-target="#demo"
+                                        tal:attributes="data-target string:#app-form-${idx}">
+                                        edit
+                                    </button>
+
                                 </div>
                             </div>
-                        </form>
+                            <div id="app-form-edit" class="collapse"
+                                tal:define="item_idx repeat/project/index"
+                                tal:attributes="id string:app-form-${item_idx}">
+                                <form class="app-form"
+                                    method="post" role="form"
+                                    tal:attributes="action request/URL">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-2">
+                                            <h5>
+                                                GA Profil
+                                            </h5>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <select class="form-control"
+                                                id="ga-profile"
+                                                name="ga-profile">
+                                                <tal:block tal:repeat="profile profiles">
+                                                    <option
+                                                        tal:define="item_id profile/id;
+                                                                    ga_id item/ga_id | nothing"
+                                                        tal:attributes="value item_id;
+                                                                        selected python:item_id == ga_id and 'selected' or ''"
+                                                        tal:content="profile/name" />
+                                                </tal:block>
+                                            </select>
+                                            <input type="hidden"
+                                                name="project-idx"
+                                                id="project-idx"
+                                                tal:attributes="value item_idx" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                            <button class="btn btn-primary"
+                                                name="form.button.Submit"
+                                                id="form.button.Submit"
+                                                i18n:translate="">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-2">
+                                            <h5>
+                                                XOVI project ID
+                                            </h5>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input type="text"
+                                                name="xovi-profile"
+                                                id="xovi-profile" />
+                                            <input type="hidden"
+                                                name="project-idx"
+                                                id="project-idx"
+                                                tal:attributes="value item_idx" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                            <button class="btn btn-primary"
+                                                name="form.button.Submit"
+                                                id="form.button.Submit"
+                                                i18n:translate="">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-2">
+                                            <h5>
+                                                ActiveCollab project ID
+                                            </h5>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input type="text"
+                                                name="ac-profile"
+                                                id="ac-profile" />
+                                            <input type="hidden"
+                                                name="project-idx"
+                                                id="project-idx"
+                                                tal:attributes="value item_idx" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                            <button class="btn btn-primary"
+                                                name="form.button.Submit"
+                                                id="form.button.Submit"
+                                                i18n:translate="">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body"
                         tal:condition="not:view/dashboard_settings">
@@ -95,10 +169,11 @@
                             <h2 i18n:translate="">
                                 There is no project asigned to this dashboard
                             </h2>
-                            <p><a tal:attributes="href string:${context/portal_url}/xd">
-                                Add project</a>
-                                <span i18n:translate="" tal:omit-tag="">to
-                                activate the dashboard</span>
+                            <p><span i18n:translate="" tal:omit-tag="">
+                                You need to add project information to
+                                activate the dashboard</span><br>
+                                <a tal:attributes="href string:${context/absolute_url}/@@add-project/${request/uuid}">
+                                Add project information</a>
                             </p>
                         </div>
                     </div>
@@ -118,7 +193,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-2">
                                 <a tal:attributes="href item/getURL"
-                                    i18n:translate="">show dashboard</a>
+                                    i18n:translate="">show</a>
                                 <a tal:attributes="href string:${context/absolute_url}/@@manage-dashboards?uuid=${item/UID}"
                                     i18n:translate="">edit</a>
                             </div>
@@ -146,6 +221,27 @@
     </div>
   </metal:content-core>
 </metal:main>
+
+<metal:header fill-slot="header">
+  <tal:block tal:condition="view/has_token">
+    <tal:modals tal:repeat="item view/dashboards">
+      <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-delete"
+        tal:define="idx repeat/item/index"
+        tal:attributes="id string:cbp-spmenu-p${idx}">
+        <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close">
+          <i class="fa fa-times-circle-o pp-icon pp-icon-md pull-right"></i></a>
+          <span i18n:translate="" tal:omit-tag="">Delete confirmation</span>
+        </h3>
+        <p i18n:translate="">Deleting this project will remove this project form the
+          dashboard views. The corresponding reports will be left intact but will be unasigned.</p>
+        <a tal:attributes="href string:${context/absolute_url}/edit-dashboard/${request/uuid}/delete/${idx}">
+          <i class="fa fa-trash-o fa-2x pp-icon pp-icon-md pull-right"></i>
+          <span i18n:translate="" tal:omit-tag="">Delete project</span>
+        </a>
+      </nav>
+    </tal:modals>
+  </tal:block>
+</metal:header>
 
 </body>
 </html>
