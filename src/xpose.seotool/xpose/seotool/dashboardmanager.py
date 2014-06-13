@@ -66,13 +66,13 @@ class ManageDashboards(grok.View):
         return api.content.get(UID=uuid)
 
     def dashboard_name(self):
-        if self.dashboard():
+        if self.has_token():
             item = self.dashboard()
             return item.Title()
         return _(u"Untitled dashboard")
 
     def dashboard_settings(self):
-        if self.dashboards():
+        if self.has_token():
             item = self.dashboard()
             data = getattr(item, 'projects')
             return json.laods(data)
