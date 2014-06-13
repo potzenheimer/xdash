@@ -65,6 +65,19 @@ class ManageDashboards(grok.View):
         uuid = self.request.get('uuid')
         return api.content.get(UID=uuid)
 
+    def dashboard_name(self):
+        if self.dashboard():
+            item = self.dashboard()
+            return item.Title()
+        return _(u"Untitled dashboard")
+
+    def dashboard_settings(self):
+        if self.dashboards():
+            item = self.dashboard()
+            data = getattr(item, 'projects')
+            return json.laods(data)
+        return dict()
+
     def dashboards(self):
         catalog = api.portal.get_tool(name='portal_catalog')
         items = catalog(object_provides=IDashboard.__identifier__,
