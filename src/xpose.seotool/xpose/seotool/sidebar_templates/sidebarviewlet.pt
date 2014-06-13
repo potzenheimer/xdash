@@ -1,8 +1,15 @@
-<div class="app-sidebar" id="app-sidebar">
-    <h3 class="app-nav-heading app-sidebar-heading">
+<div class="app-sidebar" id="app-sidebar"
+    tal:define="is_setup viewlet/is_seotool_setup">
+    <h3 class="app-nav-heading app-sidebar-heading"
+        tal:condition="not:is_setup">
         <a tal:attributes="href viewlet/portal_url">Dashboard</a>
     </h3>
-    <div class="app-sidebar-block">
+    <h3 class="app-nav-heading app-sidebar-heading"
+        tal:condition="is_setup">
+        <a tal:attributes="href viewlet/adm_url"
+            i8n:translate="">Settings</a>
+    </h3>
+    <div class="app-sidebar-block" tal:condition="not:is_setup">
         <h4>Januar 2014</h4>
     </div>
     <ul class="nav ws-nav bs-docs-sidenav app-sidebar-nav"

@@ -11,10 +11,13 @@
   <metal:content-core define-macro="main">
     <div class="app-page-header">
         <div class="app-page-title">
-            <h1>Acount Dashboards</h1>
+            <h1>Dashboards</h1>
         </div>
+        <a class="btn btn-primary pull-right" tal:attributes="href string:${context/portal_url}/xd/@@create-dashboard"
+            i18n:translate="">
+            Add dashboard</a>
         <p class="lead" i18n:translate="">
-            Manage customer dashboards
+            Add and manage customer dashboards
         </p>
     </div>
 

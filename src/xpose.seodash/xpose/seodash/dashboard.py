@@ -5,6 +5,7 @@ from plone import api
 
 from zope import schema
 from zope.component import getMultiAdapter
+from zope.lifecycleevent import modified
 
 from plone.dexterity.content import Container
 from plone.directives import form
@@ -168,3 +169,139 @@ class CreateProject(grok.View):
         )
         url = context.absolute_url()
         return self.request.response.redirect(url)
+
+
+class ReportManager(grok.View):
+    grok.context(IDashboard)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('report-manager')
+
+    def render(self):
+        context = aq_inner(self.context)
+        action = self.traverse_subpath[0]
+        new_report = self.stored_report()
+        if action == 'create':
+            new_report = self._create_report()
+        if action == 'delete':
+            new_report = self._delete_report()
+        if action == 'update':
+            new_report = self._update_report()
+        if action == 'add':
+            new_report = self._add_content()
+        setattr(context, 'panelPageLayout', new_report)
+        modified(context)
+        context.reindexObject(idxs='modified')
+        row = self.traverse_subpath[1]
+        base_url = context.absolute_url()
+        next_url = '{0}/@@panelblock-editor/{1}'.format(base_url, row)
+        return self.request.response.redirect(next_url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def stored_layout(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'panelPageLayout')
+        return stored
+
+    def gridrow(self):
+        grid = self.stored_layout()
+        row = self.traverse_subpath[1]
+        return grid[int(row)]
+
+    def panels(self):
+        return self.gridrow()['panels']
+
+    def _create_column(self):
+        grid = self.stored_layout()
+        row_idx = self.traverse_subpath[1]
+        row = grid[int(row_idx)]
+        cols = self.gridrow()['panels']
+        col_idx = len(cols) + 1
+        col_size = 12 / col_idx
+        col = {
+            'uuid': None,
+            'component': u"placeholder",
+            'grid-col': col_size,
+            'klass': 'panel-column'
+        }
+        # Reset col size to make room for additional column
+        for x in cols:
+            x['grid-col'] = col_size
+        cols.append(col)
+        row['panels'] = cols
+        grid[int(row_idx)] = row
+        return grid
+
+    def _delete_column(self):
+        row_idx = int(self.traverse_subpath[1])
+        col_idx = int(self.traverse_subpath[2])
+        grid = self.stored_layout()
+        row = grid[row_idx]
+        cols = self.gridrow()['panels']
+        col = cols[col_idx]
+        if col['component'] != 'placeholder':
+            uuid = col['uuid']
+            panel = api.content.get(UID=uuid)
+            api.content.delete(obj=panel)
+        cols.pop(col_idx)
+        grid_idx = len(cols)
+        col_size = 12 / grid_idx
+        for x in cols:
+            x['grid-col'] = col_size
+        row['panels'] = cols
+        grid[int(row_idx)] = row
+        return grid
+
+    def _update_column(self):
+        updated = self.stored_layout()
+        row = self.gridrow()
+        panels = self.panels()
+        panels[0]['grid-col'] = self.traverse_subpath[2]
+        panels[1]['grid-col'] = self.traverse_subpath[3]
+        row['panels'] = panels
+        row_idx = int(self.traverse_subpath[1])
+        updated[row_idx] = row
+        return updated
+
+    def _move_column(self):
+        updated = self.current_layout()
+        return updated
+
+    def _add_content(self):
+        grid = self.stored_layout()
+        row_idx = self.traverse_subpath[1]
+        row = grid[int(row_idx)]
+        cols = self.gridrow()['panels']
+        component = self.traverse_subpath[2]
+        col_idx = self.traverse_subpath[3]
+        col = cols[int(col_idx)]
+        # Create panel content type here
+        uid = self._create_panel(component)
+        col['component'] = component
+        col['uuid'] = uid
+        col['klass'] = 'panel-column'
+        row['panels'] = cols
+        grid[int(row_idx)] = row
+        return grid
+
+    def _create_panel(self, component):
+        context = aq_inner(self.context)
+        token = django_random.get_random_string(length=24)
+        item = api.content.create(
+            type='ade25.panelpage.panel',
+            id=token,
+            title=token,
+            container=context,
+            safe_id=True
+        )
+        setattr(item, 'component', component)
+        uuid = api.content.get_uuid(obj=item)
+        return uuid

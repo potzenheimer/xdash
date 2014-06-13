@@ -10,11 +10,13 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
     <div class="app-page-header">
-        <div class="app-page-title">
-            <h1 tal:content="context/Title" />
+        <div class="app-page-title" i18n:translate="">
+            Services
         </div>
-        <p class="lead app-page-lead" tal:condition="context/Description"
-            tal:content="context/Description" />
+        <p class="lead app-page-lead" i18n:translate="">
+            Setup and configure external services that provide data via
+            a dedicated API
+        </p>
     </div>
 
     <div class="app-page-content" id="content-core">
@@ -44,7 +46,6 @@
                                     <span tal:content="statusinfo/statuscode"
                                         tal:attributes="class statusinfo/klass">
                                         available</span>
-                                    <pre tal:content="status" />
                                 </p>
                             </div>
                             <div class="col-xs-12 col-sm-2">

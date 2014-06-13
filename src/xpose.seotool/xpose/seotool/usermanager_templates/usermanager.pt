@@ -11,10 +11,11 @@
   <metal:content-core define-macro="main">
     <div class="app-page-header">
         <div class="app-page-title">
-            <h1 i18n:translate="">Manage User Accounts</h1>
+            <h1 i18n:translate="">User Accounts</h1>
         </div>
         <p class="lead app-page-lead" i18n:translate="">
-           Add and edit customer user accounts
+           Manage customer user accounts and configure access to dashboards and
+           reports
         </p>
     </div>
 
@@ -48,7 +49,7 @@
                                     </p>
                                 </div>
                                 <p tal:condition="not:info/dashboard" class="text-warning">
-                                    No access granted 
+                                    No access granted
                                     <a tal:attributes="href string:${context/absolute_url}/@@manage-user-permissions?user=${info/user_id}">
                                         change
                                     </a>

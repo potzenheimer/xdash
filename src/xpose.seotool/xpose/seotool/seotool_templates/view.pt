@@ -11,14 +11,14 @@
   <metal:content-core define-macro="main">
     <div class="app-page-header">
         <div class="app-page-title">
-            <h1 tal:content="context/Title" />
+            <h1 i18n:translate="">Overview</h1>
         </div>
-        <p class="lead app-page-lead" tal:condition="context/Description"
-            tal:content="context/Description" />
     </div>
 
     <div class="app-page-content" id="content-core">
-        <h2>Application dashboard</h2>
+        <p class="lead app-page-lead" i18n:translate="">
+          Manage user accounts, dashboards and application settings
+        </p>
     </div>
 
     <div class="panel panel-primary">
@@ -34,21 +34,11 @@
                     tal:attributes="data-appui-uri item/uri;
                                     data-appui-target string:#app-statusmsg-${idx}">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-10">
                             <h4 class="list-group-item-heading">
                                 <span tal:content="item/name">API Name</span>
                             </h4>
                             <p class="list-group-item-text" tal:content="item/uri">API Service URI</p>
-                        </div>
-                        <div class="col-xs-12 col-sm-4">
-                            <p tal:define="status python:view.service_status(item);
-                                           statusinfo python:view.get_state_klass(status)"
-                                tal:attributes="id string:app-statusmsg-${idx}">
-                                <span tal:content="statusinfo/statuscode"
-                                    tal:attributes="class statusinfo/klass">
-                                    available</span>
-                                <!--<pre tal:content="status" /> -->
-                            </p>
                         </div>
                         <div class="col-xs-12 col-sm-2">
                             <div class="text-right">
@@ -63,7 +53,7 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <!-- Default panel contents -->
         <div class="panel-heading">
             <a class="pull-right" tal:attributes="href string:${context/portal_url}/xd/@@create-dashboard">

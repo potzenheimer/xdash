@@ -13,8 +13,6 @@ from plone.dexterity.content import Container
 from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
 
-from xpose.seodash.dashboard import IDashboard
-
 from xpose.seotool.ac import IACTool
 from xpose.seotool.ga import IGATool
 from xpose.seotool.xovi import IXoviTool
