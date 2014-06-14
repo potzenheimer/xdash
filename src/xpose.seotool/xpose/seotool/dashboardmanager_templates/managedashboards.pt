@@ -78,6 +78,14 @@
                                 <form class="app-form"
                                     method="post" role="form"
                                     tal:attributes="action request/URL">
+                                    <span tal:replace="structure context/@@authenticator/authenticator"/>
+                                    <input type="hidden"
+                                        name="uuid"
+                                        tal:attributes="value request/uuid | nothing" />
+                                    <input type="hidden"
+                                                name="project-idx"
+                                                id="project-idx"
+                                                tal:attributes="value item_idx" />
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-2">
                                             <h5>
@@ -97,13 +105,8 @@
                                                         tal:content="profile/name" />
                                                 </tal:block>
                                             </select>
-                                            <input type="hidden"
-                                                name="project-idx"
-                                                id="project-idx"
-                                                tal:attributes="value item_idx" />
                                         </div>
                                         <div class="col-xs-12 col-sm-4">
-                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
                                             <button class="btn btn-primary"
                                                 name="form.button.Submit"
                                                 id="form.button.Submit"
@@ -120,13 +123,8 @@
                                             <input type="text"
                                                 name="xovi-profile"
                                                 id="xovi-profile" />
-                                            <input type="hidden"
-                                                name="project-idx"
-                                                id="project-idx"
-                                                tal:attributes="value item_idx" />
                                         </div>
                                         <div class="col-xs-12 col-sm-4">
-                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
                                             <button class="btn btn-primary"
                                                 name="form.button.Submit"
                                                 id="form.button.Submit"
@@ -143,13 +141,8 @@
                                             <input type="text"
                                                 name="ac-profile"
                                                 id="ac-profile" />
-                                            <input type="hidden"
-                                                name="project-idx"
-                                                id="project-idx"
-                                                tal:attributes="value item_idx" />
                                         </div>
                                         <div class="col-xs-12 col-sm-4">
-                                            <span tal:replace="structure context/@@authenticator/authenticator"/>
                                             <button class="btn btn-primary"
                                                 name="form.button.Submit"
                                                 id="form.button.Submit"

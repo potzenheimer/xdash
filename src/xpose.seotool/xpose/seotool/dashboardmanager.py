@@ -27,7 +27,6 @@ class ManageDashboards(grok.View):
         context = aq_inner(self.context)
         self.errors = {}
         unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('ga.profile')
         if 'form.button.Submit' in self.request:
             authenticator = getMultiAdapter((context, self.request),
                                             name=u"authenticator")
@@ -40,17 +39,6 @@ class ManageDashboards(grok.View):
             for value in form:
                 if value not in unwanted:
                     form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
             if errorIdx > 0:
                 self.errors = form_errors
             else:
@@ -92,16 +80,25 @@ class ManageDashboards(grok.View):
         return json.loads(stored)
 
     def _update_dashboard(self, data):
+        idx = int(data['project-idx'])
         uuid = data['uuid']
-        context = api.content.get(UID=uuid)
-        setattr(context, 'ga_id', data['ga-profile'])
-        modified(context)
-        context.reindexObject(idxs='modified')
+        item = api.content.get(UID=uuid)
+        stored = getattr(item, 'projects')
+        project = stored[idx]
+        project['ga'] = data['ga-profile']
+        if data['xovi-profile']:
+            project['xo'] = data['xovi-profile']
+        if data['ac-profile']:
+            project['ac'] = data['ac-profile']
+        stored[idx] = project
+        setattr(item, 'projects', stored)
+        modified(item)
+        item.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
             _(u"GA configuration has sucessfully been refreshed"),
             type='info')
         portal_url = api.portal.get().absolute_url()
-        url = '{0}/adm/@@manage-dashboards'.format(portal_url)
+        url = '{0}/adm/@@manage-dashboards?uuid={1}'.format(portal_url, uuid)
         return self.request.response.redirect(url)
 
     def can_edit(self):
