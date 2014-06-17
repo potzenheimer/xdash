@@ -3,9 +3,10 @@ from datetime import datetime
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
-from zope.component import getUtility
-
 from zope import schema
+
+from plone.indexer import indexer
+from zope.component import getUtility
 from zope.lifecycleevent import modified
 
 from plone.dexterity.content import Container
@@ -34,7 +35,7 @@ class IReport(form.Schema, IImageScaleTraversable):
         title=_(u"Site URI / Domainname"),
         required=False,
     )
-    project = schema.TextLine(
+    projectId = schema.TextLine(
         title=_(u"Project ID"),
         required=False,
     )
@@ -62,6 +63,12 @@ class IReport(form.Schema, IImageScaleTraversable):
                       u"methods and values"),
         required=False,
     )
+
+
+@indexer(IReport)
+def projectIndexer(obj):
+    return obj.projectId
+grok.global_adapter(projectIndexer, name="projectId")
 
 
 class Report(Container):
