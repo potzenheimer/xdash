@@ -130,49 +130,21 @@ class CreateProject(grok.View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('create-project')
 
-    def update(self):
+    def render(self):
         context = aq_inner(self.context)
-        self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('title')
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._create_project(form)
+        uuid = self._create_report()
+        next_url = '{0}/report/{1}'.format(context.absolute_url(), uuid)
+        return self.request.response.redirect(next_url)
 
-    def _create_project(self, data):
+    def _create_report(self):
         context = aq_inner(self.context)
-        new_title = data['title']
-        token = django_random.get_random_string(length=12)
-        api.content.create(
-            type='xpose.seodash.project',
+        token = django_random.get_random_string(length=24)
+        item = api.content.create(
+            type='xpose.seodash.report',
             id=token,
-            title=new_title,
+            title='report-{0}'.format(token),
             container=context,
             safe_id=True
         )
-        url = context.absolute_url()
-        return self.request.response.redirect(url)
+        uuid = api.content.get_uuid(obj=item)
+        return uuid

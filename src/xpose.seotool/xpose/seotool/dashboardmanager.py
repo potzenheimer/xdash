@@ -73,6 +73,11 @@ class ManageDashboards(grok.View):
                         sort_order='reverse')
         return items
 
+    def get_field_value(self, index, key):
+        settings = self.dashboard_settings()
+        project = settings[int(index)]
+        return project[key]
+
     def ga_profiles(self):
         portal = api.portal.get()
         item = portal['adm']
