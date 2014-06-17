@@ -34,6 +34,10 @@ class IReport(form.Schema, IImageScaleTraversable):
         title=_(u"Site URI / Domainname"),
         required=False,
     )
+    project = schema.TextLine(
+        title=_(u"Project ID"),
+        required=False,
+    )
     report = schema.TextLine(
         title=_(u"Xovi Report"),
         description=_(u"Automatically updated report consisting of predefined "

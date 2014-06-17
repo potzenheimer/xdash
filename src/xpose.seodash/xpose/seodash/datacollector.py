@@ -4,6 +4,8 @@ from plone import api
 
 from plone.keyring import django_random
 
+from plone.app.contentlisting.interfaces import IContentListing
+
 from xpose.seodash.dashboardfolder import IDashboardFolder
 from xpose.seodash.dashboard import IDashboard
 
@@ -26,7 +28,7 @@ class DataCollector(grok.View):
         items = catalog(object_provides=IDashboard.__identifier__,
                         path=dict(query='/'.join(context.getPhysicalPath()),
                                   depth=1))
-        return items
+        return IContentListing(items)
 
     def _collect(self):
         idx = 0
