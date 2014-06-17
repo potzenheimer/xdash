@@ -28,11 +28,11 @@ class IReport(form.Schema, IImageScaleTraversable):
     """
     site = schema.URI(
         title=_(u"Site URI"),
-        required=True,
+        required=False,
     )
     domain = schema.TextLine(
         title=_(u"Site URI / Domainname"),
-        required=True,
+        required=False,
     )
     report = schema.TextLine(
         title=_(u"Xovi Report"),
