@@ -943,6 +943,7 @@ img.image-right a > img,
 .facet .facet-body img > img,
 .facet .facet-body img a > img {
     display: block;
+    width: 100% \9;
     max-width: 100%;
     height: auto;
 }
@@ -951,6 +952,7 @@ img.image-right a > img,
 }
 .img-thumbnail {
     display: inline-block;
+    width: 100% \9;
     max-width: 100%;
     height: auto;
     padding: 4px;
@@ -1033,7 +1035,7 @@ h6 .small,
 .h6 .small {
     font-weight: normal;
     line-height: 1;
-    color: #999;
+    color: #777;
 }
 h1,
 .h1,
@@ -1121,7 +1123,7 @@ p {
 }
 small,
 .small {
-    font-size: 85%;
+    font-size: 87%;
 }
 cite {
     font-style: normal;
@@ -1156,7 +1158,7 @@ mark,
     text-transform: capitalize;
 }
 .text-muted {
-    color: #999;
+    color: #777;
 }
 .text-primary {
     color: #92c83e;
@@ -1280,7 +1282,7 @@ dd {
 abbr[title],
 abbr[data-original-title] {
     cursor: help;
-    border-bottom: 1px dotted #999;
+    border-bottom: 1px dotted #777;
 }
 .initialism {
     font-size: 90%;
@@ -1303,7 +1305,7 @@ blockquote .small {
     display: block;
     font-size: 80%;
     line-height: 1.42857143;
-    color: #999;
+    color: #777;
 }
 blockquote footer:before,
 blockquote small:before,
@@ -2379,14 +2381,14 @@ output {
             box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 .form-control::-moz-placeholder {
-    color: #999;
+    color: #777;
     opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-    color: #999;
+    color: #777;
 }
 .form-control::-webkit-input-placeholder {
-    color: #999;
+    color: #777;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -2484,7 +2486,18 @@ fieldset[disabled] .radio label,
 fieldset[disabled] .checkbox label {
     cursor: not-allowed;
 }
-.input-sm {
+.form-control-static {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 0;
+}
+.form-control-static.input-lg,
+.form-control-static.input-sm {
+    padding-right: 0;
+    padding-left: 0;
+}
+.input-sm,
+.form-horizontal .form-group-sm .form-control {
     height: 33px;
     padding: 5px 10px;
     font-size: 14px;
@@ -2499,7 +2512,8 @@ textarea.input-sm,
 select[multiple].input-sm {
     height: auto;
 }
-.input-lg {
+.input-lg,
+.form-horizontal .form-group-lg .form-control {
     height: 49px;
     padding: 10px 16px;
     font-size: 20px;
@@ -2622,9 +2636,6 @@ select[multiple].input-lg {
 .has-feedback label.sr-only ~ .form-control-feedback {
     top: 0;
 }
-.form-control-static {
-    margin-bottom: 0;
-}
 .help-block {
     display: block;
     margin-top: 5px;
@@ -2671,7 +2682,7 @@ select[multiple].input-lg {
     }
     .form-inline .radio input[type="radio"],
   .form-inline .checkbox input[type="checkbox"] {
-        float: none;
+        position: relative;
         margin-left: 0;
     }
     .form-inline .has-feedback .form-control-feedback {
@@ -2694,10 +2705,6 @@ select[multiple].input-lg {
     margin-right: -15px;
     margin-left: -15px;
 }
-.form-horizontal .form-control-static {
-    padding-top: 7px;
-    padding-bottom: 7px;
-}
 @media (min-width: 768px) {
     .form-horizontal .control-label {
         padding-top: 7px;
@@ -2708,6 +2715,16 @@ select[multiple].input-lg {
 .form-horizontal .has-feedback .form-control-feedback {
     top: 0;
     right: 15px;
+}
+@media (min-width: 768px) {
+    .form-horizontal .form-group-lg .control-label {
+        padding-top: 14.3px;
+    }
+}
+@media (min-width: 768px) {
+    .form-horizontal .form-group-sm .control-label {
+        padding-top: 6px;
+    }
 }
 .btn {
     display: inline-block;
@@ -3033,7 +3050,7 @@ fieldset[disabled] .btn-link {
 fieldset[disabled] .btn-link:hover,
 .btn-link[disabled]:focus,
 fieldset[disabled] .btn-link:focus {
-    color: #999;
+    color: #777;
     text-decoration: none;
 }
 .btn-lg,
@@ -3060,8 +3077,6 @@ fieldset[disabled] .btn-link:focus {
 .btn-block {
     display: block;
     width: 100%;
-    padding-right: 0;
-    padding-left: 0;
 }
 .btn-block + .btn-block {
     margin-top: 5px;
@@ -3173,7 +3188,7 @@ tbody.collapse.in {
 .dropdown-menu > .disabled > a,
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
-    color: #999;
+    color: #777;
 }
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
@@ -3202,7 +3217,8 @@ tbody.collapse.in {
     padding: 3px 20px;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #999;
+    color: #777;
+    white-space: nowrap;
 }
 .dropdown-backdrop {
     position: fixed;
@@ -3611,11 +3627,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     background-color: #eee;
 }
 .nav > li.disabled > a {
-    color: #999;
+    color: #777;
 }
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-    color: #999;
+    color: #777;
     text-decoration: none;
     cursor: not-allowed;
     background-color: transparent;
@@ -4044,7 +4060,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     }
     .navbar-form .radio input[type="radio"],
   .navbar-form .checkbox input[type="checkbox"] {
-        float: none;
+        position: relative;
         margin-left: 0;
     }
     .navbar-form .has-feedback .form-control-feedback {
@@ -4215,7 +4231,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
     background-color: transparent;
 }
 .navbar-inverse .navbar-text {
-    color: #999;
+    color: #777;
 }
 .navbar-inverse .navbar-nav > li > a {
     color: #eee;
@@ -4320,7 +4336,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
     content: "/\00a0";
 }
 .breadcrumb > .active {
-    color: #999;
+    color: #777;
 }
 .pagination {
     display: inline-block;
@@ -4380,7 +4396,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > .disabled > a,
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
-    color: #999;
+    color: #777;
     cursor: not-allowed;
     background-color: #fff;
     border-color: #ddd;
@@ -4449,7 +4465,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pager .disabled > a:hover,
 .pager .disabled > a:focus,
 .pager .disabled > span {
-    color: #999;
+    color: #777;
     cursor: not-allowed;
     background-color: #fff;
 }
@@ -4479,11 +4495,11 @@ a.label:focus {
     top: -1px;
 }
 .label-default {
-    background-color: #999;
+    background-color: #777;
 }
 .label-default[href]:hover,
 .label-default[href]:focus {
-    background-color: #808080;
+    background-color: #5e5e5e;
 }
 .label-primary {
     background-color: #92c83e;
@@ -4531,7 +4547,7 @@ a.label:focus {
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    background-color: #999;
+    background-color: #777;
     border-radius: 10px;
 }
 .badge:empty {
@@ -4643,10 +4659,12 @@ a.thumbnail.active {
 .alert > p + p {
     margin-top: 5px;
 }
-.alert-dismissable {
+.alert-dismissable,
+.alert-dismissible {
     padding-right: 35px;
 }
-.alert-dismissable .close {
+.alert-dismissable .close,
+.alert-dismissible .close {
     position: relative;
     top: -2px;
     right: -21px;
@@ -4696,6 +4714,14 @@ a.thumbnail.active {
 .alert-danger .alert-link {
     color: #843534;
 }
+@-webkit-keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
 @keyframes progress-bar-stripes {
     from {
         background-position: 40px 0;
@@ -4728,13 +4754,15 @@ a.thumbnail.active {
          -o-transition: width .6s ease;
             transition: width .6s ease;
 }
-.progress-striped .progress-bar {
+.progress-striped .progress-bar,
+.progress-bar-striped {
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
     background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
     background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
     background-size: 40px 40px;
 }
-.progress.active .progress-bar {
+.progress.active .progress-bar,
+.progress-bar.active {
     -webkit-animation: progress-bar-stripes 2s linear infinite;
          -o-animation: progress-bar-stripes 2s linear infinite;
             animation: progress-bar-stripes 2s linear infinite;
@@ -4745,7 +4773,7 @@ a.thumbnail.active {
 }
 .progress-bar[aria-valuenow="0"] {
     min-width: 30px;
-    color: #999;
+    color: #777;
     background-color: transparent;
     background-image: none;
     box-shadow: none;
@@ -4852,7 +4880,8 @@ a.list-group-item:focus {
 .list-group-item.disabled,
 .list-group-item.disabled:hover,
 .list-group-item.disabled:focus {
-    color: #999;
+    color: #777;
+    cursor: not-allowed;
     background-color: #eee;
 }
 .list-group-item.disabled .list-group-item-heading,
@@ -4863,7 +4892,7 @@ a.list-group-item:focus {
 .list-group-item.disabled .list-group-item-text,
 .list-group-item.disabled:hover .list-group-item-text,
 .list-group-item.disabled:focus .list-group-item-text {
-    color: #999;
+    color: #777;
 }
 .list-group-item.active,
 .list-group-item.active:hover,
@@ -4875,7 +4904,13 @@ a.list-group-item:focus {
 }
 .list-group-item.active .list-group-item-heading,
 .list-group-item.active:hover .list-group-item-heading,
-.list-group-item.active:focus .list-group-item-heading {
+.list-group-item.active:focus .list-group-item-heading,
+.list-group-item.active .list-group-item-heading > small,
+.list-group-item.active:hover .list-group-item-heading > small,
+.list-group-item.active:focus .list-group-item-heading > small,
+.list-group-item.active .list-group-item-heading > .small,
+.list-group-item.active:hover .list-group-item-heading > .small,
+.list-group-item.active:focus .list-group-item-heading > .small {
     color: inherit;
 }
 .list-group-item.active .list-group-item-text,
@@ -7552,7 +7587,7 @@ ul.formTabs:after,
     text-shadow: none;
     white-space: nowrap;
     vertical-align: baseline;
-    background-color: #999;
+    background-color: #777;
     border: none;
     border-radius: 10px;
 }
@@ -7727,11 +7762,11 @@ div.field span.required:after {
 #contentActionMenus dl.actionMenu.activated dd {
     z-index: 5;
     color: White;
-    background-color: #999;
+    background-color: #777;
 }
 #contentActionMenus dl.actionMenu.activated dd {
     right: -3px;
-    border-bottom: .5em solid #999;
+    border-bottom: .5em solid #777;
 }
 #contentActionMenus dl.actionMenu.activated dd a:hover,
 #contentActionMenus dl.actionMenu.activated dd .actionMenuSelected {
@@ -7882,11 +7917,11 @@ ul.formTabs > li > a:focus {
     background-color: #eee;
 }
 ul.formTabs > li.disabled > a {
-    color: #999;
+    color: #777;
 }
 ul.formTabs > li.disabled > a:hover,
 ul.formTabs > li.disabled > a:focus {
-    color: #999;
+    color: #777;
     text-decoration: none;
     cursor: not-allowed;
     background-color: transparent;
@@ -8300,7 +8335,7 @@ input[type="url"]::-moz-placeholder,
 input[type="search"]::-moz-placeholder,
 input[type="tel"]::-moz-placeholder,
 input[type="color"]::-moz-placeholder {
-    color: #999;
+    color: #777;
     opacity: 1;
 }
 select:-ms-input-placeholder,
@@ -8319,7 +8354,7 @@ input[type="url"]:-ms-input-placeholder,
 input[type="search"]:-ms-input-placeholder,
 input[type="tel"]:-ms-input-placeholder,
 input[type="color"]:-ms-input-placeholder {
-    color: #999;
+    color: #777;
 }
 select::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder,
@@ -8337,7 +8372,7 @@ input[type="url"]::-webkit-input-placeholder,
 input[type="search"]::-webkit-input-placeholder,
 input[type="tel"]::-webkit-input-placeholder,
 input[type="color"]::-webkit-input-placeholder {
-    color: #999;
+    color: #777;
 }
 select[disabled],
 textarea[disabled],
@@ -8412,7 +8447,8 @@ textareainput[type="color"] {
 textarea {
     height: auto;
 }
-.input-sm {
+.input-sm,
+.form-horizontal .form-group-sm .form-control {
     height: 33px;
     padding: 5px 10px;
     font-size: 14px;
@@ -8427,7 +8463,8 @@ textarea.input-sm,
 select[multiple].input-sm {
     height: auto;
 }
-.input-lg {
+.input-lg,
+.form-horizontal .form-group-lg .form-control {
     height: 49px;
     padding: 10px 16px;
     font-size: 20px;
@@ -8509,7 +8546,7 @@ div.fieldTextFormat {
 }
 div.fieldTextFormat label {
     font-weight: 300;
-    color: #999;
+    color: #777;
 }
 div.fieldTextFormat select {
     width: 120px;
@@ -8523,7 +8560,7 @@ div.field xlabel {
 div.field label span.formHelp {
     display: block;
     font-weight: normal;
-    color: #999;
+    color: #777;
 }
 div.field div.label,
 div.field span.label,
@@ -8544,7 +8581,7 @@ div.field label span.formHelp {
     margin-bottom: 10px;
     font-weight: normal;
     color: #8b831a;
-    color: #999;
+    color: #777;
 }
 div.formHelp {
     display: block;
@@ -8729,7 +8766,7 @@ table.listing .top {
 }
 table.listing th {
     font-weight: 400;
-    color: #999;
+    color: #777;
     text-align: left;
     background: #eee;
     border: .1em solid #e7e7e7;
@@ -8911,7 +8948,7 @@ body > .portalMessage {
 .listingBar .disabled > a:hover,
 .listingBar .disabled > a:focus,
 .listingBar .disabled > span {
-    color: #999;
+    color: #777;
     cursor: not-allowed;
     background-color: #fff;
 }
@@ -8920,7 +8957,7 @@ body > .portalMessage {
     padding: 5px 14px;
     font-size: 11px;
     background-color: #fff;
-    border: 1px solid #999;
+    border: 1px solid #777;
     border-radius: 4px;
 }
 .listingBar a.next {
@@ -9014,7 +9051,7 @@ dd.image-caption {
 .discreet {
     font-size: 14px;
     font-weight: 1;
-    color: #999;
+    color: #777;
 }
 .text-highlight,
 .visualHighlight {
@@ -9029,9 +9066,9 @@ dd.image-caption {
     clear: right;
     line-height: 22px;
     line-height: 19px;
-    color: #999;
+    color: #777;
     background: #eee;
-    border-left: 5px solid #999;
+    border-left: 5px solid #777;
 }
 .text-callout,
 .callout {
@@ -9039,7 +9076,7 @@ dd.image-caption {
     margin: 0 0 22px;
     clear: both;
     background: #eee;
-    border-left: 5px solid #999;
+    border-left: 5px solid #777;
 }
 .morris-hover {
     position: absolute;
@@ -9157,7 +9194,7 @@ dd.image-caption {
 .app-signin-group.app-signin-group-text {
     padding: 44px 0;
     margin-top: 22px;
-    border-top: 1px dotted #999;
+    border-top: 1px dotted #777;
 }
 .app-signin-group label,
 .app-signin-group .signin-label {
@@ -9168,20 +9205,20 @@ dd.image-caption {
     padding: 22px 0 44px;
 }
 .app-signin-control.app-signin-control-bordered {
-    border-bottom: 1px dotted #999;
+    border-bottom: 1px dotted #777;
 }
 .page-aside {
     position: relative;
     padding: 44px 22px;
 }
 .page-signin {
-    color: #999;
+    color: #777;
 }
 .page-signin .documentDescription {
     margin-bottom: 22px;
 }
 .page-signin p {
-    color: #999;
+    color: #777;
 }
 .app-register {
     margin-bottom: 50px;
@@ -9193,7 +9230,7 @@ dd.image-caption {
 }
 .cbp-spmenu {
     position: fixed;
-    background: #999;
+    background: #777;
 }
 .cbp-spmenu h3 {
     padding: 22px;
@@ -9604,7 +9641,7 @@ dd.image-caption {
 .statuspanel-no-data {
     padding: 11px;
     margin: 22px 0;
-    color: #999;
+    color: #777;
     border: 1px solid #eee;
 }
 .statuspanel-no-data .no-data-sign {
@@ -9998,14 +10035,14 @@ dd.image-caption {
             box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 #mail_password #userid::-moz-placeholder {
-    color: #999;
+    color: #777;
     opacity: 1;
 }
 #mail_password #userid:-ms-input-placeholder {
-    color: #999;
+    color: #777;
 }
 #mail_password #userid::-webkit-input-placeholder {
-    color: #999;
+    color: #777;
 }
 #mail_password #userid[disabled],
 #mail_password #userid[readonly],

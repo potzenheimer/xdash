@@ -36,7 +36,17 @@
             </a>
             <h2>Report Data</h2>
         </div>
-        <code tal:content="view/build_report_ga" />
+        <pre tal:content="view/print_report" />
+
+        <div tal:define="data view/print_report">
+          <div class="app-list-entry" tal:repeat="item data">
+            <h6 tal:content="item" />
+            <code tal:content="python:data[item]" />
+          </div>
+        </div>
+
+        <code tal:content="context/report" />
+
         <h3>activeCollab</h3>
         <div tal:replace="structure view/tracking_report" />
         <h3>Xovi</h3>

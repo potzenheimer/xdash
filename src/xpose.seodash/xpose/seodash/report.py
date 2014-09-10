@@ -18,6 +18,7 @@ from xpose.seotool.ac import IACTool
 from xpose.seotool.ga import IGATool
 from xpose.seotool.xovi import IXoviTool
 
+
 from xpose.seodash import MessageFactory as _
 
 
@@ -87,18 +88,26 @@ class View(grok.View):
         context = aq_inner(self.context)
         return context.restrictedTraverse('@@report-tracking')()
 
-    def project_id(self):
+    def project_info(self):
         context = aq_inner(self.context)
         parent = aq_parent(context)
+        from xpose.seodash.dashboard import IDashboard
         if IDashboard.providedBy(parent):
             container = parent
         else:
             container = aq_parent(parent)
-        return getattr(container, 'ga_id')
+        return getattr(container, 'projects')
 
     def build_report_ga(self):
         tool = getUtility(IGATool)
-        data = tool.get()
+        projects = self.project_info()
+        project = projects[0]
+        pid = project['ga']
+        data = tool.get(profile_id=pid)
+        return data
+
+    def print_report(self):
+        data = self.build_report_ga()
         return data
 
     def filter_tracking(self):

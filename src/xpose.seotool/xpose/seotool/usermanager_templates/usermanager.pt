@@ -42,7 +42,7 @@
                                     <p tal:define="code info/dashboard;
                                                    dashboard python:view.compute_dashboard(code)">
                                         Dashboard:
-                                        <span tal:content="dashboard/Title" />
+                                        <span tal:content="dashboard/title" />
                                         <a tal:attributes="href dashboard/absolute_url">
                                             show
                                         </a>

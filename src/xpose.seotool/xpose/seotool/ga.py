@@ -87,11 +87,18 @@ class GATool(grok.GlobalUtility):
         return service
 
     def get_results(self, service, profile_id):
+        timerange = self.get_month_timerange()
+        start = timerange['first'].strftime('%Y-%m-%d')
+        end = timerange['last'].strftime('%Y-%m-%d')
         query = service.data().ga().get(
             ids='ga:' + profile_id,
-            start_date='2012-03-03',
-            end_date='2012-03-03',
-            metrics='ga:sessions')
+            # start_date=start,
+            start_date='2013-01-01',
+            end_date=end,
+            metrics=','.join(self.report_metrics()),
+            prettyPrint=True,
+            output='dataTable'
+        )
         feed = query.execute()
         return feed
 
@@ -129,7 +136,22 @@ class GATool(grok.GlobalUtility):
         today = datetime.datetime.today()
         info = {}
         first_current = datetime.datetime(today.year, today.month, 1)
-        last = first_current - datetime.datime.timedelta(days=1)
+        last = first_current - datetime.timedelta(days=1)
         info['first'] = datetime.datetime(last.year, last.month, 1)
         info['last'] = last
         return info
+
+    def report_metrics(self):
+        metrics = (
+            u'ga:sessions',
+            u'ga:bounces',
+            u'ga:sessionDuration',
+            u'ga:pageviews',
+            u'ga:hits',
+            u'ga:organicSearches',
+            u'ga:percentNewSessions',
+            u'ga:pageviewsPerSession',
+            u'ga:avgTimeOnPage',
+            u'ga:exitRate'
+        )
+        return metrics
