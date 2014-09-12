@@ -10,12 +10,35 @@
 }
 
 .app-list-item-subtitle {
-    background: @app-gray-light;
+    background: @app-gray;
     color: #fff;
+}
+
+.app-list-item-headline {
+  color: @app-gray;
 }
 
 .app-list-billable {
     color: @app-primary;
     font-weight: 600;
     font-size: @font-size-base * 1.5;
+}
+
+// Report list-style
+.report-list-item {
+  .make-row();
+  margin-bottom: ceil((@line-height-computed / 2));
+  border-bottom: 1px solid @app-gray-light;
+}
+
+.report-list-item-time {
+  .make-sm-column(3);
+}
+.report-list-item-meta {
+  .make-sm-column(6);
+}
+.report-list-item-actions {
+  .make-sm-column(3);
+  padding: @line-height-computed 0;
+  text-align: right;
 }

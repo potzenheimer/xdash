@@ -67,8 +67,9 @@
 
     <div class="container app-page-content" id="content-core">
 
-    <tal:projects tal:condition="view/has_projects">
-        <tal:block tal:condition="not:view/show_projectlist">
+    <tal:projects tal:condition="view/has_reports">
+        <tal:block tal:condition="not:view/show_projectlist"
+            tal:content="nothing">
             <div tal:define="item view/active_project;
                              item_uid item/UID"
                 tal:condition="python:view.has_reports(item_uid)">

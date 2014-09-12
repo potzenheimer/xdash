@@ -1,19 +1,20 @@
-from Acquisition import aq_inner
+# -*- coding: utf-8 -*-
+"""Module providing user dashboard content type and functionality"""
+
 from AccessControl import Unauthorized
+from Acquisition import aq_inner
+from Products.CMFPlone.utils import safe_unicode
 from five import grok
 from plone import api
-
-from zope import schema
-from zope.component import getMultiAdapter
-
+from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Container
 from plone.directives import form
+from plone.event.utils import pydt
+from plone.keyring import django_random
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
-
-from plone.keyring import django_random
-from Products.CMFPlone.utils import safe_unicode
-from plone.app.uuid.utils import uuidToObject
+from zope import schema
+from zope.component import getMultiAdapter
 
 from xpose.seodash.project import IProject
 from xpose.seodash.report import IReport
@@ -56,10 +57,17 @@ class View(grok.View):
     def update(self):
         self.has_projects = len(self.projects()) > 0
         self.show_projectlist = len(self.projects()) > 1
+        self.has_reports = len(self.reports()) > 0
 
-    def has_reports(self, uuid):
-        container = api.content.get(UID=uuid)
-        return len(container.items()) > 0
+    def reports(self):
+        context = aq_inner(self.context)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IReport.__identifier__,
+                        path=dict(query='/'.join(context.getPhysicalPath()),
+                                  depth=2),
+                        sort_on='modified',
+                        sort_order='reverse')
+        return items
 
     def get_latest_report(self, uuid):
         item = uuidToObject(uuid)
@@ -113,6 +121,17 @@ class Reports(grok.View):
                         sort_on='modified',
                         sort_order='reverse')
         return items
+
+    def timestamp(self, uid):
+        item = api.content.get(UID=uid)
+        date = item.created()
+        date = pydt(date)
+        timestamp = {}
+        timestamp['day'] = date.strftime("%d")
+        timestamp['month'] = date.strftime("%m")
+        timestamp['year'] = date.strftime("%Y")
+        timestamp['date'] = date
+        return timestamp
 
     def can_edit(self):
         context = aq_inner(self.context)

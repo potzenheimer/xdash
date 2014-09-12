@@ -1,0 +1,27 @@
+{
+  "id": "55bd5bd2-f372-4ad1-9ac3-5d5a465cf5c3",
+  "timestamp": 1410547898,
+  "_runtime": 0.0000059604644775390625,
+  "created": "2014-07-16T13:45:55+02:00",
+  "items": [
+    {
+        "uid": "ee59700d028a4a2aa0818c2a25474add",
+        "date": "2014-09-11T00:00:00",
+        "created": "2014-07-16T13:45:55+02:00",
+        "id": "builtLinks"
+        "title": "Aufgebaute Links",
+        "summary": "<p>Folgende Tabbelle enthält aufgebaute Links und Landing Pages</p>",
+        "data": {
+          "cols": [
+            {u'dataType': u'INTEGER', u'columnType': u'METRIC', u'name': u'ga:sessions'},
+            {u'dataType': u'INTEGER', u'columnType': u'METRIC', u'name': u'ga:bounces'},
+            {u'dataType': u'TIME', u'columnType': u'METRIC', u'name': u'ga:sessionDuration'}, {u'dataType': u'INTEGER', u'columnType': u'METRIC', u'name': u'ga:pageviews'}
+          ],
+          "rows": [
+            {u'c': [{u'v': u'3414'}, {u'v': u'1795'}, {u'v': u'503866.0'}, {u'v': u'10920'}, {u'v': u'11565'}, {u'v': u'1184'}, {u'v': u'72.40773286467487'}, {u'v': u'3.1985940246045694'}, {u'v': u'67.02607770090474'}, {u'v': u'31.17216117216117'}]}], u'cols': [{u'type': u'number', u'id': u'ga:sessions', u'label': u'ga:sessions'}, {u'type': u'number', u'id': u'ga:bounces', u'label': u'ga:bounces'}, {u'type': u'number', u'id': u'ga:sessionDuration', u'label': u'ga:sessionDuration'}, {u'type': u'number', u'id': u'ga:pageviews', u'label': u'ga:pageviews'}, {u'type': u'number', u'id': u'ga:hits', u'label': u'ga:hits'}, {u'type': u'number', u'id': u'ga:organicSearches', u'label': u'ga:organicSearches'}, {u'type': u'number', u'id': u'ga:percentNewSessions', u'label': u'ga:percentNewSessions'}, {u'type': u'number', u'id': u'ga:pageviewsPerSession', u'label': u'ga:pageviewsPerSession'}, {u'type': u'number', u'id': u'ga:avgTimeOnPage', u'label': u'ga:avgTimeOnPage'}, {u'type': u'number', u'id': u'ga:exitRate', u'label': u'ga:exitRate'}
+          ]
+        }
+
+    }
+  ]
+}
