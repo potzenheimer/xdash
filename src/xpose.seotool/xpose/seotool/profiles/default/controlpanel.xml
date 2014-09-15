@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<object
+    name="portal_controlpanel"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="xpose.seotool"
+    purge="False">
+
+    <configlet
+        title="Xdash Reporting Tool"
+        action_id="xdash-reporting-tool"
+        appId="xdash.reportingtool"
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@xdash-reporting-tool-settings"
+        visible="True"
+        i18n:attributes="title">
+            <permission>Manage portal</permission>
+    </configlet>
+
+</object>
