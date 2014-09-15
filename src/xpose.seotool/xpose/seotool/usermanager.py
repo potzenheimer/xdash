@@ -40,7 +40,7 @@ class UserManager(grok.View):
         return info
 
     def compute_dashboard(self, uuid):
-        dashboard = uuidToObject(uuid)
+        dashboard = api.content.get(UID=uuid)
         return dashboard
 
 
@@ -53,7 +53,9 @@ class UserPermissionManager(grok.View):
         self.user_id = self.request.get('user', None)
         context = aq_inner(self.context)
         self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit', 'form.button.Clear')
+        unwanted = ('_authenticator',
+                    'form.button.Submit',
+                    'form.button.Clear')
         required = ('panel')
         if 'form.button.Clear' in self.request:
             authenticator = getMultiAdapter((context, self.request),

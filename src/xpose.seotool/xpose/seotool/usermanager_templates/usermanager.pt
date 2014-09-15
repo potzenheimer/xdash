@@ -39,14 +39,16 @@
                             </div>
                             <div class="col-xs-12 col-sm-4">
                                 <div tal:condition="info/dashboard">
-                                    <p tal:define="code info/dashboard;
+                                    <div tal:define="code info/dashboard;
                                                    dashboard python:view.compute_dashboard(code)">
-                                        Dashboard:
-                                        <span tal:content="dashboard/title" />
-                                        <a tal:attributes="href dashboard/absolute_url">
-                                            show
-                                        </a>
-                                    </p>
+                                        <p tal:condition="dashboard">
+                                            Dashboard:
+                                            <span tal:content="dashboard/Title" />
+                                            <a tal:attributes="href dashboard/absolute_url">
+                                                show
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
                                 <p tal:condition="not:info/dashboard" class="text-warning">
                                     No access granted

@@ -9998,6 +9998,9 @@ dd.image-caption {
     color: #333;
     border-color: #333;
 }
+.app-page-content {
+    padding-top: 22px;
+}
 .app-footer {
     padding: 22px 0;
     margin-top: 22px;

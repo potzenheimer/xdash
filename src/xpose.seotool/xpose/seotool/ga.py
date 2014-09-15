@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Module providing google analytics api access"""
 import json
 import os
 import socket
