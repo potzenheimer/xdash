@@ -15,6 +15,7 @@ dist
 .codeintel
 .installed.cfg
 .mr.developer.cfg
+known-good-versions.cfg
 var
 .hg
 .bzr
