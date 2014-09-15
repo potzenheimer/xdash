@@ -1,0 +1,37 @@
+<div class="app-report app-report-tracking"
+    i18n:domain="xdash.boards">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" i18n:translate="">
+                Dezember 2013
+            </h3>
+        </div>
+        <tal:block tal:condition="context/report_ac">
+            <div class="list-group">
+                <tal:item tal:repeat="item view/metrics">
+                    <div class="list-group-item">
+                        <span class="pull-right app-list-billable"><span tal:replace="item/value" />h</span>
+                        <div class="h5"
+                            tal:define="timestamp item/record_date;
+                                        actor item/user">
+                            <span tal:content="timestamp/formatted_date" />
+                            <small tal:content="actor/display_name" />
+                        </div>
+                        <p tal:content="item/summary" />
+                    </div>
+                </tal:item>
+            </div>
+        </tal:block>
+    </div>
+    <div tal:condition="not:context/report_ac">
+        <div class="statuspanel-no-data statuspanel-no-data-lg">
+            <div class="no-data-sign">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <h2 i18n:translate="">
+                No tracking information available
+            </h2>
+        </div>
+    </div>
+</div>
+

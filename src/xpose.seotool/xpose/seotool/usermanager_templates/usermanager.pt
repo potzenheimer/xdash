@@ -48,6 +48,12 @@
                                                 show
                                             </a>
                                         </p>
+                                        <p tal:condition="not:dashboard">
+                                            Dashboard can not be computed
+                                            <a tal:attributes="href context/absolute_url">
+                                                fix this issue now
+                                            </a>
+                                        </p>
                                     </div>
                                 </div>
                                 <p tal:condition="not:info/dashboard" class="text-warning">

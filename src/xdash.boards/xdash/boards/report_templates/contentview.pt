@@ -1,0 +1,11 @@
+<div class="container app-page-content"
+    i18n:translate="xdash.boards">
+    <div class="page-header">
+        <h2>Tätigkeitsübersicht</h2>
+    </div>
+    <p class="lead" i18n:translate="">
+        Diese Tabelle gibt eine Übersicht über die erledigten Aufgaben des Monats Dezember mit jeweiliger Bearbeitungszeit.
+    </p>
+    <div tal:replace="structure view/tracking_report" />
+</div>
+

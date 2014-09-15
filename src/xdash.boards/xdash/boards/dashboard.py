@@ -20,8 +20,7 @@ from string import Template
 from zope import schema
 from zope.lifecycleevent import modified
 
-from xpose.seodash.project import IProject
-from xpose.seodash.report import IReport
+from xdash.boards.report import IReport
 
 from xpose.seodash import MessageFactory as _
 
@@ -59,8 +58,6 @@ class View(grok.View):
     grok.name('view')
 
     def update(self):
-        self.has_projects = len(self.projects()) > 0
-        self.show_projectlist = len(self.projects()) > 1
         self.has_reports = len(self.reports()) > 0
 
     def reports(self):
@@ -84,18 +81,6 @@ class View(grok.View):
     def render_report(self, uuid):
         item = uuidToObject(uuid)
         return item.restrictedTraverse('@@content-view')()
-
-    def active_project(self):
-        return self.projects()[0]
-
-    def projects(self):
-        context = aq_inner(self.context)
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IProject.__identifier__,
-                        path=dict(query='/'.join(context.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
-        return items
 
     def can_edit(self):
         context = aq_inner(self.context)

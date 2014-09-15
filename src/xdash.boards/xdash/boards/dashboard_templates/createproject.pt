@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xdash.boards">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="container">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Add new project</h1>
+        </div>
+        <p class="lead app-page-lead" i18n:translate="">
+            Each dashboard can hold one or more projects. Most of the time one
+            project should be enough to make the reporting tool usable.
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+        <form class="app-form" method="post" role="form"
+            tal:attributes="action request/URL">
+            <h4 i18n:translate="">
+                Project name or title
+            </h4>
+            <p class="text-muted" i18n:translate="">
+                Normally this would be either a single domain name or an internal
+                project id
+            </p>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group field"
+                        tal:define="error errors/title | nothing;
+                                    err_msg python:error and error['active'] == True;
+                                    value request/title | nothing"
+                        tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
+                        <label class="sr-only" for="title" i18n:translate="">Title</label>
+                            <input class="form-control"
+                                id="title"
+                                type="text"
+                                name="title"
+                                placeholder="Please enter title"
+                                tal:attributes="value python:error and view.default_value(error) or value" />
+                            <div class="help-block error"
+                                tal:condition="err_msg">
+                              <i class="fa fa-exclamation-triangle"></i>
+                              <span tal:replace="python:error['msg']" />
+                            </div>
+                    </div><!-- /title field -->
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                        <span tal:replace="structure context/@@authenticator/authenticator"/>
+                        <button class="btn btn-primary"
+                            name="form.button.Submit"
+                            id="form.button.Submit"
+                            i18n:translate="">Create project</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

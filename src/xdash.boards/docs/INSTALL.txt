@@ -1,0 +1,17 @@
+xdash.boards Installation
+--------------------------
+
+To install xdash.boards using zc.buildout and the plone.recipe.zope2instance
+recipe to manage your project, you can do this:
+
+* Add ``xdash.boards`` to the list of eggs to install, e.g.:
+
+    [buildout]
+    ...
+    eggs =
+        ...
+        xdash.boards
+
+* Re-run buildout, e.g. with:
+
+    $ ./bin/buildout

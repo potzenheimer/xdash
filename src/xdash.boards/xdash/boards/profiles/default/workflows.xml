@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_workflow">
+  <object name="xdash_boards_workflow" meta_type="Workflow" />
+  <bindings>
+    <type type_id="xdash.boards.dashboard">
+      <bound-workflow workflow_id="xdash_boards_workflow" />
+    </type>
+  </bindings>
+</object>

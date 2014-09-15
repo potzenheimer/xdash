@@ -1,0 +1,11 @@
+{
+  "id": ${id},
+  "uid": ${uid},
+  "timestamp": ${timestamp},
+  "_runtime": 0.0000059604644775390625,
+  "created": ${created},
+  "dashboard": ${dashboard},
+  "project": {},
+  "items": [
+  ]
+}

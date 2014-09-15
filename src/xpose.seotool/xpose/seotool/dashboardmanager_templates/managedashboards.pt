@@ -58,14 +58,16 @@
                                     <h4 tal:content="project/title" />
                                 </div>
                                 <div class="col-xs-12 col-sm-4">
-                                    <a class="btn btn-link pull-right"
+                                    <a class="btn btn-link btn-danger pull-right"
                                       data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
                                       tal:attributes="data-target string:#cbp-spmenu-p${idx} ;
                                                       href string:${context/absolute_url}/edit-dashboard/${request/uuid}/delete/${idx}">
                                         delete
                                     </a>
-                                    <button type="button" class="btn btn-link pull-right"
-                                        data-toggle="collapse" data-target="#demo"
+                                    <button type="button" class="btn btn-primary pull-right"
+                                        data-toggle="collapse"
+                                        data-toggle="button"
+                                        data-target="#demo"
                                         tal:attributes="data-target string:#app-form-${idx}">
                                         edit
                                     </button>

@@ -1,6 +1,4 @@
-import os
 import json
-from string import Template
 from datetime import datetime
 from Acquisition import aq_inner
 from Acquisition import aq_parent
@@ -16,12 +14,12 @@ from plone.dexterity.content import Container
 from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
 
-from xpose.seotool.ac import IACTool
-from xpose.seotool.ga import IGATool
-from xpose.seotool.xovi import IXoviTool
+from xdash.seotool.ac import IACTool
+from xdash.seotool.ga import IGATool
+from xdash.seotool.xovi import IXoviTool
 
 
-from xpose.seodash import MessageFactory as _
+from xdash.boards import MessageFactory as _
 
 
 # Interface class; used to define content-type schema.
@@ -93,7 +91,7 @@ class View(grok.View):
     def project_info(self):
         context = aq_inner(self.context)
         parent = aq_parent(context)
-        from xpose.seodash.dashboard import IDashboard
+        from xdash.boards.dashboard import IDashboard
         if IDashboard.providedBy(parent):
             container = parent
         else:
@@ -160,18 +158,6 @@ class RequestReport(grok.View):
         self.clean_ac_record()
         return self.request.response.redirect(next_url)
 
-    def get_report_template(name, data=dict()):
-        template_file = os.path.join(os.path.dirname(__file__),
-                                     'report.json')
-        template = Template(open(template_file).read())
-        template_vars = {
-            'id': user_id,
-            'email': user.getProperty('email'),
-            'fullname': user.getProperty('fullname'),
-            'url': url
-        }
-        return template.substitute(template_vars)
-
     def clean_ac_record(self):
         context = aq_inner(self.context)
         data = getattr(context, 'report_ac')
@@ -215,7 +201,7 @@ class RequestReport(grok.View):
                 service=u'seo',
                 method=u'getKeywords',
                 sengine=u'google.de',
-                domain=u'xpose414.de',
+                domain=u'xdash414.de',
             )
             report['getKeywords'] = kws
             daily_kws = tool.get(
@@ -227,7 +213,7 @@ class RequestReport(grok.View):
                 service=u'seo',
                 method=u'getLostKeywords',
                 sengineid=u'1',
-                domain=u'xpose414.de',
+                domain=u'xdash414.de',
             )
             report['getLostKeywords'] = lost_kws
         data = json.dumps(report)

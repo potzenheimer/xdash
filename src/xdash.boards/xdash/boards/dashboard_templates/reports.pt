@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xdash.boards">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="container">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Reports</h1>
+        </div>
+        <p class="lead app-page-lead">
+            Hier finden Sie alle verfügbaren und archivierten Berichte
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+
+        <div class="report-list" tal:condition="view/has_reports">
+            <div class="report-list-item" tal:repeat="item view/reports">
+                <div class="report-list-item-time"
+                    tal:define="item_uid item/UID;
+                                ts python:view.timestamp(item_uid)">
+                    <span class="fa-stack fa-3x text-gray">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <strong class="fa-stack-1x fa-inverse timestamp-text"
+                             tal:content="ts/month">08</strong>
+                    </span>
+                    <span class="h2" tal:content="ts/year">2014</span>
+                </div>
+                <div class="report-list-item-meta">
+                    <h3><a class="app-list-item-headline"
+                        tal:attributes="href item/getURL" tal:content="item/Title" />
+                    </h3>
+                </div>
+                <div class="report-list-item-actions">
+                    <a class="btn btn-default btn-lg"
+                        tal:attributes="href string:${item/getURL}">
+                        <i class="fa fa-chevron-right fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

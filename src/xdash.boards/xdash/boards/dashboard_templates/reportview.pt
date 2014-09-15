@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xdash.boards">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="container">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1 i18n:translate="">Report</h1>
+        </div>
+        <p class="lead app-page-lead" i18n:translate="">
+           A single report - this is the data rendering context and might take
+           a bit of computing time
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+
+        <tal:block tal:define="data view/report_data">
+            <pre tal:content="data" />
+        </tal:block>
+
+    </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

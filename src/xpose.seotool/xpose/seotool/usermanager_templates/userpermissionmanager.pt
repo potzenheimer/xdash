@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-xs-12 col-md-6">
                     <div class="form-group">
-                        <input class="form-control" type="text"
+                        <input class="form-control" type="hidden"
                             id="user"
                             name="user"
                             placeholder="Panel UID"
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </form>
-    </div>    
+    </div>
     </div>
   </metal:content-core>
 </metal:main>

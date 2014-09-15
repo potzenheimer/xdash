@@ -29,3 +29,4 @@ src/vwc.*
 src/sauna.reload
 src/watchdog
 fabfile.py
+settings.json

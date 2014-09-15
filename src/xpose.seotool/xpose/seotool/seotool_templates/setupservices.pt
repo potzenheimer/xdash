@@ -9,9 +9,10 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
+
     <div class="app-page-header">
         <div class="app-page-title" i18n:translate="">
-            Services
+            <h1>Services</h1>
         </div>
         <p class="lead app-page-lead" i18n:translate="">
             Setup and configure external services that provide data via

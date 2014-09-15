@@ -9,9 +9,9 @@ from plone.keyring import django_random
 from plone.dexterity.content import Container
 from Products.CMFPlone.utils import safe_unicode
 
-from xpose.seodash.dashboard import IDashboard
+from xdash.boards.dashboard import IDashboard
 
-from xpose.seodash import MessageFactory as _
+from xdash.boards import MessageFactory as _
 
 
 class IDashboardFolder(form.Schema):
@@ -84,15 +84,18 @@ class CreateDashboard(grok.View):
     def _create_dashboard(self, data):
         context = aq_inner(self.context)
         new_title = data['title']
-        token = django_random.get_random_string(length=24)
+        token = django_random.get_random_string(length=12)
         item = api.content.create(
-            container=context,
-            type='xpose.seodash.dashboard',
-            id=token,
+            type='xdash.boards.dashboard',
             title=new_title,
+            container=context,
             safe_id=True
         )
         uuid = api.content.get_uuid(obj=item)
-        portal_url = api.portal.get().absolute_url()
-        next_url = portal_url + '/adm/@@manage-dashboards?uuid=' + uuid
+        #item_id = item.getId()
+        #api.content.rename(obj=context[item_id],
+        #                   new_id=uuid)
+        url = context.absolute_url()
+        base_url = url + '/@@setup-workspace?uuid=' + uuid
+        next_url = base_url + '&token=' + token
         return self.request.response.redirect(next_url)
