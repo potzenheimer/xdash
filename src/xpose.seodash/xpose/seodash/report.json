@@ -1,11 +1,49 @@
 {
-  "id": ${id},
-  "uid": ${uid},
-  "timestamp": ${timestamp},
-  "_runtime": 0.0000059604644775390625,
-  "created": ${created},
-  "dashboard": ${dashboard},
-  "project": {},
+  "id": "${id}",
+  "uid": "${uid}",
+  "timestamp": "${timestamp}",
+  "_runtime": "0.0000059604644775390625",
+  "created": "${created}",
+  "dashboard": "${dashboard}",
+  "project": ${project},
   "items": [
+    {"uid": "${xd-1-uid}",
+     "kind": "builtLinks",
+     "title": "Build Links",
+     "description": "This data table containes build links including the corresponding landing pages",
+     "columnHeaders": [
+        {u'dataType': u'TIME', u'columnType': u'METRIC', u'name': u'xd:date'},
+        {u'dataType': u'STRING', u'columnType': u'METRIC', u'name': u'xd:sourceURI'},
+        {u'dataType': u'STRING', u'columnType': u'METRIC', u'name': u'xd:targetURI'},
+        {u'dataType': u'STRING', u'columnType': u'METRIC', u'name': u'xd:linkText'},
+      ],
+      "dataTable": {
+        u'cols': [
+          {u'type': u'string', u'id': u'xd:linkSourceURI', u'label': u'Link Source URI'},
+          {u'type': u'string', u'id': u'xd:linkTargetURI', u'label': u'Link Target URI'},
+          {u'type': u'string', u'id': u'xd:linkText', u'label': u'Link Text'},
+          {u'type': u'string', u'id': u'xd:linkDate', u'label': u'Link Date'},
+        ],
+        u'rows': [{}]},
+    },
+    {"uid": "${xd-2-uid}",
+     "kind": "tracking",
+     "title": "Task tracking report",
+     "description": "This data table shows a list of tasks along with the execution date and person responsible at the time",
+     "columnHeaders": [
+        {u'dataType': u'TIME', u'columnType': u'METRIC', u'name': u'xd:trackingDate'},
+        {u'dataType': u'STRING', u'columnType': u'METRIC', u'name': u'xd:trackingUserId'},
+        {u'dataType': u'STRING', u'columnType': u'METRIC', u'name': u'xd:trackingSummary'},
+        {u'dataType': u'INTEGER', u'columnType': u'METRIC', u'name': u'xd:trackingValue'},
+      ],
+      "dataTable": {
+        u'cols': [
+          {u'type': u'date', u'id': u'xd:trackingDate', u'label': u'Tracking Date'},
+          {u'type': u'string', u'id': u'xd:trackingUserId', u'label': u'Tracking User ID'},
+          {u'type': u'string', u'id': u'xd:trackingSummary', u'label': u'Summary'},
+          {u'type': u'number', u'id': u'xd:trackingValue', u'label': u'Hours'},
+        ],
+        u'rows': [{}]},
+    },
   ]
 }

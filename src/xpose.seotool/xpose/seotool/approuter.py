@@ -57,6 +57,33 @@ class FrontPageView(grok.View):
         return portal.hasObject('adm')
 
 
+class ReportView(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('report')
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def report(self):
+        uuid = self.traverse_subpath[0]
+        return api.content.get(UID=uuid)
+
+    def report_data(self):
+        data = {}
+        if self.report():
+            item = self.report()
+            data = getattr(item, 'report')
+        return data
+
+
 class SetupSeoTool(grok.View):
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')

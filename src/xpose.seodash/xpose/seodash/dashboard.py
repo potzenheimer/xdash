@@ -193,8 +193,19 @@ class AddReport(grok.View):
         timestamp['year'] = date.strftime("%Y")
         return timestamp
 
+    def project_info(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        from xpose.seodash.dashboard import IDashboard
+        if IDashboard.providedBy(parent):
+            container = parent
+        else:
+            container = aq_parent(parent)
+        return getattr(context, 'projects')
+
     def _create_report(self):
         context = aq_inner(self.context)
+        project_list = getattr(context, 'projects')
         date = datetime.datetime.now()
         token = django_random.get_random_string(length=24)
         item = api.content.create(
@@ -215,6 +226,7 @@ class AddReport(grok.View):
             'timestamp': int(time.time()),
             'created': datetime.datetime.now(),
             'dashboard': api.content.get_uuid(obj=context),
+            'project': project_list[0],
         }
         report = template.substitute(template_vars)
         setattr(item, 'report', report)

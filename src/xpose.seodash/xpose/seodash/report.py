@@ -137,6 +137,18 @@ class ContentView(grok.View):
         return data
 
 
+class LinkBuilding(grok.View):
+    grok.context(IReport)
+    grok.require('zope2.View')
+    grok.name('report-linkbuilding')
+
+    def report(self):
+        context = aq_inner(self.context)
+        data = getattr(context, 'report')
+        report = json.loads(data)
+        return data
+
+
 class Tracking(grok.View):
     grok.context(IReport)
     grok.require('zope2.View')
