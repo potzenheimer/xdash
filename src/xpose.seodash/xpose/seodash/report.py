@@ -145,6 +145,7 @@ class LinkBuilding(grok.View):
     def report(self):
         context = aq_inner(self.context)
         data = getattr(context, 'report')
+        import pdb; pdb.set_trace()
         report = json.loads(data)
         return data
 

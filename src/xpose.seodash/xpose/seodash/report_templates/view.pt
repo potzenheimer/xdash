@@ -36,6 +36,10 @@
             </a>
             <h2>Report Data</h2>
         </div>
+
+        <pre tal:content="context/report" />
+
+        <h3>GA dynamic query</h3>
         <pre tal:content="view/print_report" />
 
         <div tal:define="data view/print_report">
@@ -44,8 +48,6 @@
             <code tal:content="python:data[item]" />
           </div>
         </div>
-
-        <code tal:content="context/report" />
 
         <h3>activeCollab</h3>
         <div tal:replace="structure view/tracking_report" />

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module providing user dashboard content type and functionality"""
 
+import json
 import datetime
 import os
 import time
@@ -193,16 +194,6 @@ class AddReport(grok.View):
         timestamp['year'] = date.strftime("%Y")
         return timestamp
 
-    def project_info(self):
-        context = aq_inner(self.context)
-        parent = aq_parent(context)
-        from xpose.seodash.dashboard import IDashboard
-        if IDashboard.providedBy(parent):
-            container = parent
-        else:
-            container = aq_parent(parent)
-        return getattr(context, 'projects')
-
     def _create_report(self):
         context = aq_inner(self.context)
         project_list = getattr(context, 'projects')
@@ -226,10 +217,13 @@ class AddReport(grok.View):
             'timestamp': int(time.time()),
             'created': datetime.datetime.now(),
             'dashboard': api.content.get_uuid(obj=context),
-            'project': project_list[0],
+            'project': json.dumps(project_list[0]),
+            'xd1uid': uuid_tool.uuid4(),
+            'xd2uid': uuid_tool.uuid4()
         }
         report = template.substitute(template_vars)
-        setattr(item, 'report', report)
+        tmpl = report.replace('\n', '')
+        setattr(item, 'report', tmpl)
         modified(item)
         item.reindexObject(idxs='modified')
         return uuid
