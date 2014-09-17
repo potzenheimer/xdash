@@ -9743,6 +9743,72 @@ dd.image-caption {
         width: 25%;
     }
 }
+/*
+ * Callouts
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+/* Common styles for all types */
+.app-callout {
+    padding: 22px;
+    margin: 22px 0;
+    border-left: 6px solid #eee;
+}
+.app-callout h4 {
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+.app-callout p:last-child {
+    margin-bottom: 0;
+}
+.app-callout code {
+    background-color: #fff;
+}
+.app-callout-default {
+    color: #201e06;
+    background-color: #eee;
+    border-color: #777;
+}
+.app-callout-default hr {
+    border-top-color: #6a6a6a;
+}
+.app-callout-default .alert-link {
+    color: #000;
+}
+.app-callout-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.app-callout-success hr {
+    border-top-color: #c9e2b3;
+}
+.app-callout-success .alert-link {
+    color: #2b542c;
+}
+.app-callout-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.app-callout-danger hr {
+    border-top-color: #e4b9c0;
+}
+.app-callout-danger .alert-link {
+    color: #843534;
+}
+.app-callout-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.app-callout-warning hr {
+    border-top-color: #f7e1b5;
+}
+.app-callout-warning .alert-link {
+    color: #66512c;
+}
 .app-container,
 .app-pusher {
     height: 100%;
@@ -10002,7 +10068,7 @@ dd.image-caption {
     padding-top: 22px;
 }
 .report-metric {
-    margin: 22px;
+    margin: 22px 0 100px;
 }
 .report-metric-title {
     padding-bottom: 10px;

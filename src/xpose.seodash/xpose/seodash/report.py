@@ -6,6 +6,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from zope import schema
+from plone import api
 
 from plone.indexer import indexer
 from zope.component import getUtility
@@ -85,6 +86,14 @@ class View(grok.View):
     grok.context(IReport)
     grok.require('zope2.View')
     grok.name('view')
+
+    def report(self):
+        context = aq_inner(self.context)
+        report = getattr(context, 'report', None)
+        data = dict()
+        if report is not None:
+            data = json.loads(report)
+        return data
 
     def tracking_report(self):
         context = aq_inner(self.context)
@@ -169,20 +178,61 @@ class RequestReport(grok.View):
     def render(self):
         context = aq_inner(self.context)
         next_url = context.absolute_url()
-        self.clean_ac_record()
+        self.postprocess_ac_record()
         return self.request.response.redirect(next_url)
 
-    def get_report_template(name, data=dict()):
-        template_file = os.path.join(os.path.dirname(__file__),
-                                     'report.json')
-        template = Template(open(template_file).read())
-        template_vars = {
-            'id': user_id,
-            'email': user.getProperty('email'),
-            'fullname': user.getProperty('fullname'),
-            'url': url
-        }
-        return template.substitute(template_vars)
+    def project_info(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        from xpose.seodash.dashboard import IDashboard
+        if IDashboard.providedBy(parent):
+            container = parent
+        else:
+            container = aq_parent(parent)
+        return getattr(container, 'projects')
+
+    def report(self):
+        context = aq_inner(self.context)
+        data = []
+        stored_report = getattr(context, 'report', None)
+        if stored_report is not None:
+            report = json.loads(stored_report)
+            metrics = report['items']
+        return metrics
+
+    def postprocess_ac_record(self):
+        context = aq_inner(self.context)
+        report = self.report()
+        ac_data = getattr(context, 'report_ac')
+        ac_report = json.loads(ac_data)
+        metric = report[1]
+        table = metric['dataTable']
+        rows = table['rows']
+        for entry in ac_report[:50]:
+            time_rec = entry['record_date']['mysql']
+            time_comps = time_rec.split('-')
+            entry_date = '{0}.{1}.{2}'.format(time_comps[2],
+                                              time_comps[1],
+                                              time_comps[0])
+            new_row = {
+                'xd:trackingDate': entry_date,
+                'xd:trackingUserId': entry['user']['display_name'],
+                'xd:trackingSummary': entry['summary'],
+                'xd:trackingValue': entry['value']
+            }
+            rows.append(new_row)
+        table['rows'] = rows
+        metric['dataTable'] = table
+        stored = getattr(context, 'report')
+        data = json.loads(stored)
+        items = data['items']
+        items[1] = metric
+        setattr(context, 'report', json.dumps(data))
+        modified(context)
+        context.reindexObject(idxs='modified')
+        msg = _(u"Built links data table was successfully updated")
+        api.portal.show_message(msg, self.request)
+        return msg
 
     def clean_ac_record(self):
         context = aq_inner(self.context)
@@ -193,18 +243,20 @@ class RequestReport(grok.View):
         return as_json
 
     def _build_report_ga(self):
-        context = aq_inner(self.context)
         tool = getUtility(IGATool)
         data = tool.get()
         return data
 
     def _build_report_ac(self):
         context = aq_inner(self.context)
-        project_id = '2'
+        projects = self.project_info()
+        project = projects[0]
+        project_id = project['ac']
         pinfo = u'projects/{0}/tracking'.format(project_id)
         tool = getUtility(IACTool)
         data = tool.make_request(path_info=pinfo)
-        setattr(context, 'report_ac', data)
+        as_json = json.dumps(data)
+        setattr(context, 'report_ac', as_json)
         modified(context)
         context.reindexObject(idxs='modified')
         return data
@@ -243,7 +295,7 @@ class RequestReport(grok.View):
             )
             report['getLostKeywords'] = lost_kws
         data = json.dumps(report)
-        setattr(context, 'report_xovi', data)
+        setattr(context, 'report_xovi', json.dumps(data))
         modified(context)
         context.reindexObject(idxs='modified')
         return report

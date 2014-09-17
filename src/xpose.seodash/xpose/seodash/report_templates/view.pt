@@ -14,6 +14,7 @@
         tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
         <div class="app-page-title" tal:define="timestamp context/modified">
             <h1>Report
+                <small tal:content="context/Title" />
                 <small tal:define="timestamp python:context.modified().ISO()" class="text-discreet">
                   <span i18n:translate="">Last changed:</span>
                   <span tal:attributes="data-livestamp timestamp"
@@ -21,10 +22,11 @@
                 </small>
             </h1>
         </div>
-        <p class="lead" i18n:translate="">
-            This is a single report available for projects. The latest report will
-            always show in the project dashboard. Further details are available
-            on subsequent requests.
+        <p class="app-page-lead lead"
+          tal:define="timestamp python:context.modified().ISO()">
+          <span i18n:translate="">Last changed:</span>
+          <span tal:attributes="data-livestamp timestamp"
+            tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
         </p>
     </div>
 
@@ -37,23 +39,65 @@
             <h2>Report Data</h2>
         </div>
 
+      <div class="report" tal:define="report view/report;
+                                      items python:report['items']">
+        <div class="report-metric" tal:repeat="item items">
+          <div class="report-metric-header">
+            <h2 class="report-metric-title">
+              <span tal:replace="item/title" />
+              <small tal:content="item/uid" />
+            </h2>
+            <p class="report-metric-lead"
+              tal:content="item/description" />
+          </div>
+          <div class="report-metric-content"
+            tal:define="metric item/dataTable;
+                        rows metric/rows;
+                        row_content python:len(rows)">
+            <table class="table table-bordered metric-table"
+              tal:condition="row_content">
+              <thead class="metric-table-head" tal:define="cols metric/cols">
+                <tr class="metric-table-row metric-table-row-primary">
+                  <tal:block tal:repeat="col cols">
+                    <th tal:attributes="class string:metric-table-cell-head metric-table-cell-head-primary;
+                                        id string:table-cell-${col/id}"
+                      tal:content="col/label"
+                      i18n:translate="" />
+                  </tal:block>
+                </tr>
+              </thead>
+              <tbody class="metric-table-body"
+                tal:define="cols metric/cols;
+                            rows metric/rows">
+                  <tr tal:repeat="row rows">
+                    <tal:items tal:repeat="col cols">
+                      <td tal:define="col_id col/id">
+                        <span tal:replace="python:row[col_id]" />
+                      </td>
+                    </tal:items>
+                  </tr>
+              </tbody>
+            </table>
+            <div class="app-callout app-callout-warning" tal:condition="not:row_content">
+              <h4>Bericht nicht verfügbar</h4>
+              <p>Dieser Bericht ist im Augenblick nicht verfügbar. Dies könnte bedeuten, dass
+                der Bericht noch nicht generiert wurde, oder keine aktuellen Daten vorliegen.
+            </div>
+          </div>
+        </div>
+      </div>
+
         <pre tal:content="context/report" />
 
         <h3>GA dynamic query</h3>
         <pre tal:content="view/print_report" />
 
-        <div tal:define="data view/print_report">
-          <div class="app-list-entry" tal:repeat="item data">
-            <h6 tal:content="item" />
-            <code tal:content="python:data[item]" />
-          </div>
-        </div>
 
         <h3>activeCollab</h3>
-        <div tal:replace="structure view/tracking_report" />
+        <!--<div tal:replace="structure view/tracking_report" />-->
         <h3>Xovi</h3>
-        <pre tal:condition="context/report_xovi"
-            tal:content="context/report_xovi" />
+        <!--<pre tal:condition="context/report_xovi"
+            tal:content="context/report_xovi" />-->
 
     </div>
 
