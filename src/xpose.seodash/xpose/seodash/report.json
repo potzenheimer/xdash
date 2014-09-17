@@ -11,14 +11,14 @@
       "id": "xd-1",
       "uid": "${xd1uid}",
       "kind": "builtLinks",
-      "title": "Build Links",
+      "title": "Built Links",
       "description": "This data table containes build links including the corresponding landing pages",
       "dataTable": {
         "cols": [
+          {"type": "string", "id": "xd:linkDate", "label": "Link Date"},
           {"type": "string", "id": "xd:linkSourceURI", "label": "Link Source URI"},
           {"type": "string", "id": "xd:linkTargetURI", "label": "Link Target URI"},
-          {"type": "string", "id": "xd:linkText", "label": "Link Text"},
-          {"type": "string", "id": "xd:linkDate", "label": "Link Date"}
+          {"type": "string", "id": "xd:linkText", "label": "Link Text"}
         ],
         "rows": []
       }

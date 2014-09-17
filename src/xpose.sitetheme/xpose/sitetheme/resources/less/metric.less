@@ -1,0 +1,41 @@
+//
+// Metric sections and data tables
+// --------------------------------------
+
+.report-metric {
+  margin: @line-height-computed;
+}
+
+.report-metric-title {
+  .page-header();
+}
+
+.report-metric-lead {
+  .lead();
+}
+
+// Metric data table
+// Note: should probably move to a dedicated component file
+.metric-table {
+  .table();
+  .table-bordered();
+}
+
+.metric-table-head {
+  color: #fff;
+  background: @app-primary;
+}
+
+.metric-table > thead > tr > th,
+.metric-table-cell-head {
+  padding: ceil((@line-height-computed / 2));
+  font-weight: 300;
+  font-size: @font-size-large;
+}
+
+.metric-table-row-actions {
+  background: @state-warning-bg;
+  > td {
+    padding: @line-height-computed 0;
+  }
+}

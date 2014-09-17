@@ -1,12 +1,21 @@
+# -*- coding: utf-8 -*-
+"""Module for report management"""
+
 import json
+
+from AccessControl import Unauthorized
 from Acquisition import aq_inner
+from Products.CMFPlone.utils import safe_unicode
 from five import grok
 from plone import api
-
 from plone.keyring import django_random
+from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
 from xpose.seodash.dashboard import IDashboard
+from xpose.seodash.report import IReport
+
+from xpose.seotool import MessageFactory as _
 
 
 class ReportManager(grok.View):
@@ -121,3 +130,68 @@ class ReportManager(grok.View):
         )
         uuid = api.content.get_uuid(obj=item)
         return uuid
+
+
+class LinkBuilding(grok.View):
+    grok.context(IReport)
+    grok.require('zope2.View')
+    grok.name('report-editor-links')
+
+    def update(self):
+        self.has_report = len(self.report()) > 0
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._update_report_data(form_data)
+
+    def report(self):
+        context = aq_inner(self.context)
+        data = []
+        stored_report = getattr(context, 'report', None)
+        if stored_report is not None:
+            report = json.loads(stored_report)
+            metrics = report['items']
+            data = metrics[0]
+        return data
+
+    def _update_report_data(self, data):
+        context = aq_inner(self.context)
+        metric = self.report()
+        new_row = {
+            'xd:linkDate': data['lb-date'],
+            'xd:linkSourceURI': data['lb-source'],
+            'xd:linkTargetURI': data['lb-target'],
+            'xd:linkText': data['lb-text']
+        }
+        table = metric['dataTable']
+        rows = table['rows']
+        rows.append(new_row)
+        table['rows'] = rows
+        metric['dataTable'] = table
+        stored = getattr(context, 'report')
+        data = json.loads(stored)
+        items = data['items']
+        items[0] = metric
+        setattr(context, 'report', json.dumps(data))
+        modified(context)
+        context.reindexObject(idxs='modified')
+        msg = _(u"Built links data table was successfully updated")
+        api.portal.show_message(msg, self.request)
+        portal_url = api.portal.get().absolute_url()
+        url = '{0}/adm/'.format(portal_url)
+        return self.request.response.redirect(url)

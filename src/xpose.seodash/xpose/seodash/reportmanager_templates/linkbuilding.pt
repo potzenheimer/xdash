@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="app-page-header">
+        <div class="app-page-title">
+            <h1>Built Links
+                <small tal:content="context/Title">http://example.tld</small>
+            </h1>
+        </div>
+        <p class="app-page-abstract" i18n:translate="">
+            Update data table on linkebuilding results
+        </p>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+      <tal:report tal:condition="view/has_report">
+        <div class="page-header">
+            <h2>Existing Report</h2>
+        </div>
+        <div class="report-metric" tal:define="data view/report">
+          <div class="report-metric-header">
+            <h2 class="report-metric-title">
+              <span tal:replace="data/title" />
+              <small tal:content="data/uid" />
+            </h2>
+            <p class="report-metric-lead"
+              tal:content="data/description" />
+          </div>
+          <table class="table table-bordered metric-table"
+            tal:define="metric data/dataTable">
+            <thead class="metric-table-head" tal:define="cols metric/cols">
+              <tr class="metric-table-row metric-table-row-primary">
+                <tal:block tal:repeat="col cols">
+                  <th tal:attributes="class string:metric-table-cell-head metric-table-cell-head-primary;
+                                      id string:table-cell-${col/id}"
+                    tal:content="col/label"
+                    i18n:translate="" />
+                </tal:block>
+                  <th class="metric-table-col metric-table-col-editable">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody class="metric-table-body"
+              tal:define="cols metric/cols;
+                          rows metric/rows">
+                <tr tal:repeat="row rows">
+                  <tal:items tal:repeat="col cols">
+                    <td tal:define="col_id col/id">
+                      <span tal:replace="python:row[col_id]" />
+                    </td>
+                  </tal:items>
+                  <td class="metric-table-col metric-table-col-editable">
+                    <a class="btn btn-danger">
+                      <i class="fa fa-times"></i>
+                    </a>
+                  </td>
+                </tr>
+            </tbody>
+            <form class="app-form form-inline" method="post" role="form"
+                tal:attributes="action request/URL">
+            <tr class="metric-table-row metric-table-row-actions">
+              <td>
+              <div class="form-group">
+                <label class="sr-only" for="lb-date">Date</label>
+                <input type="date" class="form-control" id="lb-date" name="lb-date" placeholder="Enter date">
+              </div>
+              </td><td>
+              <div class="form-group">
+                <label class="sr-only" for="lb-source">Link Source</label>
+                  <input class="form-control" type="text" id="lb-source" name="lb-source" placeholder="Enter link source">
+              </div>
+            </td><td>
+              <div class="form-group">
+                <label class="sr-only" for="lb-target">Link Target</label>
+                  <input class="form-control" type="text" id="lb-target" name="lb-target" placeholder="Enter link target">
+              </div>
+            </td><td>
+              <div class="form-group">
+                <label class="sr-only" for="lb-date">Link text</label>
+                <input type="text" class="form-control" id="lb-text" name="lb-text" placeholder="Enter link text">
+              </div>
+            </td><td>
+              <div class="form-group">
+                  <span tal:replace="structure context/@@authenticator/authenticator"/>
+                  <button class="btn btn-primary"
+                      name="form.button.Submit"
+                      id="form.button.Submit"
+                      i18n:translate="">Add row</button>
+              </div>
+            </td>
+          </tr>
+            </form>
+          </table>
+        </div>
+      </tal:report>
+
+      <div class="report-metric">
+        <tal:error tal:condition="not:view/has_report">
+          <div class="alert alert-warning">
+            There are no rows on linkbuilding available yet. You can add the
+            first data below.
+          </div>
+        </tal:error>
+      </div>
+    </div>
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>

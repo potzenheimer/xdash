@@ -10001,6 +10001,88 @@ dd.image-caption {
 .app-page-content {
     padding-top: 22px;
 }
+.report-metric {
+    margin: 22px;
+}
+.report-metric-title {
+    padding-bottom: 10px;
+    margin: 44px 0 22px;
+    border-bottom: 1px solid #eee;
+}
+.report-metric-lead {
+    margin-bottom: 22px;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.4;
+}
+@media (min-width: 768px) {
+    .report-metric-lead {
+        font-size: 24px;
+    }
+}
+.metric-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 22px;
+    border: 1px solid #ddd;
+}
+.metric-table > thead > tr > th,
+.metric-table > tbody > tr > th,
+.metric-table > tfoot > tr > th,
+.metric-table > thead > tr > td,
+.metric-table > tbody > tr > td,
+.metric-table > tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.metric-table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+.metric-table > caption + thead > tr:first-child > th,
+.metric-table > colgroup + thead > tr:first-child > th,
+.metric-table > thead:first-child > tr:first-child > th,
+.metric-table > caption + thead > tr:first-child > td,
+.metric-table > colgroup + thead > tr:first-child > td,
+.metric-table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+}
+.metric-table > tbody + tbody {
+    border-top: 2px solid #ddd;
+}
+.metric-table .table {
+    background-color: #fff;
+}
+.metric-table > thead > tr > th,
+.metric-table > tbody > tr > th,
+.metric-table > tfoot > tr > th,
+.metric-table > thead > tr > td,
+.metric-table > tbody > tr > td,
+.metric-table > tfoot > tr > td {
+    border: 1px solid #ddd;
+}
+.metric-table > thead > tr > th,
+.metric-table > thead > tr > td {
+    border-bottom-width: 2px;
+}
+.metric-table-head {
+    color: #fff;
+    background: #8ec05e;
+}
+.metric-table > thead > tr > th,
+.metric-table-cell-head {
+    padding: 11px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.metric-table-row-actions {
+    background: #fcf8e3;
+}
+.metric-table-row-actions > td {
+    padding: 22px 0;
+}
 .app-footer {
     padding: 22px 0;
     margin-top: 22px;
