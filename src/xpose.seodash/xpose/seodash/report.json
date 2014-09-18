@@ -10,6 +10,22 @@
     {
       "id": "xd-1",
       "uid": "${xd1uid}",
+      "kind": "tracking",
+      "title": "Tracking report",
+      "description": "This data table shows a list of tasks along with the execution date and person responsible at the time",
+      "dataTable": {
+        "cols": [
+          {"type": "date", "id":   "xd:trackingDate", "label": "Tracking Date"},
+          {"type": "string", "id": "xd:trackingUserId", "label": "Tracking User ID"},
+          {"type": "string", "id": "xd:trackingSummary", "label": "Summary"},
+          {"type": "number", "id": "xd:trackingValue", "label": "Hours"}
+        ],
+        "rows": []
+      }
+    },
+    {
+      "id": "xd-2",
+      "uid": "${xd2uid}",
       "kind": "builtLinks",
       "title": "Built Links",
       "description": "This data table containes build links including the corresponding landing pages",
@@ -24,17 +40,17 @@
       }
     },
     {
-      "id": "xd-2",
-      "uid": "${xd2uid}",
-      "kind": "tracking",
-      "title": "Tracking report",
-      "description": "This data table shows a list of tasks along with the execution date and person responsible at the time",
+      "id": "xd-3",
+      "uid": "${xd3uid}",
+      "kind": "seoTraffic",
+      "title": "SEO Traffic",
+      "description": "This data table shows relevant metrics built from Google Analytics data.",
       "dataTable": {
         "cols": [
-          {"type": "date", "id":   "xd:trackingDate", "label": "Tracking Date"},
-          {"type": "string", "id": "xd:trackingUserId", "label": "Tracking User ID"},
-          {"type": "string", "id": "xd:trackingSummary", "label": "Summary"},
-          {"type": "number", "id": "xd:trackingValue", "label": "Hours"}
+          {"type": "string", "id": "xd:linkDate", "label": "Link Date"},
+          {"type": "string", "id": "xd:linkSourceURI", "label": "Link Source URI"},
+          {"type": "string", "id": "xd:linkTargetURI", "label": "Link Target URI"},
+          {"type": "string", "id": "xd:linkText", "label": "Link Text"}
         ],
         "rows": []
       }

@@ -219,7 +219,8 @@ class AddReport(grok.View):
             'dashboard': api.content.get_uuid(obj=context),
             'project': json.dumps(project_list[0]),
             'xd1uid': uuid_tool.uuid4(),
-            'xd2uid': uuid_tool.uuid4()
+            'xd2uid': uuid_tool.uuid4(),
+            'xd3uid': uuid_tool.uuid4()
         }
         report = template.substitute(template_vars)
         tmpl = report.replace('\n', '')

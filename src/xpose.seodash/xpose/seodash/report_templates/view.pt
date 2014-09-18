@@ -72,7 +72,8 @@
                   <tr tal:repeat="row rows">
                     <tal:items tal:repeat="col cols">
                       <td tal:define="col_id col/id">
-                        <span tal:replace="python:row[col_id]" />
+                        <!--<span tal:replace="python:row[col_id]" /> -->
+                        <span tal:content="row" />
                       </td>
                     </tal:items>
                   </tr>

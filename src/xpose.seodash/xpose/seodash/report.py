@@ -1,7 +1,6 @@
-import os
+# -*- coding: utf-8 -*-
+"""Module providing report content type setup and funcitonality"""
 import json
-from string import Template
-from datetime import datetime
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
@@ -122,9 +121,10 @@ class View(grok.View):
         return data
 
     def filter_tracking(self):
-        context = aq_inner(self.context)
-        metrics = getattr(context, 'report_ac')
-        timeframe = datetime.datetime.utcnow().replace(day=1) - datetime.timedelta(days=1)
+        # context = aq_inner(self.context)
+        # metrics = getattr(context, 'report_ac')
+        # timeframe = (datetime.datetime.utcnow().replace(day=1) -
+        #     datetime.timedelta(days=1))
         data = {}
         return data
 
@@ -139,9 +139,10 @@ class ContentView(grok.View):
         return context.restrictedTraverse('@@report-tracking')()
 
     def filter_tracking(self):
-        context = aq_inner(self.context)
-        metrics = getattr(context, 'report_ac')
-        timeframe = datetime.datetime.utcnow().replace(day=1) - datetime.timedelta(days=1)
+        # context = aq_inner(self.context)
+        # metrics = getattr(context, 'report_ac')
+        # timeframe = (datetime.datetime.utcnow().replace(day=1) -
+        #    datetime.timedelta(days=1))
         data = {}
         return data
 
@@ -155,7 +156,7 @@ class LinkBuilding(grok.View):
         context = aq_inner(self.context)
         data = getattr(context, 'report')
         report = json.loads(data)
-        return data
+        return report
 
 
 class Tracking(grok.View):
@@ -178,7 +179,7 @@ class RequestReport(grok.View):
     def render(self):
         context = aq_inner(self.context)
         next_url = context.absolute_url()
-        self.postprocess_ac_record()
+        self.ga_record()
         return self.request.response.redirect(next_url)
 
     def project_info(self):
@@ -199,6 +200,20 @@ class RequestReport(grok.View):
             report = json.loads(stored_report)
             metrics = report['items']
         return metrics
+
+    def _build_report_ac(self):
+        context = aq_inner(self.context)
+        projects = self.project_info()
+        project = projects[0]
+        project_id = project['ac']
+        pinfo = u'projects/{0}/tracking'.format(project_id)
+        tool = getUtility(IACTool)
+        data = tool.make_request(path_info=pinfo)
+        as_json = json.dumps(data)
+        setattr(context, 'report_ac', as_json)
+        modified(context)
+        context.reindexObject(idxs='modified')
+        return data
 
     def postprocess_ac_record(self):
         context = aq_inner(self.context)
@@ -242,24 +257,31 @@ class RequestReport(grok.View):
         modified(context)
         return as_json
 
-    def _build_report_ga(self):
+    def build_report_ga(self):
         tool = getUtility(IGATool)
-        data = tool.get()
-        return data
-
-    def _build_report_ac(self):
-        context = aq_inner(self.context)
         projects = self.project_info()
         project = projects[0]
-        project_id = project['ac']
-        pinfo = u'projects/{0}/tracking'.format(project_id)
-        tool = getUtility(IACTool)
-        data = tool.make_request(path_info=pinfo)
-        as_json = json.dumps(data)
-        setattr(context, 'report_ac', as_json)
+        pid = project['ga']
+        data = tool.get(profile_id=pid)
+        return data
+
+    def ga_record(self):
+        context = aq_inner(self.context)
+        report = self.report()
+        ga_report = self.build_report_ga()
+        metric = report[2]
+        data_table = ga_report['dataTable']
+        metric['dataTable'] = data_table
+        stored = getattr(context, 'report')
+        data = json.loads(stored)
+        items = data['items']
+        items[2] = metric
+        setattr(context, 'report', json.dumps(data))
         modified(context)
         context.reindexObject(idxs='modified')
-        return data
+        msg = _(u"Built links data table was successfully updated")
+        api.portal.show_message(msg, self.request)
+        return msg
 
     def _build_report_xovi(self):
         context = aq_inner(self.context)

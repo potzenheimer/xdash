@@ -23,12 +23,31 @@ DEFAULT_SERVICE_TIMEOUT = socket.getdefaulttimeout()
 class IGATool(Interface):
     """ API call processing and session data storage """
 
+    def get_results(context):
+        """ Get results form ga api
+
+        :param service: Apiclient service authorized via oauth2client
+            credentials. The service object can be initialized once per session
+            and passed to each subsequent query.
+        :type service: service object
+
+        :param profile_id: Id of the api profile to query
+        :type profile_id: string
+
+        :param query_type: Type of query passed as medium name, e.g. referral
+            or organic search sources
+        :type query_type: string
+        """
+
 
 class GATool(grok.GlobalUtility):
     grok.provides(IGATool)
 
     def get(self, **kwargs):
-        service = self.initialize_service()
+        if 'service' in kwargs:
+            service = kwargs['service']
+        else:
+            service = self.initialize_service()
         try:
             if 'qt' in kwargs:
                 qt = kwargs['qt']
@@ -44,7 +63,9 @@ class GATool(grok.GlobalUtility):
                         webPropertyId=kwargs['property_id'])
                 return query.execute()
             else:
-                return self.get_results(service, kwargs['profile_id'])
+                return self.get_results(service,
+                                        kwargs['profile_id'],
+                                        kwargs['query_type'])
         except TypeError as error:
             # Handle errors in constructing a query.
             return 'There was an error constructing your query : {0}'.format(
@@ -88,19 +109,33 @@ class GATool(grok.GlobalUtility):
         service = build('analytics', 'v3', http=http)
         return service
 
-    def get_results(self, service, profile_id):
+    def get_results(self, service, profile_id, query_type=None):
         timerange = self.get_month_timerange()
         start = timerange['first'].strftime('%Y-%m-%d')
         end = timerange['last'].strftime('%Y-%m-%d')
-        query = service.data().ga().get(
-            ids='ga:' + profile_id,
-            # start_date=start,
-            start_date='2013-01-01',
-            end_date=end,
-            metrics=','.join(self.report_metrics()),
-            prettyPrint=True,
-            output='dataTable'
-        )
+        if query_type is None:
+            query = service.data().ga().get(
+                ids='ga:' + profile_id,
+                # start_date=start,
+                start_date='2013-01-01',
+                end_date=end,
+                metrics=','.join(self.report_metrics()),
+                prettyPrint=True,
+                output='dataTable'
+            )
+        else:
+            query = service.data().ga().get(
+                ids='ga:' + profile_id,
+                # start_date=start,
+                start_date='2013-01-01',
+                end_date=end,
+                dimensions='ga:source',
+                sort='-ga:pageviews',
+                metrics=','.join(self.report_metrics()),
+                filters='ga:medium==${0}'.format(query_type),
+                prettyPrint=True,
+                output='dataTable'
+            )
         feed = query.execute()
         return feed
 
@@ -150,6 +185,7 @@ class GATool(grok.GlobalUtility):
             u'ga:sessionDuration',
             u'ga:pageviews',
             u'ga:hits',
+            u'ga:exits',
             u'ga:organicSearches',
             u'ga:percentNewSessions',
             u'ga:pageviewsPerSession',
