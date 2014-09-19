@@ -113,7 +113,8 @@ class View(grok.View):
         projects = self.project_info()
         project = projects[0]
         pid = project['ga']
-        data = tool.get(profile_id=pid)
+        # data = tool.get(profile_id=pid, query_type='keywords')
+        data = tool.get(profile_id=pid, query_type='referral')
         return data
 
     def print_report(self):
@@ -262,7 +263,7 @@ class RequestReport(grok.View):
         projects = self.project_info()
         project = projects[0]
         pid = project['ga']
-        data = tool.get(profile_id=pid)
+        data = tool.get(profile_id=pid, query_type='keywords')
         return data
 
     def ga_record(self):

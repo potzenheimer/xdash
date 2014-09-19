@@ -65,7 +65,7 @@ class GATool(grok.GlobalUtility):
             else:
                 return self.get_results(service,
                                         kwargs['profile_id'],
-                                        kwargs['query_type'])
+                                        kwargs.get('query_type', None))
         except TypeError as error:
             # Handle errors in constructing a query.
             return 'There was an error constructing your query : {0}'.format(
@@ -123,6 +123,19 @@ class GATool(grok.GlobalUtility):
                 prettyPrint=True,
                 output='dataTable'
             )
+        if query_type is 'keywords':
+            query = service.data().ga().get(
+                ids='ga:' + profile_id,
+                # start_date=start,
+                start_date='2013-01-01',
+                end_date=end,
+                dimensions='ga:keyword',
+                sort='-ga:sessions',
+                metrics=','.join(self.report_metrics_base()),
+                filters='ga:medium==${0}'.format(query_type),
+                prettyPrint=True,
+                output='dataTable'
+            )
         else:
             query = service.data().ga().get(
                 ids='ga:' + profile_id,
@@ -131,7 +144,7 @@ class GATool(grok.GlobalUtility):
                 end_date=end,
                 dimensions='ga:source',
                 sort='-ga:pageviews',
-                metrics=','.join(self.report_metrics()),
+                metrics=','.join(self.report_metrics_base()),
                 filters='ga:medium==${0}'.format(query_type),
                 prettyPrint=True,
                 output='dataTable'
@@ -178,6 +191,18 @@ class GATool(grok.GlobalUtility):
         info['last'] = last
         return info
 
+    def report_metrics_base(self):
+        # besuche, pageviews, besuchsdauer, neue besuche, absprungrate
+        metrics = (
+            u'ga:sessions',
+            u'ga:pageviews',
+            u'ga:pageviewsPerSession',
+            u'ga:sessionDuration',
+            u'ga:percentNewSessions',
+            u'ga:exitRate'
+        )
+        return metrics
+
     def report_metrics(self):
         metrics = (
             u'ga:sessions',
@@ -185,7 +210,6 @@ class GATool(grok.GlobalUtility):
             u'ga:sessionDuration',
             u'ga:pageviews',
             u'ga:hits',
-            u'ga:exits',
             u'ga:organicSearches',
             u'ga:percentNewSessions',
             u'ga:pageviewsPerSession',
