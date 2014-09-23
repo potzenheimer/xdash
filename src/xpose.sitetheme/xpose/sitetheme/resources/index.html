@@ -1,25 +1,26 @@
 ---
-layout: default
+layout: dashboard
 title: Xposeo
 slug: getting-started
 lead: "An overview of the new diazo theme for the xposeo dashboard tool"
 base_url: "../"
 ---
 <div class="app-content-body">
-  <div class="container app-page" id="content">
-    <div class="app-page-header">
-        <div class="page-header">
-            <h1>Xposeo Dashboard</h1>
+  <div class="app-page app-page-dashboard" id="content">
+    {% include infopanel.html %}
+    <div class="container app-page-content">
+        {% include reportlist.html %}
+        <div class="app-page-aside text-center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
         </div>
-        <p class="lead">
-            This is the new default theme
-        </p>
-        <div class="page-header">
-            <h2>application listing Demo</h2>
-        </div>
-        <p>Next we will define a custom listing to provide a basic scaffolding
-            before we intergrate the example API
-        </p>
     </div>
   </div>
 </div>

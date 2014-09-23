@@ -115,7 +115,7 @@ class Reports(grok.View):
     grok.name('reports')
 
     def update(self):
-        self.has_reports = len(self.reports()) > 0
+        self.has_reports = self.report_idx() > 0
 
     def reports(self):
         context = aq_inner(self.context)
@@ -126,6 +126,9 @@ class Reports(grok.View):
                         sort_on='modified',
                         sort_order='reverse')
         return items
+
+    def report_idx(self):
+        return len(self.reports())
 
     def timestamp(self, uid):
         item = api.content.get(UID=uid)

@@ -97,6 +97,7 @@
     }
 }
 .datapanel-row {
+    .make-row();
     margin: 0;
 }
 .datapanel-item {
@@ -107,6 +108,19 @@
     text-align: right;
     &.last {
         border-right: 0 none;
+    }
+    &.datapanel-item-title {
+      padding-left: @line-height-computed;
+      text-align: left;
+      > h1 {
+        margin: 0;
+        font-weight: 300;
+      }
+    }
+    .datapanel-item-headline {
+      .h1();
+      margin: 0;
+      font-weight: 300;
     }
     .item-data {
         color: @text-color;
@@ -156,11 +170,12 @@
 
 .statuspanel-no-data-lg {
     margin: @line-height-computed;
+    border: none;
     text-align: center;
     .no-data-sign {
         .square(200px);
         margin:0 auto @line-height-computed;
-        padding:@navbar-height;
+        padding: ceil((@navbar-height * 0.75));
         border:5px solid @gray-lighter;
         border-radius:200px;
         color:@gray-lighter;

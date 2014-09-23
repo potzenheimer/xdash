@@ -1,0 +1,24 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    {% include head.html %}
+  </head>
+  <body class="app-theme-dashboard">
+    <a class="sr-only" href="#content">Skip to main content</a>
+    {% include navbar.html %}
+    <div class="app-container" id="app-container">
+       <main class="app-content" id="app-content" role="main">
+            {{ content }}
+        </main>
+    </div>
+    {% include javascript.html %}
+    <div class="app-js-slot">
+        {% include gfont.html %}
+    </div>
+
+  </body>
+</html>

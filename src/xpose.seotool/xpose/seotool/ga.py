@@ -147,7 +147,7 @@ class GATool(grok.GlobalUtility):
                 metrics=','.join(self.report_metrics_base()),
                 filters='ga:medium==${0}'.format(query_type),
                 prettyPrint=True,
-                output='dataTable'
+                # output='dataTable'
             )
         feed = query.execute()
         return feed

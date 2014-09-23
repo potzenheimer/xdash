@@ -24,9 +24,11 @@
     font-size: @font-size-base * 1.5;
 }
 
+
 // Report list-style
 .report-list-item {
   .make-row();
+  padding-top: @line-height-computed;
   margin-bottom: ceil((@line-height-computed / 2));
   border-bottom: 1px solid @app-gray-light;
 }
@@ -34,11 +36,42 @@
 .report-list-item-time {
   .make-sm-column(3);
 }
+
+// Timestamp
+.rti-time-timestamp {
+  // padding-top: @line-height-computed;
+  //margin-bottom: (@line-height-computed / 2);
+}
+
+.rli-time-month {
+  display: inline-block;
+  padding-right: ceil((@line-height-computed / 2));
+  color: @app-gray;
+  border-right: 1px solid @app-gray;
+  font-size: @font-size-h2;
+}
+
+.rli-time-year {
+  display: inline-block;
+  padding-left: ceil((@line-height-computed / 2));
+  color: @app-gray;
+  font-size: @font-size-h2;
+}
+
 .report-list-item-meta {
   .make-sm-column(6);
 }
+
+.rli-meta-title {
+  display: block;
+  color: @app-gray;
+  font-size: @font-size-h3;
+}
+
 .report-list-item-actions {
   .make-sm-column(3);
-  padding: @line-height-computed 0;
-  text-align: right;
+  font-size: @font-size-h4;
+  @media (min-width: @screen-sm) {
+    text-align: right;
+  }
 }

@@ -30,9 +30,10 @@
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
                                <link rel="shortcut icon" href="../assets/ico/favicon.png">
   </head>
-  <body class="app-theme-default">
-    <a class="sr-only" href="#content">Skip navigation</a>
+  <body class="app-theme-dashboard">
+    <a class="sr-only" href="#content">Skip to main content</a>
     <nav class="navbar navbar-inverse navbar-fixed-top app-navbar" id="app-navbar" role="navigation">
+<div class="container-fluid">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="sr-only">Toggle navigation</span>
@@ -40,10 +41,13 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand navbar-right app-navbar-brand" href="/">xpose360</a>
+    <a class="navbar-brand app-navbar-brand" href="/">
+      <span class="hidden">xpose360</span>
+      xdash.io
+    </a>
   </div>
-  <div class="collapse navbar-collapse navbar-ex1-collapse" id="app-navbar-nav">
-        <ul class="nav navbar-nav pull-right">
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-right" id="app-navbar-nav">
           <li id="plone-personal-actions" class="dropdown dropdown-userinfo">
             <a data-toggle="dropdown" class="dropdown-toggle" href="/author/123456789">
               <span>John Doe</span>
@@ -63,78 +67,147 @@
               </li>
             </ul></li>
         </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Help</a></li>
-    </ul>
   </div><!-- /.navbar-collapse -->
+</div>
 </nav>
 
-    <div class="app-container app-effect-4" id="app-container">
-        <div class="app-aside app-effect-4">
-            <div class="app-aside-close">
-                <a class="closeMenu app-aside-toggle-close" id="closeMenu" href="#app-container">
-                    <i class="fa fa-times-circle-o"></i>
-                </a>
-            </div>
-            <div id="app-sidebar" class="app-sidebar">
-    <h3 class="app-nav-heading app-sidebar-heading">
-        <a href="http://localhost:8499/plonesite">
-            Seodash
-        </a>
-    </h3>
-    <div class="app-sidebar-content dim-in dim-in-1">
-        <div class="app-sidebar-block">
-            <h4>zope-admin</h4>
-            <p><a href="http://localhost:8499/plonesite/logout"><small>
-                <i class="fa fa-sign-out"></i>abmelden</small></a></p>
+    <div class="app-container" id="app-container">
+       <main class="app-content" id="app-content" role="main">
+            <div class="app-content-body">
+  <div class="app-page app-page-dashboard" id="content">
+    <div class="datapanel" id="main-stats">
+    <div class="row datapanel-row">
+        <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+            <h1>Meine Berichte</h1>
         </div>
-        <ul class="nav ws-nav bs-docs-sidenav app-sidebar-nav">
-            <li><a href="#css" class="nav-header">Administration</a></li>
-            <li class="active"><a href="#css-overview">Services</a></li>
-            <li><a href="#css-overview">Dashboards</a></li>
-            <li><a href="#grid">Settings</a></li>
-            <li><a href="#grid">Latest Activity</a></li>
-        </ul>
+        <div class="col-md-3 col-sm-3 datapanel-item">
+            <div class="item-data">
+                <span class="numberic">12</span>
+                Berichte
+            </div>
+            <span class="item-date">letztes Update: February 2013</span>
+        </div>
     </div>
 </div>
-        </div>
-        <div class="app-pusher">
-            <div class="app-aside-actionbar">
-                <div class="app-aside-toggle-wrapper" id="app-menu-trigger">
-                    <a class="btn btn-link app-aside-toggle-open" href="#app-container">
-                        <i class="fa fa-list"></i>
-                    </a>
-                    <!--<button class="btn btn-link app-aside-toggle" data-effect="app-effect-4">
-                        <i class="fa fa-list"></i>
-                    </button>-->
-                </div>
-                <!-- <a class="app-aside-toggle closeMenu" id="closeMenu" href="#app-container">
-                    <i class="fa fa-list"></i>
-                    <i class="fa fa-chevron-right"></i>
-                </a>-->
+    <div class="container app-page-content">
+        <div class="report-list">
+    <div class="report-list-item">
+        <div class="report-list-item-time">
+            <div class="rti-time-timestamp">
+                <span class="rli-time-month">09</span>
+                <span class="rli-time-year">2014</span>
             </div>
-            <main class="app-content app-content-dashboard" id="app-content" role="main">
-                <div class="app-content-body">
-  <div class="container app-page" id="content">
-    <div class="app-page-header">
-        <div class="page-header">
-            <h1>Xposeo Dashboard</h1>
         </div>
-        <p class="lead">
-            This is the new default theme
-        </p>
-        <div class="page-header">
-            <h2>application listing Demo</h2>
+        <div class="report-list-item-meta">
+            <a class="rli-meta-title" href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                <span class="rli-meta-projectname">xpose414.de</span>
+                <span class="label label-default">Neu</span>
+            </a>
         </div>
-        <p>Next we will define a custom listing to provide a basic scaffolding
-            before we intergrate the example API
-        </p>
+        <div class="report-list-item-actions">
+            <a class="rli-actions-primary"
+                href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                Bericht
+                <i class="fa fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <div class="report-list-item">
+        <div class="report-list-item-time">
+            <div class="rti-time-timestamp">
+                <span class="rli-time-month">08</span>
+                <span class="rli-time-year">2014</span>
+            </div>
+        </div>
+        <div class="report-list-item-meta">
+            <a class="rli-meta-title" href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                <span class="rli-meta-projectname">xpose414.de</span>
+            </a>
+        </div>
+        <div class="report-list-item-actions">
+            <a class="rli-actions-primary"
+                href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                Bericht
+                <i class="fa fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <div class="report-list-item">
+        <div class="report-list-item-time">
+            <div class="rti-time-timestamp">
+                <span class="rli-time-month">07</span>
+                <span class="rli-time-year">2014</span>
+            </div>
+        </div>
+        <div class="report-list-item-meta">
+            <a class="rli-meta-title" href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                <span class="rli-meta-projectname">xpose414.de</span>
+            </a>
+        </div>
+        <div class="report-list-item-actions">
+            <a class="rli-actions-primary"
+                href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                Bericht
+                <i class="fa fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <div class="report-list-item">
+        <div class="report-list-item-time">
+            <div class="rti-time-timestamp">
+                <span class="rli-time-month">06</span>
+                <span class="rli-time-year">2014</span>
+            </div>
+        </div>
+        <div class="report-list-item-meta">
+            <a class="rli-meta-title" href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                <span class="rli-meta-projectname">xpose414.de</span>
+            </a>
+        </div>
+        <div class="report-list-item-actions">
+            <a class="rli-actions-primary"
+                href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                Bericht
+                <i class="fa fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <div class="report-list-item">
+        <div class="report-list-item-time">
+            <div class="rti-time-timestamp">
+                <span class="rli-time-month">05</span>
+                <span class="rli-time-year">2014</span>
+            </div>
+        </div>
+        <div class="report-list-item-meta">
+            <a class="rli-meta-title" href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                <span class="rli-meta-projectname">xpose414.de</span>
+            </a>
+        </div>
+        <div class="report-list-item-actions">
+            <a class="rli-actions-primary"
+                href="http://localhost:8499/xpose/xd/xpose-1/hnzsis04lvhekvnp80iovlvg">
+                Bericht
+                <i class="fa fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+    </div>
+</div>
+        <div class="app-page-aside text-center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
     </div>
   </div>
 </div>
-            </main>
-        </div>
+        </main>
     </div>
     <!-- Bootstrap core JavaScript
 ================================================== -->

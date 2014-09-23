@@ -10,25 +10,27 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
 
-   <div class="container app-page-header"
+    <div class="app-page-header datapanel"
         tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-        <div class="app-page-title" tal:define="timestamp context/modified">
-            <h1>Report
-                <small tal:content="context/Title" />
-                <small tal:define="timestamp python:context.modified().ISO()" class="text-discreet">
-                  <span i18n:translate="">Last changed:</span>
-                  <span tal:attributes="data-livestamp timestamp"
-                    tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
-                </small>
-            </h1>
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1 tal:content="context/Title">Meine Berichte</h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic">{{number}}}</span>
+                    Berichte
+                </div>
+                <span class="item-date"
+                    tal:define="timestamp python:context.modified().ISO()">
+                    letztes Update:
+                    <span tal:attributes="data-livestamp timestamp"
+                        tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
+                </span>
+            </div>
         </div>
-        <p class="app-page-lead lead"
-          tal:define="timestamp python:context.modified().ISO()">
-          <span i18n:translate="">Last changed:</span>
-          <span tal:attributes="data-livestamp timestamp"
-            tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
-        </p>
     </div>
+
 
     <div class="container app-page-content" id="content-core">
         <div class="page-header">
@@ -40,8 +42,7 @@
         </div>
 
       <div class="report" tal:define="report view/report;
-                                      items python:report['items']"
-                                      tal:content="nothing">
+                                      items python:report['items']">
         <div class="report-metric" tal:repeat="item items">
           <div class="report-metric-header">
             <h2 class="report-metric-title">

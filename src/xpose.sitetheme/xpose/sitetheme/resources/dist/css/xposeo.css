@@ -3801,7 +3801,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
     position: relative;
-    min-height: 50px;
+    min-height: 75px;
     margin-bottom: 22px;
     border: 1px solid transparent;
 }
@@ -3909,8 +3909,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
     float: left;
-    height: 50px;
-    padding: 14px 15px;
+    height: 75px;
+    padding: 26.5px 15px;
     font-size: 20px;
     line-height: 22px;
 }
@@ -3928,9 +3928,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     position: relative;
     float: right;
     padding: 9px 10px;
-    margin-top: 8px;
+    margin-top: 20.5px;
     margin-right: 15px;
-    margin-bottom: 8px;
+    margin-bottom: 20.5px;
     background-color: transparent;
     background-image: none;
     border: 1px solid transparent;
@@ -3954,7 +3954,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     }
 }
 .navbar-nav {
-    margin: 7px -15px;
+    margin: 13.25px -15px;
 }
 .navbar-nav > li > a {
     padding-top: 10px;
@@ -3992,8 +3992,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
         float: left;
     }
     .navbar-nav > li > a {
-        padding-top: 14px;
-        padding-bottom: 14px;
+        padding-top: 26.5px;
+        padding-bottom: 26.5px;
     }
     .navbar-nav.navbar-right:last-child {
         margin-right: -15px;
@@ -4011,9 +4011,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-form {
     padding: 10px 15px;
-    margin-top: 7px;
+    margin-top: 19.5px;
     margin-right: -15px;
-    margin-bottom: 7px;
+    margin-bottom: 19.5px;
     margin-left: -15px;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
@@ -4097,20 +4097,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-bottom-left-radius: 0;
 }
 .navbar-btn {
-    margin-top: 7px;
-    margin-bottom: 7px;
+    margin-top: 19.5px;
+    margin-bottom: 19.5px;
 }
 .navbar-btn.btn-sm {
-    margin-top: 8.5px;
-    margin-bottom: 8.5px;
+    margin-top: 21px;
+    margin-bottom: 21px;
 }
 .navbar-btn.btn-xs {
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin-top: 26.5px;
+    margin-bottom: 26.5px;
 }
 .navbar-text {
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin-top: 26.5px;
+    margin-bottom: 26.5px;
 }
 @media (min-width: 768px) {
     .navbar-text {
@@ -5954,6 +5954,8 @@ ul.formTabs:before,
 ul.formTabs:after,
 .listingBar:before,
 .listingBar:after,
+.datapanel-row:before,
+.datapanel-row:after,
 .report-list-item:before,
 .report-list-item:after {
     display: table;
@@ -5976,6 +5978,7 @@ ul.formTabs:after,
 .modal-footer:after,
 ul.formTabs:after,
 .listingBar:after,
+.datapanel-row:after,
 .report-list-item:after {
     clear: both;
 }
@@ -8915,7 +8918,7 @@ dl.portalMessage.error .alert-link {
     color: #843534;
 }
 body > .portalMessage {
-    padding-top: 61px;
+    padding-top: 86px;
 }
 .listingBar {
     padding-left: 0;
@@ -9175,7 +9178,7 @@ dd.image-caption {
     background: #5a5f64;
 }
 .app-signin {
-    margin-top: 100px;
+    margin-top: 150px;
     border-radius: 0;
 }
 .app-signin-header {
@@ -9224,7 +9227,7 @@ dd.image-caption {
     color: #777;
 }
 .app-register {
-    margin-bottom: 50px;
+    margin-bottom: 75px;
     border-bottom: 5px solid #637b2d;
 }
 .app-signin-actions,
@@ -9263,11 +9266,11 @@ dd.image-caption {
 .cbp-spmenu-vertical {
     top: 0;
     z-index: 1000;
-    width: 375px;
+    width: 563px;
     height: 100%;
 }
 .userrole-authenticated .cbp-spmenu-vertical {
-    top: 50px;
+    top: 75px;
 }
 .cbp-spmenu-vertical a {
     padding: 1em;
@@ -9308,7 +9311,7 @@ dd.image-caption {
     left: -240px;
 }
 .cbp-spmenu-right {
-    right: -375px;
+    right: -563px;
 }
 .cbp-spmenu-left.cbp-spmenu-open {
     left: 0;
@@ -9609,6 +9612,8 @@ dd.image-caption {
 }
 .datapanel-row {
     margin: 0;
+    margin-right: -15px;
+    margin-left: -15px;
 }
 .datapanel-item {
     position: relative;
@@ -9619,6 +9624,35 @@ dd.image-caption {
 }
 .datapanel-item.last {
     border-right: 0 none;
+}
+.datapanel-item.datapanel-item-title {
+    padding-left: 22px;
+    text-align: left;
+}
+.datapanel-item.datapanel-item-title > h1 {
+    margin: 0;
+    font-weight: 300;
+}
+.datapanel-item .datapanel-item-headline {
+    margin: 0;
+    margin-top: 22px;
+    margin-bottom: 11px;
+    font-family: inherit;
+    font-size: 41px;
+    font-weight: 500;
+    font-weight: 300;
+    line-height: 1.1;
+    color: inherit;
+}
+.datapanel-item .datapanel-item-headline small,
+.datapanel-item .datapanel-item-headline .small {
+    font-weight: normal;
+    line-height: 1;
+    color: #777;
+}
+.datapanel-item .datapanel-item-headline small,
+.datapanel-item .datapanel-item-headline .small {
+    font-size: 65%;
 }
 .datapanel-item .item-data {
     padding-right: 50px;
@@ -9649,15 +9683,15 @@ dd.image-caption {
 }
 .statuspanel-no-data .no-data-sign {
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     padding: 11px;
     margin: 0 22px;
     line-height: 1;
     color: #eee;
     text-align: center;
     border: 5px solid #eee;
-    border-radius: 25px;
+    border-radius: 37px;
 }
 .statuspanel-no-data .no-data-title {
     margin-top: 11px;
@@ -9665,11 +9699,12 @@ dd.image-caption {
 .statuspanel-no-data-lg {
     margin: 22px;
     text-align: center;
+    border: none;
 }
 .statuspanel-no-data-lg .no-data-sign {
     width: 200px;
     height: 200px;
-    padding: 50px;
+    padding: 57px;
     margin: 0 auto 22px;
     font-size: 92px;
     line-height: 1;
@@ -9680,7 +9715,7 @@ dd.image-caption {
 }
 @media (min-width: 768px) {
     .statuspanel-no-data-lg {
-        margin: 50px 125px;
+        margin: 75px 188px;
     }
 }
 .app-list-item-title {
@@ -9700,6 +9735,7 @@ dd.image-caption {
     color: #8ec05e;
 }
 .report-list-item {
+    padding-top: 22px;
     margin-right: -15px;
     margin-bottom: 11px;
     margin-left: -15px;
@@ -9717,6 +9753,19 @@ dd.image-caption {
         width: 25%;
     }
 }
+.rli-time-month {
+    display: inline-block;
+    padding-right: 11px;
+    font-size: 34px;
+    color: #5a5f64;
+    border-right: 1px solid #5a5f64;
+}
+.rli-time-year {
+    display: inline-block;
+    padding-left: 11px;
+    font-size: 34px;
+    color: #5a5f64;
+}
 .report-list-item-meta {
     position: relative;
     min-height: 1px;
@@ -9729,18 +9778,27 @@ dd.image-caption {
         width: 50%;
     }
 }
+.rli-meta-title {
+    display: block;
+    font-size: 28px;
+    color: #5a5f64;
+}
 .report-list-item-actions {
     position: relative;
     min-height: 1px;
-    padding: 22px 0;
     padding-right: 15px;
     padding-left: 15px;
-    text-align: right;
+    font-size: 20px;
 }
 @media (min-width: 768px) {
     .report-list-item-actions {
         float: left;
         width: 25%;
+    }
+}
+@media (min-width: 768px) {
+    .report-list-item-actions {
+        text-align: right;
     }
 }
 /*
@@ -9848,7 +9906,7 @@ dd.image-caption {
     top: 0;
     left: 0;
     z-index: 100;
-    width: 250px;
+    width: 375px;
     height: 100%;
     visibility: hidden;
     background: #e3e4e5;
@@ -9938,9 +9996,9 @@ dd.image-caption {
     top: 0;
     bottom: 0;
     display: block;
-    width: 50px;
+    width: 75px;
     height: 100%;
-    padding-top: 72px;
+    padding-top: 97px;
     overflow-y: scroll;
     text-shadow: 0 1px 0 #fff;
     background-color: #e3e4e5;
@@ -9963,7 +10021,7 @@ dd.image-caption {
 }
 .app-aside-close {
     position: absolute;
-    top: 50px;
+    top: 75px;
     right: 0;
     padding: 16px 11px 0;
 }
@@ -9977,10 +10035,10 @@ dd.image-caption {
 }
 .app-sidebar {
     position: fixed;
-    top: 50px;
+    top: 75px;
     bottom: 0;
     display: block;
-    width: 200px;
+    width: 225px;
     overflow-y: scroll;
     text-shadow: 0 1px 0 #fff;
     background-color: #f5f5f5;
@@ -10068,7 +10126,7 @@ dd.image-caption {
     padding-top: 22px;
 }
 .report-metric {
-    margin: 22px 0 100px;
+    margin: 22px 0 150px;
 }
 .report-metric-title {
     padding-bottom: 10px;
@@ -10157,6 +10215,11 @@ dd.image-caption {
     border-top: 1px solid #5a5f64;
     box-shadow: inset 1px 0 0 #e5e5e5;
 }
+a:hover {
+    -webkit-transition: color .5s linear;
+         -o-transition: color .5s linear;
+            transition: color .5s linear;
+}
 .text-gray {
     color: #5a5f64;
 }
@@ -10175,22 +10238,29 @@ dd.image-caption {
     padding-right: 22px;
 }
 .app-toolbar + .app-navbar {
-    margin-top: 50px;
+    margin-top: 75px;
 }
 .app-navbar-brand {
-    min-width: 250px;
     padding-left: 33px;
     font-weight: 700;
     text-transform: uppercase;
-    background: url(../assets/img/arrow.png) no-repeat 11px 11px transparent;
+    background: url(../assets/img/arrow.png) no-repeat 11px 22px transparent;
+}
+@media (min-width: 768px) {
+    .app-navbar-brand {
+        min-width: 375px;
+    }
+}
+.app-content {
+    padding-top: 75px;
 }
 .app-content-workspace {
-    padding-top: 50px;
+    padding-top: 75px;
 }
 @media (min-width: 768px) {
     .app-content-workspace {
-        padding-left: -200px;
-        margin-left: 200px;
+        padding-left: -225px;
+        margin-left: 225px;
     }
 }
 .app-content-workspace .app-content-body {
@@ -10202,8 +10272,8 @@ dd.image-caption {
     }
 }
 .app-content-dashboard {
-    padding-top: 50px;
-    padding-left: 50px;
+    padding-top: 75px;
+    padding-left: 75px;
 }
 .app-content-dashboard .app-page-header {
     padding: 0 0 22px 9px;
@@ -10367,7 +10437,7 @@ textarea#mail_password #userid {
 }
 /* Set the fixed height of the footer here */
 .app-footer {
-    height: 100px;
+    height: 150px;
 }
 .facet .facet-body img {
     display: block;

@@ -13,7 +13,7 @@
     <theme href="dist/signin.html" css:if-content="body.template-pwreset_form" />
     <theme href="dist/signin.html" css:if-content="body.template-pwreset_finish" />
 
-    <theme href="dist/dashboard.html" css:if-content="body.section-xd" />
+    <theme href="dist/index.html" css:if-content="body.section-xd" />
 
     <!-- Rules applying to a standard Plone web page -->
     <rules css:if-content="#visual-portal-wrapper">

@@ -33,6 +33,7 @@
   <body class="app-theme-workspace">
     <a class="sr-only" href="#content">Skip navigation</a>
     <nav class="navbar navbar-inverse navbar-fixed-top app-navbar" id="app-navbar" role="navigation">
+<div class="container-fluid">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="sr-only">Toggle navigation</span>
@@ -40,10 +41,13 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand navbar-right app-navbar-brand" href="/">xpose360</a>
+    <a class="navbar-brand app-navbar-brand" href="/">
+      <span class="hidden">xpose360</span>
+      xdash.io
+    </a>
   </div>
-  <div class="collapse navbar-collapse navbar-ex1-collapse" id="app-navbar-nav">
-        <ul class="nav navbar-nav pull-right">
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-right" id="app-navbar-nav">
           <li id="plone-personal-actions" class="dropdown dropdown-userinfo">
             <a data-toggle="dropdown" class="dropdown-toggle" href="/author/123456789">
               <span>John Doe</span>
@@ -63,11 +67,8 @@
               </li>
             </ul></li>
         </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Help</a></li>
-    </ul>
   </div><!-- /.navbar-collapse -->
+</div>
 </nav>
 
     <div id="app-sidebar" class="app-sidebar">

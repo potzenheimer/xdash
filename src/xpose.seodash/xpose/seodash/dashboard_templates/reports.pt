@@ -9,44 +9,68 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="container">
-    <div class="app-page-header">
-        <div class="app-page-title">
-            <h1 i18n:translate="">Reports</h1>
+
+    <div class="app-page-header datapanel"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1>Meine Berichte</h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic" tal:content="view/report_idx">{{number}}}</span>
+                    Berichte
+                </div>
+                <span class="item-date"
+                    tal:define="timestamp python:context.modified().ISO()">
+                    letztes Update:
+                    <span tal:attributes="data-livestamp timestamp"
+                        tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
+                </span>
+            </div>
         </div>
-        <p class="lead app-page-lead">
-            Hier finden Sie alle verfügbaren und archivierten Berichte
-        </p>
     </div>
 
-    <div class="app-page-content" id="content-core">
+    <div class="container app-page-content" id="content-core">
 
         <div class="report-list" tal:condition="view/has_reports">
             <div class="report-list-item" tal:repeat="item view/reports">
                 <div class="report-list-item-time"
                     tal:define="item_uid item/UID;
                                 ts python:view.timestamp(item_uid)">
-                    <span class="fa-stack fa-3x text-gray">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <strong class="fa-stack-1x fa-inverse timestamp-text"
-                             tal:content="ts/month">08</strong>
-                    </span>
-                    <span class="h2" tal:content="ts/year">2014</span>
+                    <div class="rti-time-timestamp">
+                        <span class="rli-time-month" tal:content="ts/month">09</span>
+                        <span class="rli-time-year" tal:content="ts/year">2014</span>
+                    </div>
                 </div>
                 <div class="report-list-item-meta">
-                    <h3><a class="app-list-item-headline"
-                        tal:attributes="href item/getURL" tal:content="item/Title" />
-                    </h3>
+                    <a class="rli-meta-title" tal:attributes="href item/getURL">
+                        <span class="rli-meta-projectname" tal:content="item/Title">xpose414.de</span>
+                    </a>
                 </div>
                 <div class="report-list-item-actions">
-                    <a class="btn btn-default btn-lg"
+                    <a class="rli-actions-primary"
                         tal:attributes="href string:${item/getURL}">
+                        Bericht
                         <i class="fa fa-chevron-right fa-2x"></i>
                     </a>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="statuspanel-no-data statuspanel-no-data-lg"
+            tal:condition="not:view/has_reports"
+            tal:define="portal_url context/portal_url">
+            <div class="no-data-sign">
+                <i class="fa fa-ellipsis-h"></i>
+            </div>
+            <h2 i18n:translate="">This dashboard is empty</h2>
+            <p class="lead" i18n:translate="">
+                Your account has either just been set up for you and no reports have been
+                generated yet or something really, really bad has just happend.
+                Anyway you must be disappointed. We are really sorry for that.
+            </p>
+        </div>
     </div>
   </metal:content-core>
 </metal:main>
