@@ -148,6 +148,19 @@ class ContentView(grok.View):
         return data
 
 
+class JSONView(grok.View):
+    grok.context(IReport)
+    grok.require('zope2.View')
+    grok.name('json-view')
+
+    def render(self):
+        context = aq_inner(self.context)
+        data = getattr(context, 'report')
+        report = json.loads(data)
+        self.request.response.setHeader("Content-Type", "application/json")
+        return json.dumps(report)
+
+
 class LinkBuilding(grok.View):
     grok.context(IReport)
     grok.require('zope2.View')
@@ -180,6 +193,8 @@ class RequestReport(grok.View):
     def render(self):
         context = aq_inner(self.context)
         next_url = context.absolute_url()
+        self._build_report_ac()
+        self.postprocess_ac_record()
         self.ga_record()
         return self.request.response.redirect(next_url)
 
@@ -204,7 +219,7 @@ class RequestReport(grok.View):
     def _build_report_ac(self):
         context = aq_inner(self.context)
         projects = self.project_info()
-        project = projects[0]
+        project = projects[1]
         project_id = project['ac']
         pinfo = u'projects/{0}/tracking'.format(project_id)
         tool = getUtility(IACTool)
