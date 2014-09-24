@@ -72,12 +72,18 @@
                 tal:define="cols metric/cols;
                             rows metric/rows">
                   <tr tal:repeat="row rows">
-                    <tal:items tal:repeat="col cols">
-                      <td tal:define="col_id col/id">
-                        <!--<span tal:replace="python:row[col_id]" /> -->
+                    <tal:col tal:define="cols python:row['c']">
+                      <td tal:repeat="col cols">
+                        <span tal:content="python:col['v']" />
+                      </td>
+                    </tal:col>
+                    <!--<tal:items tal:repeat="col cols">
+                      <td tal:define="col_id col/id;
+                                      col_idx repeat/col/index">
+                        <span tal:replace="python:row[col_idx]" />
                         <span tal:content="row" />
                       </td>
-                    </tal:items>
+                    </tal:items>-->
                   </tr>
               </tbody>
             </table>
@@ -94,7 +100,6 @@
 
         <h3>GA dynamic query</h3>
         <pre tal:content="view/print_report" />
-
 
         <h3>activeCollab</h3>
         <!--<div tal:replace="structure view/tracking_report" />-->

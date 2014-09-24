@@ -132,7 +132,7 @@ class GATool(grok.GlobalUtility):
                 dimensions='ga:keyword',
                 sort='-ga:sessions',
                 metrics=','.join(self.report_metrics_base()),
-                filters='ga:medium==${0}'.format(query_type),
+                # filters='ga:medium==${0}'.format(query_type),
                 prettyPrint=True,
                 output='dataTable'
             )

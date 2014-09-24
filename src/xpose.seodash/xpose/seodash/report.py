@@ -114,7 +114,7 @@ class View(grok.View):
         project = projects[0]
         pid = project['ga']
         # data = tool.get(profile_id=pid, query_type='keywords')
-        data = tool.get(profile_id=pid, query_type='referral')
+        data = tool.get(profile_id=pid, query_type='keywords')
         return data
 
     def print_report(self):
@@ -195,7 +195,6 @@ class RequestReport(grok.View):
 
     def report(self):
         context = aq_inner(self.context)
-        data = []
         stored_report = getattr(context, 'report', None)
         if stored_report is not None:
             report = json.loads(stored_report)
@@ -290,6 +289,9 @@ class RequestReport(grok.View):
         stored_report = getattr(context, 'report_xovi', None)
         if stored_report:
             report = json.loads(stored_report)
+        projects = self.project_info()
+        project = projects[0]
+        project_id = project['xo']
         tool = getUtility(IXoviTool)
         status = tool.status()
         if status['code'] == 'active':
@@ -302,19 +304,21 @@ class RequestReport(grok.View):
                 service=u'seo',
                 method=u'getKeywords',
                 sengine=u'google.de',
-                domain=u'xpose414.de',
+                domain=project_id,
             )
             report['getKeywords'] = kws
             daily_kws = tool.get(
                 service=u'seo',
                 method=u'getDailyKeywords',
+                sengineid=u'1',
+                domain=project_id,
             )
             report['getDailyKeywords'] = daily_kws
             lost_kws = tool.get(
                 service=u'seo',
                 method=u'getLostKeywords',
                 sengineid=u'1',
-                domain=u'xpose414.de',
+                domain=project_id,
             )
             report['getLostKeywords'] = lost_kws
         data = json.dumps(report)

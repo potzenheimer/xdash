@@ -64,7 +64,7 @@
                                                       href string:${context/absolute_url}/edit-dashboard/${request/uuid}/delete/${idx}">
                                         delete
                                     </a>
-                                    <button type="button" class="btn btn-primary pull-right"
+                                    <button type="button" class="btn btn-primary pull-right hidden"
                                         data-toggle="collapse"
                                         data-toggle="button"
                                         data-target="#demo"
@@ -74,7 +74,7 @@
 
                                 </div>
                             </div>
-                            <div id="app-form-edit" class="collapse"
+                            <div id="app-form-edit" class="xcollapse"
                                 tal:define="item_idx repeat/project/index"
                                 tal:attributes="id string:app-form-${item_idx}">
                                 <form class="app-form"

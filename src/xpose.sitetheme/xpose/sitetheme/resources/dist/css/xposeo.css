@@ -9222,6 +9222,7 @@ dd.image-caption {
 .app-signin-field {
     display: block;
     max-width: 750px;
+    padding: 0 5px;
     margin-right: auto;
     margin-left: auto;
 }
