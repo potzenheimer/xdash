@@ -18,8 +18,8 @@
             </div>
             <div class="col-md-3 col-sm-3 datapanel-item">
                 <div class="item-data">
-                    <span class="numberic">{{number}}}</span>
-                    Berichte
+                    <span class="numberic">xpose414.de</span>
+                    Projekt
                 </div>
                 <span class="item-date"
                     tal:define="timestamp python:context.modified().ISO()">

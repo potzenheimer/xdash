@@ -47,9 +47,10 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
-          'bower_components/jquery/jquery.js',
+          'bower_components/jquery/dist/jquery.js',
           'bower_components/modernizr/modernizr.js',
           'bower_components/bootstrap/dist/js/bootstrap.js',
+          'bower_components/hideShowPassword/hideShowPassword.js',
           'bower_components/momentjs/moment.js',
           'bower_components/momentjs/lang/de.js',
           'bower_components/livestampjs/livestamp.js',
@@ -63,6 +64,7 @@ module.exports = function (grunt) {
       theme: {
         src: [
         'bower_components/bootstrap/dist/js/bootstrap.js',
+        'bower_components/hideShowPassword/hideShowPassword.js',
         'bower_components/momentjs/moment.js',
         'bower_components/momentjs/lang/de.js',
         'bower_components/livestampjs/livestamp.js',

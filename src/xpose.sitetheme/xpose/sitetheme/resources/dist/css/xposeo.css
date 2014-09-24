@@ -9178,12 +9178,18 @@ dd.image-caption {
     background: #5a5f64;
 }
 .app-signin {
-    margin-top: 150px;
+    margin-top: 113px;
     border-radius: 0;
 }
 .app-signin-header {
     color: #eee;
     background: #5a5f64;
+}
+.app-signin-header-content {
+    display: block;
+    max-width: 750px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .app-signin-title {
     font-weight: 300;
@@ -9213,6 +9219,12 @@ dd.image-caption {
 .app-signin-control.app-signin-control-bordered {
     border-bottom: 1px dotted #777;
 }
+.app-signin-field {
+    display: block;
+    max-width: 750px;
+    margin-right: auto;
+    margin-left: auto;
+}
 .page-aside {
     position: relative;
     padding: 44px 22px;
@@ -9232,7 +9244,33 @@ dd.image-caption {
 }
 .app-signin-actions,
 .app-register-actions {
-    padding: 22px;
+    display: block;
+    max-width: 750px;
+    padding: 22px 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+/* custom toggle style */
+.my-toggle {
+    -webkit-appearance: none;
+    padding: .5em;
+    margin-right: .5em;
+    font-size: .75em;
+    font-weight: 600;
+    color: #92c83e;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: .25em;
+
+       -moz-appearance: none;
+}
+.my-toggle:hover,
+.my-toggle:focus {
+    color: #555;
+    background-color: #eee;
+    outline: transparent;
 }
 .cbp-spmenu {
     position: fixed;

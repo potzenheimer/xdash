@@ -7,7 +7,7 @@
 }
 
 .app-signin {
-    margin-top: (@navbar-height * 2);
+    margin-top: ceil((@navbar-height * 1.5));
     //background: @navbar-default-bg;
     // #gradient > .vertical(@start-color: #fff; @end-color: @gray-lighter);
     border-radius: 0;
@@ -17,6 +17,12 @@
     background: @app-gray;
     color: @gray-lighter;
 }
+
+.app-signin-header-content {
+    .center-block();
+    max-width: @container-sm;
+}
+
 .app-signin-title {
     font-weight: 300;
 }
@@ -53,6 +59,11 @@
     }
 }
 
+.app-signin-field {
+    .center-block();
+    max-width: @container-sm;
+}
+
 .page-aside {
     position:relative;
     padding: ceil((@line-height-computed * 2)) @line-height-computed;
@@ -77,6 +88,34 @@
 
 .app-signin-actions,
 .app-register-actions {
-    padding: @line-height-computed;
+    .center-block();
+    padding: @line-height-computed 0;
+    max-width: @container-sm;
 }
+
+// Password field visibility toggle
+/* custom toggle style */
+
+.my-toggle {
+  background: transparent;
+  border: 0;
+  border-radius: 0.25em;
+  color: @link-color;
+  cursor: pointer;
+  font-size: 0.75em;
+  font-weight: 600;
+  margin-right: 0.5em;
+  padding: 0.5em;
+  text-transform: uppercase;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.my-toggle:hover,
+.my-toggle:focus {
+  background-color: #eee;
+  color: #555;
+  outline: transparent;
+}
+
 

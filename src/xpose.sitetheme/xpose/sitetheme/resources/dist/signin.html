@@ -37,7 +37,7 @@
     <section class="app-signin page page-signin">
         <article class="page-content" id="app-signin-content">
             <header class="app-signin-header">
-                <div class="container">
+                <div class="app-signin-header-content">
                     <h1 class="app-signin-title">
                         Anmelden
                     </h1>
@@ -47,19 +47,19 @@
                 <form class="app-signin-form enableAutoFocus" action="." id="login_form" method="post">
                     <div class="app-signin-group" id="login-form">
                         <div class="control-group app-signin-control app-signin-control-bordered">
-                            <div class="container">
-                            <label for="__ac_name">E-Mail-Adresse</label>
-                            <input class="form-control" type="text" id="__ac_name" value="" name="__ac_name" size="15">
+                            <div class="app-signin-field">
+                                <label for="__ac_name">E-Mail-Adresse</label>
+                                <input class="form-control" type="text" id="__ac_name" value="" name="__ac_name" size="15">
                             </div>
                         </div>
                         <div class="control-group app-signin-control">
-                            <div class="container">
-                                    <label for="__ac_password">Passwort</label>
-                                    <input  class="form-control" type="password" id="__ac_password" name="__ac_password" size="15">
+                            <div class="app-signin-field">
+                                <label for="__ac_password">Passwort</label>
+                                <input  class="form-control" data-appui="pw-toggle" type="password" id="__ac_password" name="__ac_password" size="15">
                             </div>
                         </div>
                     </div>
-                    <div class="container app-signin-actions"
+                    <div class="app-signin-actions"
                         <div class="control-group">
                             <input class="btn btn-primary btn-lg" type="submit" value="Anmelden" name="submit">
                             <a class="btn btn-link btn-sm" href="/mail_password_form?userid=">Passwort vergessen?</a>
@@ -88,6 +88,21 @@ window.attachEvent("onload", downloadJSAtOnload);
 else window.onload = downloadJSAtOnload;
 </script>
 <!-- <script src="../../dist/js/xposeo.js"></script>-->
-
+    <div class="app-js-slot">
+        <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Lato:300,400,700:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+  </script>
+    </div>
   </body>
 </html>
