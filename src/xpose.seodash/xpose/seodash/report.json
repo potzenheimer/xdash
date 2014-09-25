@@ -84,9 +84,9 @@
             {"type": "number", "id": "ga:sessions", "label": "ga:sessions"},
             {"type": "number", "id": "ga:pageviews", "label": "ga:pageviews"},
             {"type": "number", "id": "ga:pageviewsPerSession", "label": "ga:pageviewsPerSession"},
-            {"type": "number", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
-            {"type": "number", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
-            {"type": "number", "id": "ga:exitRate", "label": "ga:exitRate"}
+            {"type": "time", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
+            {"type": "percent", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
+            {"type": "percent", "id": "ga:exitRate", "label": "ga:exitRate"}
         ],
         "rows": []
       }
@@ -99,13 +99,13 @@
       "description": "This data table shows relevant traffic originating from link sources",
       "dataTable": {
         "cols": [
-            {"type": "string", "id": "ga:keyword", "label": "ga:keyword"},
+            {"type": "string", "id": "ga:source", "label": "ga:source"},
             {"type": "number", "id": "ga:sessions", "label": "ga:sessions"},
             {"type": "number", "id": "ga:pageviews", "label": "ga:pageviews"},
             {"type": "number", "id": "ga:pageviewsPerSession", "label": "ga:pageviewsPerSession"},
-            {"type": "number", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
-            {"type": "number", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
-            {"type": "number", "id": "ga:exitRate", "label": "ga:exitRate"}
+            {"type": "time", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
+            {"type": "percent", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
+            {"type": "percent", "id": "ga:exitRate", "label": "ga:exitRate"}
         ],
         "rows": []
       }

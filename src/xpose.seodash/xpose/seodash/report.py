@@ -195,8 +195,8 @@ class RequestReport(grok.View):
     def render(self):
         context = aq_inner(self.context)
         next_url = context.absolute_url()
-        self._build_report_ac()
-        self.postprocess_ac_record()
+        # self._build_report_ac()
+        # self.postprocess_ac_record()
         self.ga_record()
         return self.request.response.redirect(next_url)
 
@@ -286,13 +286,32 @@ class RequestReport(grok.View):
         context = aq_inner(self.context)
         report = self.report()
         ga_report = self.build_report_ga()
-        metric = report[2]
-        data_table = ga_report['dataTable']
-        metric['dataTable'] = data_table
+        metric = report[5]
+        table = metric['dataTable']
+        rows = table['rows']
+        cols = table['cols']
+        if 'totalsForAllResults' in ga_report:
+            first_row = ga_report['totalsForAllResults']
+            first_row['ga:keyword'] = 'totalsForAllResults'
+            rows.append(first_row)
+        if 'dataTable' in ga_report:
+            data_table = ga_report['dataTable']
+            dt_rows = data_table['rows']
+            for r in dt_rows:
+                item = {}
+                row_columns = r['c']
+                for x in range(7):
+                    item_key = cols[x]['id']
+                    item[item_key] = row_columns[x]['v']
+                rows.append(item)
+        # import pdb; pdb.set_trace()
+        # metric['dataTable'] = data_table
+        table['rows'] = rows
+        metric['dataTable'] = table
         stored = getattr(context, 'report')
         data = json.loads(stored)
         items = data['items']
-        items[2] = metric
+        items[5] = metric
         setattr(context, 'report', json.dumps(data))
         modified(context)
         context.reindexObject(idxs='modified')
