@@ -8,6 +8,7 @@ import time
 import uuid as uuid_tool
 
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from five import grok
 from plone import api
 from plone.app.uuid.utils import uuidToObject
@@ -60,9 +61,7 @@ class View(grok.View):
     grok.name('view')
 
     def update(self):
-        self.has_projects = len(self.projects()) > 0
-        self.show_projectlist = len(self.projects()) > 1
-        self.has_reports = len(self.reports()) > 0
+        self.has_reports = self.report_idx() > 0
 
     def reports(self):
         context = aq_inner(self.context)
@@ -74,29 +73,19 @@ class View(grok.View):
                         sort_order='reverse')
         return items
 
-    def get_latest_report(self, uuid):
-        item = uuidToObject(uuid)
-        results = item.restrictedTraverse('@@folderListing')(
-            portal_type='xpose.seodash.report',
-            sort_on='modified',
-            sort_order='reverse')
-        return results[0]
+    def report_idx(self):
+        return len(self.reports())
 
-    def render_report(self, uuid):
-        item = uuidToObject(uuid)
-        return item.restrictedTraverse('@@content-view')()
-
-    def active_project(self):
-        return self.projects()[0]
-
-    def projects(self):
-        context = aq_inner(self.context)
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IProject.__identifier__,
-                        path=dict(query='/'.join(context.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
-        return items
+    def timestamp(self, uid):
+        item = api.content.get(UID=uid)
+        date = item.created()
+        date = pydt(date)
+        timestamp = {}
+        timestamp['day'] = date.strftime("%d")
+        timestamp['month'] = date.strftime("%m")
+        timestamp['year'] = date.strftime("%Y")
+        timestamp['date'] = date
+        return timestamp
 
     def can_edit(self):
         context = aq_inner(self.context)
@@ -179,6 +168,61 @@ class ReportView(grok.View):
         return data
 
 
+class ReportLayout(grok.View):
+    grok.context(IDashboard)
+    grok.require('zope2.View')
+    grok.name('report-layout')
+
+    def update(self):
+        self.has_projects = len(self.projects()) > 0
+        self.show_projectlist = len(self.projects()) > 1
+        self.has_reports = len(self.reports()) > 0
+
+    def reports(self):
+        context = aq_inner(self.context)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IReport.__identifier__,
+                        path=dict(query='/'.join(context.getPhysicalPath()),
+                                  depth=2),
+                        sort_on='modified',
+                        sort_order='reverse')
+        return items
+
+    def get_latest_report(self, uuid):
+        item = uuidToObject(uuid)
+        results = item.restrictedTraverse('@@folderListing')(
+            portal_type='xpose.seodash.report',
+            sort_on='modified',
+            sort_order='reverse')
+        return results[0]
+
+    def render_report(self, uuid):
+        item = uuidToObject(uuid)
+        return item.restrictedTraverse('@@content-view')()
+
+    def active_project(self):
+        return self.projects()[0]
+
+    def projects(self):
+        context = aq_inner(self.context)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IProject.__identifier__,
+                        path=dict(query='/'.join(context.getPhysicalPath()),
+                                  depth=1),
+                        sort_on='getObjPositionInParent')
+        return items
+
+    def can_edit(self):
+        context = aq_inner(self.context)
+        is_adm = False
+        if not api.user.is_anonymous():
+            user = api.user.get_current()
+            roles = api.user.get_roles(username=user.getId(), obj=context)
+            if 'Manager' or 'Site Administrator' in roles:
+                is_adm = True
+        return is_adm
+
+
 class AddReport(grok.View):
     grok.context(IDashboard)
     grok.require('cmf.ModifyPortalContent')
@@ -189,6 +233,16 @@ class AddReport(grok.View):
         uuid = self._create_report()
         next_url = '{0}/report/{1}'.format(context.absolute_url(), uuid)
         return self.request.response.redirect(next_url)
+
+    def project_info(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        from xpose.seodash.dashboard import IDashboard
+        if IDashboard.providedBy(parent):
+            container = parent
+        else:
+            container = aq_parent(parent)
+        return getattr(container, 'projects')
 
     def timestamp(self):
         date = datetime.datetime.now()
@@ -223,11 +277,19 @@ class AddReport(grok.View):
             'project': json.dumps(project_list[0]),
             'xd1uid': uuid_tool.uuid4(),
             'xd2uid': uuid_tool.uuid4(),
-            'xd3uid': uuid_tool.uuid4()
+            'xd3uid': uuid_tool.uuid4(),
+            'xd4uid': uuid_tool.uuid4(),
+            'xd5uid': uuid_tool.uuid4(),
+            'xd6uid': uuid_tool.uuid4(),
+            'xd7uid': uuid_tool.uuid4()
         }
         report = template.substitute(template_vars)
         tmpl = report.replace('\n', '')
         setattr(item, 'report', tmpl)
+        projects = self.project_info()
+        project = projects[0]
+        pid = project['title']
+        setattr(item, 'projectId', pid)
         modified(item)
         item.reindexObject(idxs='modified')
         return uuid

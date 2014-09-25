@@ -11,14 +11,16 @@
   <metal:content-core define-macro="main">
 
     <div class="app-page-header datapanel"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;
+                    report view/report;
+                    project python:report['project']">
         <div class="row datapanel-row">
             <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
                 <h1 tal:content="context/Title">Meine Berichte</h1>
             </div>
             <div class="col-md-3 col-sm-3 datapanel-item">
                 <div class="item-data">
-                    <span class="numberic">xpose414.de</span>
+                    <span class="numberic" tal:content="project/title">xpose414.de</span>
                     Projekt
                 </div>
                 <span class="item-date"
@@ -31,15 +33,19 @@
         </div>
     </div>
 
+    <div class="app-callout app-callout-danger" tal:condition="view/can_edit">
+      <a class="btn btn-danger btn-sm pull-right"
+          tal:attributes="href string:${context/absolute_url}/@@build-report">
+          Update report data (credits required)
+      </a>
+      <p>You are logged in as administrator
+        <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/@@json-view">
+          View raw report data
+        </a>
+      </p>
+    </div>
 
     <div class="container app-page-content" id="content-core">
-        <div class="page-header">
-            <a class="btn btn-danger pull-right"
-                tal:attributes="href string:${context/absolute_url}/@@build-report">
-                Build new report (credits required)
-            </a>
-            <h2>Report Data</h2>
-        </div>
 
       <div class="report" tal:define="report view/report;
                                       items python:report['items']">
@@ -56,7 +62,9 @@
             tal:define="metric item/dataTable;
                         rows metric/rows;
                         row_content python:len(rows)">
-            <table class="table table-bordered metric-table"
+            <table class="metric-table"
+              tal:attributes="class string:metric-table metric-table-${item/id};
+                              id string:metric-table-${item/uid}"
               tal:condition="row_content">
               <thead class="metric-table-head" tal:define="cols metric/cols">
                 <tr class="metric-table-row metric-table-row-primary">
@@ -72,18 +80,18 @@
                 tal:define="cols metric/cols;
                             rows metric/rows">
                   <tr tal:repeat="row rows">
-                    <tal:col tal:define="cols python:row['c']">
+                    <!--<tal:col tal:define="cols python:row['c']">
                       <td tal:repeat="col cols">
                         <span tal:content="python:col['v']" />
                       </td>
-                    </tal:col>
-                    <!--<tal:items tal:repeat="col cols">
+                    </tal:col>-->
+                    <tal:items tal:repeat="col cols">
                       <td tal:define="col_id col/id;
                                       col_idx repeat/col/index">
                         <span tal:replace="python:row[col_idx]" />
                         <span tal:content="row" />
                       </td>
-                    </tal:items>-->
+                    </tal:items>
                   </tr>
               </tbody>
             </table>

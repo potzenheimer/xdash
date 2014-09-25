@@ -42,15 +42,70 @@
     {
       "id": "xd-3",
       "uid": "${xd3uid}",
+      "kind": "focusKeywords",
+      "title": "Focus Keywords",
+      "description": "This most important keywords in relation to volume and reach",
+      "dataTable": {
+        "cols": [],
+        "rows": []
+      }
+    },
+    {
+      "id": "xd-4",
+      "uid": "${xd4uid}",
+      "kind": "winnerKeywords",
+      "title": "Winner Keywords",
+      "description": "This most important keywords in relation to volume and reach",
+      "dataTable": {
+        "cols": [],
+        "rows": []
+      }
+    },
+    {
+      "id": "xd-5",
+      "uid": "${xd5uid}",
+      "kind": "looserKeywords",
+      "title": "Looser Keywords",
+      "description": "This most important keywords in relation to volume and reach",
+      "dataTable": {
+        "cols": [],
+        "rows": []
+      }
+    },
+    {
+      "id": "xd-6",
+      "uid": "${xd6uid}",
       "kind": "seoTraffic",
       "title": "SEO Traffic",
       "description": "This data table shows relevant metrics built from Google Analytics data.",
       "dataTable": {
         "cols": [
-          {"type": "string", "id": "xd:linkDate", "label": "Link Date"},
-          {"type": "string", "id": "xd:linkSourceURI", "label": "Link Source URI"},
-          {"type": "string", "id": "xd:linkTargetURI", "label": "Link Target URI"},
-          {"type": "string", "id": "xd:linkText", "label": "Link Text"}
+            {"type": "string", "id": "ga:keyword", "label": "ga:keyword"},
+            {"type": "number", "id": "ga:sessions", "label": "ga:sessions"},
+            {"type": "number", "id": "ga:pageviews", "label": "ga:pageviews"},
+            {"type": "number", "id": "ga:pageviewsPerSession", "label": "ga:pageviewsPerSession"},
+            {"type": "number", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
+            {"type": "number", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
+            {"type": "number", "id": "ga:exitRate", "label": "ga:exitRate"}
+        ],
+        "rows": []
+      }
+    },
+    {
+      "id": "xd-7",
+      "uid": "${xd7uid}",
+      "kind": "referralTraffic",
+      "title": "Referral Traffic",
+      "description": "This data table shows relevant traffic originating from link sources",
+      "dataTable": {
+        "cols": [
+            {"type": "string", "id": "ga:keyword", "label": "ga:keyword"},
+            {"type": "number", "id": "ga:sessions", "label": "ga:sessions"},
+            {"type": "number", "id": "ga:pageviews", "label": "ga:pageviews"},
+            {"type": "number", "id": "ga:pageviewsPerSession", "label": "ga:pageviewsPerSession"},
+            {"type": "number", "id": "ga:sessionDuration", "label": "ga:sessionDuration"},
+            {"type": "number", "id": "ga:percentNewSessions", "label": "ga:percentNewSessions"},
+            {"type": "number", "id": "ga:exitRate", "label": "ga:exitRate"}
         ],
         "rows": []
       }

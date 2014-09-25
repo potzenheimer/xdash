@@ -7,8 +7,10 @@
   $(document).ready(function () {
     if ($('body').hasClass('lt-ie7')) { return; }
 
-    $('[data-appui="pw-toggle"]').showPassword('focus', {
-      toggle: { className: 'my-toggle' }
+    $('[data-appui="pw-toggle"]').hideShowPassword(true, 'focus', {
+      toggle: {
+        className: 'my-toggle'
+      }
     });
 
     $('a[data-appui="contextmenu"]').on({

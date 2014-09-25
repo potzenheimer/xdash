@@ -121,13 +121,15 @@ class View(grok.View):
         data = self.build_report_ga()
         return data
 
-    def filter_tracking(self):
-        # context = aq_inner(self.context)
-        # metrics = getattr(context, 'report_ac')
-        # timeframe = (datetime.datetime.utcnow().replace(day=1) -
-        #     datetime.timedelta(days=1))
-        data = {}
-        return data
+    def can_edit(self):
+        context = aq_inner(self.context)
+        is_adm = False
+        if not api.user.is_anonymous():
+            user = api.user.get_current()
+            roles = api.user.get_roles(username=user.getId(), obj=context)
+            if 'Manager' or 'Site Administrator' in roles:
+                is_adm = True
+        return is_adm
 
 
 class ContentView(grok.View):

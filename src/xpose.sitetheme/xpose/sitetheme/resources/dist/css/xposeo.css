@@ -5957,7 +5957,9 @@ ul.formTabs:after,
 .datapanel-row:before,
 .datapanel-row:after,
 .report-list-item:before,
-.report-list-item:after {
+.report-list-item:after,
+.template-edit .app-content:before,
+.template-edit .app-content:after {
     display: table;
     content: " ";
 }
@@ -5979,7 +5981,8 @@ ul.formTabs:after,
 ul.formTabs:after,
 .listingBar:after,
 .datapanel-row:after,
-.report-list-item:after {
+.report-list-item:after,
+.template-edit .app-content:after {
     clear: both;
 }
 .center-block {
@@ -9696,13 +9699,14 @@ dd.image-caption {
 .datapanel-item .item-data {
     padding-right: 50px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     color: #201e06;
     text-transform: uppercase;
 }
 .datapanel-item .item-data .numberic {
     margin-right: 15px;
     font-size: 25px;
+    font-weight: 600;
     color: #92c83e;
 }
 .datapanel-item .item-date {
@@ -10324,6 +10328,40 @@ a:hover {
 @media (min-width: 768px) {
     .app-content-dashboard .app-page-body {
         padding: 0 22px;
+    }
+}
+.template-edit .app-content {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-bottom: 75px;
+    margin-left: auto;
+}
+@media (min-width: 768px) {
+    .template-edit .app-content {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+    .template-edit .app-content {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    .template-edit .app-content {
+        width: 1170px;
+    }
+}
+.template-edit .app-content > .navbar-header,
+.template-edit .app-content > .navbar-collapse {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+@media (min-width: 768px) {
+    .template-edit .app-content > .navbar-header,
+  .template-edit .app-content > .navbar-collapse {
+        margin-right: 0;
+        margin-left: 0;
     }
 }
 #mail_password #userid {
