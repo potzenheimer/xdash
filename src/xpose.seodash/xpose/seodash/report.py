@@ -287,48 +287,52 @@ class RequestReport(grok.View):
         modified(context)
         return as_json
 
-    def build_report_ga(self):
+    def build_report_ga(self, querytype):
         tool = getUtility(IGATool)
         projects = self.project_info()
         project = projects[0]
         pid = project['ga']
-        data = tool.get(profile_id=pid, query_type='keywords')
+        data = tool.get(profile_id=pid, query_type=querytype)
         return data
 
     def ga_record(self):
         context = aq_inner(self.context)
         report = self.report()
-        ga_report = self.build_report_ga()
-        metric = report[5]
-        table = metric['dataTable']
-        rows = table['rows']
-        cols = table['cols']
-        if 'totalsForAllResults' in ga_report:
-            first_row = ga_report['totalsForAllResults']
-            first_row['ga:keyword'] = 'totalsForAllResults'
-            rows.append(first_row)
-        if 'dataTable' in ga_report:
-            data_table = ga_report['dataTable']
-            dt_rows = data_table['rows']
-            for r in dt_rows:
-                item = {}
-                row_columns = r['c']
-                for x in range(7):
-                    item_key = cols[x]['id']
-                    item[item_key] = row_columns[x]['v']
-                rows.append(item)
-        # import pdb; pdb.set_trace()
-        # metric['dataTable'] = data_table
-        table['rows'] = rows
-        metric['dataTable'] = table
-        stored = getattr(context, 'report')
-        data = json.loads(stored)
-        items = data['items']
-        items[5] = metric
+        ga_queries = {
+            'keywords': 5,
+            'referral': 6
+        }
+        for qt in ga_queries:
+            report_index = ga_queries[qt]
+            ga_report = self.build_report_ga()
+            metric = report[report_index]
+            table = metric['dataTable']
+            rows = table['rows']
+            cols = table['cols']
+            if 'totalsForAllResults' in ga_report:
+                first_row = ga_report['totalsForAllResults']
+                first_row['ga:keyword'] = 'totalsForAllResults'
+                rows.append(first_row)
+            if 'dataTable' in ga_report:
+                data_table = ga_report['dataTable']
+                dt_rows = data_table['rows']
+                for r in dt_rows:
+                    item = {}
+                    row_columns = r['c']
+                    for x in range(7):
+                        item_key = cols[x]['id']
+                        item[item_key] = row_columns[x]['v']
+                    rows.append(item)
+            table['rows'] = rows
+            metric['dataTable'] = table
+            stored = getattr(context, 'report')
+            data = json.loads(stored)
+            items = data['items']
+            items[report_index] = metric
         setattr(context, 'report', json.dumps(data))
         modified(context)
         context.reindexObject(idxs='modified')
-        msg = _(u"Built links data table was successfully updated")
+        msg = _(u"Report data table was successfully updated")
         api.portal.show_message(msg, self.request)
         return msg
 

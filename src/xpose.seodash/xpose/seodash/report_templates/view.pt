@@ -79,22 +79,21 @@
               <tbody class="metric-table-body"
                 tal:define="cols metric/cols;
                             rows metric/rows">
-                  <tr tal:repeat="row rows">
-                    <!--<tal:col tal:define="cols python:row['c']">
-                      <td tal:repeat="col cols">
-                        <span tal:content="python:col['v']" />
-                      </td>
-                    </tal:col>-->
-                    <tal:items tal:repeat="col cols">
-                      <td tal:define="col_id col/id;
-                                      col_idx repeat/col/index;
-                                      col_type col/type;
-                                      col_value python:row[col_id]">
-                        <span tal:replace="python:view.pretty_column_value(col_idx, col_value, col_type)" />
-                        <!--<span tal:content="row" />-->
-                      </td>
-                    </tal:items>
-                  </tr>
+                  <tal:block tal:repeat="row rows">
+                    <tr class="metric-table-row"
+                      tal:define="row_idx repeat/row/index"
+                      tal:attributes="class python:row_idx == 0 and 'metric-table-row metric-table-row-info' or 'metric-table-row'">
+                      <tal:items tal:repeat="col cols">
+                        <td tal:define="col_id col/id;
+                                        col_idx repeat/col/index;
+                                        col_type col/type;
+                                        col_value python:row[col_id]">
+                          <span tal:replace="python:view.pretty_column_value(col_idx, col_value, col_type)" />
+                          <!--<span tal:content="row" />-->
+                        </td>
+                      </tal:items>
+                    </tr>
+                  </tal:block>
               </tbody>
             </table>
             <div class="app-callout app-callout-warning" tal:condition="not:row_content">

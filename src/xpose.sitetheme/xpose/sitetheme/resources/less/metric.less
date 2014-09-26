@@ -18,7 +18,7 @@
 // Note: should probably move to a dedicated component file
 .metric-table {
   .table();
-  .table-bordered();
+  .table-hover();
 }
 
 .metric-table-head {
@@ -31,6 +31,32 @@
   padding: ceil((@line-height-computed / 2));
   font-weight: 300;
   font-size: @font-size-large;
+}
+
+.metric-table-row {
+  > td {
+    text-align: right;
+    &:first-child {
+      text-align: left;
+    }
+  }
+}
+
+// Highlighted table row used for data summaries
+.metric-table-row-info {
+  background: @app-gray;
+  color: #fff;
+  > tbody > tr > td {
+    padding: ceil((@line-height-computed * 0.75)) ceil((@line-height-computed / 2));
+  }
+}
+
+.metric-table > tbody > tr.metric-table-row-info:hover {
+    background-color: darken(@app-gray, 5%);
+}
+
+.metric-table > tbody > tr.metric-table-row-info td {
+    padding: ceil((@line-height-computed * 0.75)) ceil((@line-height-computed / 2));
 }
 
 .metric-table-row-actions {

@@ -10406,7 +10406,6 @@ fieldset[disabled] .searchButton.active {
     width: 100%;
     max-width: 100%;
     margin-bottom: 20.00000001px;
-    border: 1px solid #ddd;
 }
 .metric-table > thead > tr > th,
 .metric-table > tbody > tr > th,
@@ -10437,17 +10436,9 @@ fieldset[disabled] .searchButton.active {
 .metric-table .table {
     background-color: #fff;
 }
-.metric-table > thead > tr > th,
-.metric-table > tbody > tr > th,
-.metric-table > tfoot > tr > th,
-.metric-table > thead > tr > td,
-.metric-table > tbody > tr > td,
-.metric-table > tfoot > tr > td {
-    border: 1px solid #ddd;
-}
-.metric-table > thead > tr > th,
-.metric-table > thead > tr > td {
-    border-bottom-width: 2px;
+.metric-table > tbody > tr:hover > td,
+.metric-table > tbody > tr:hover > th {
+    background-color: #f5f5f5;
 }
 .metric-table-head {
     color: #fff;
@@ -10458,6 +10449,25 @@ fieldset[disabled] .searchButton.active {
     padding: 11px;
     font-size: 1.25rem;
     font-weight: 300;
+}
+.metric-table-row > td {
+    text-align: right;
+}
+.metric-table-row > td:first-child {
+    text-align: left;
+}
+.metric-table-row-info {
+    color: #fff;
+    background: #5a5f64;
+}
+.metric-table-row-info > tbody > tr > td {
+    padding: 16px 11px;
+}
+.metric-table > tbody > tr.metric-table-row-info:hover {
+    background-color: #4e5257;
+}
+.metric-table > tbody > tr.metric-table-row-info td {
+    padding: 16px 11px;
 }
 .metric-table-row-actions {
     background: #fcf8e3;
