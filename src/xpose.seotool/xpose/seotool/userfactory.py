@@ -18,7 +18,7 @@ from xpose.seotool.seotool import ISeoTool
 from xpose.seotool import MessageFactory as _
 
 usergroups = SimpleVocabulary([
-    SimpleTerm(value=u'staff', title=_(u'Xpose414 Staff')),
+    SimpleTerm(value=u'staff', title=_(u'Xdash Staff')),
     SimpleTerm(value=u'customers', title=_(u'Customers'))
 ])
 

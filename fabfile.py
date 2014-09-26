@@ -18,11 +18,11 @@ env.use_ssh_config = True
 env.forward_agent = True
 env.port = '22'
 env.user = 'root'
-env.hosts = ['z9']
+env.hosts = ['c2']
 env.webserver = '/opt/sites/hph/buildout.hph'
 env.code_root = '/opt/sites/hph/buildout.hph'
 env.local_root = '/Users/cb/dev/seodash/xdash'
-env.sitename = 'hph'
+env.sitename = 'xdash'
 env.code_user = 'root'
 env.prod_user = 'www'
 # Uncomment and add your name here
@@ -90,7 +90,7 @@ def deploy(actor=None):
     controls.update()
     controls.build()
     project.cluster.restart_clients()
-    msg = '[hph] *%(sitename)s* deployed by %(actor)s' % opts
+    msg = '[c2] *%(sitename)s* deployed by %(actor)s' % opts
     user = 'fabric'
     icon = ':shipit:'
     slack.chat.post_message('#general', msg, username=user, icon_emoji=icon)
