@@ -37,6 +37,10 @@ class IGATool(Interface):
         :param query_type: Type of query passed as medium name, e.g. referral
             or organic search sources
         :type query_type: string
+
+        :param reference_date: A reference or effective date used to calculate
+            the start and end timeframe for month queries
+        :type reference_date: datetime
         """
 
 
@@ -65,7 +69,8 @@ class GATool(grok.GlobalUtility):
             else:
                 return self.get_results(service,
                                         kwargs['profile_id'],
-                                        kwargs.get('query_type', None))
+                                        kwargs.get('query_type', None),
+                                        kwargs.get('reference_date', None))
         except TypeError as error:
             # Handle errors in constructing a query.
             return 'There was an error constructing your query : {0}'.format(
@@ -95,7 +100,6 @@ class GATool(grok.GlobalUtility):
 
     def initialize_service(self):
         service_url = self.get_config('api_uri')
-        # client_email = self.get_config('client_email')
         keyfile = self.get_keyfile()
         record_key = 'xeo.cxn.ga_client_secret'
         record = api.portal.get_registry_record(record_key)
@@ -109,15 +113,18 @@ class GATool(grok.GlobalUtility):
         service = build('analytics', 'v3', http=http)
         return service
 
-    def get_results(self, service, profile_id, query_type=None):
-        timerange = self.get_month_timerange()
+    def get_results(self,
+                    service,
+                    profile_id,
+                    query_type=None,
+                    reference_date=None):
+        timerange = self.get_month_timerange(reference_date=reference_date)
         start = timerange['first'].strftime('%Y-%m-%d')
         end = timerange['last'].strftime('%Y-%m-%d')
         if query_type is None:
             query = service.data().ga().get(
                 ids='ga:' + profile_id,
-                # start_date=start,
-                start_date='2013-01-01',
+                start_date=start,
                 end_date=end,
                 metrics=','.join(self.report_metrics()),
                 prettyPrint=True,
@@ -127,8 +134,7 @@ class GATool(grok.GlobalUtility):
         if query_type is 'keywords':
             query = service.data().ga().get(
                 ids='ga:' + profile_id,
-                # start_date=start,
-                start_date='2013-01-01',
+                start_date=start,
                 end_date=end,
                 dimensions='ga:keyword',
                 sort='-ga:sessions',
@@ -141,8 +147,7 @@ class GATool(grok.GlobalUtility):
         else:
             query = service.data().ga().get(
                 ids='ga:' + profile_id,
-                # start_date=start,
-                start_date='2013-01-01',
+                start_date=start,
                 end_date=end,
                 dimensions='ga:source',
                 sort='-ga:pageviews',
@@ -155,26 +160,6 @@ class GATool(grok.GlobalUtility):
         feed = query.execute()
         return feed
 
-    def get_analytics_visitors():
-        f = open('ga-privatekey.p12', 'rb')
-        key = f.read()
-        f.close()
-        credentials = SignedJwtAssertionCredentials(
-            'xxx@developer.gserviceaccount.com',
-            key,
-            scope='https://www.googleapis.com/auth/analytics.readonly')
-        http = httplib2.Http()
-        http = credentials.authorize(http)
-        service = build('analytics', 'v3', http=http)
-        data_query = service.data().ga().get(**{
-            'ids': 'ga:YOUR_PROFILE_ID_NOT_UA',
-            'metrics': 'ga:visitors',
-            'start_date': '2013-01-01',
-            'end_date': '2015-01-01'
-        })
-        feed = data_query.execute()
-        return feed['rows'][0][0]
-
     def get_config(self, record=None):
         record_key = 'xeo.cxn.google_{0}'.format(record)
         record = api.portal.get_registry_record(record_key)
@@ -185,8 +170,10 @@ class GATool(grok.GlobalUtility):
                                 'ga-pk.p12')
         return open(p12_file).read()
 
-    def get_month_timerange(self):
+    def get_month_timerange(self, reference_date=None):
         today = datetime.datetime.today()
+        if reference_date is not None:
+            today = reference_date
         info = {}
         first_current = datetime.datetime(today.year, today.month, 1)
         last = first_current - datetime.timedelta(days=1)
