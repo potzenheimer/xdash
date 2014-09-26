@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 """Module providing google analytics api access"""
+import contextlib
+import datetime
+import httplib2
 import json
 import os
-import socket
 import requests
-import contextlib
-import httplib2
-import datetime
+import socket
+
 from five import grok
 from plone import api
 from zope.interface import Interface
+
 from apiclient.discovery import build
 from apiclient.errors import HttpError
-from oauth2client.client import SignedJwtAssertionCredentials
 from oauth2client.client import AccessTokenRefreshError
+from oauth2client.client import SignedJwtAssertionCredentials
 
 from xpose.seotool import MessageFactory as _
 
