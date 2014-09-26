@@ -121,7 +121,8 @@ class GATool(grok.GlobalUtility):
                 end_date=end,
                 metrics=','.join(self.report_metrics()),
                 prettyPrint=True,
-                output='dataTable'
+                output='dataTable',
+                max_results='10'
             )
         if query_type is 'keywords':
             query = service.data().ga().get(
@@ -135,7 +136,7 @@ class GATool(grok.GlobalUtility):
                 # filters='ga:medium==${0}'.format(query_type),
                 prettyPrint=True,
                 output='dataTable',
-                max_results='20'
+                max_results='10'
             )
         else:
             query = service.data().ga().get(
@@ -148,7 +149,8 @@ class GATool(grok.GlobalUtility):
                 metrics=','.join(self.report_metrics_base()),
                 filters='ga:medium==${0}'.format(query_type),
                 prettyPrint=True,
-                # output='dataTable'
+                output='dataTable',
+                max_results='10'
             )
         feed = query.execute()
         return feed
