@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module providing report content type setup and funcitonality"""
+
+import time
 import json
 from Acquisition import aq_inner
 from Acquisition import aq_parent
@@ -120,6 +122,17 @@ class View(grok.View):
     def print_report(self):
         data = self.build_report_ga()
         return data
+
+    def pretty_column_value(self, index, value, column_type):
+        ctype = str(column_type)
+        if ctype == 'time':
+            secs = int(float(value))
+            return time.strftime('%H:%M:%S', time.gmtime(secs))
+        if ctype == 'number':
+            return round(float(value), 2)
+        if ctype == 'percent':
+            return round(float(value), 1)
+        return value
 
     def can_edit(self):
         context = aq_inner(self.context)

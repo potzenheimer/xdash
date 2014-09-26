@@ -87,9 +87,11 @@
                     </tal:col>-->
                     <tal:items tal:repeat="col cols">
                       <td tal:define="col_id col/id;
-                                      col_idx repeat/col/index">
-                        <span tal:replace="python:row[col_id]" />
-                        <span tal:content="row" />
+                                      col_idx repeat/col/index;
+                                      col_type col/type;
+                                      col_value python:row[col_id]">
+                        <span tal:replace="python:view.pretty_column_value(col_idx, col_value, col_type)" />
+                        <!--<span tal:content="row" />-->
                       </td>
                     </tal:items>
                   </tr>

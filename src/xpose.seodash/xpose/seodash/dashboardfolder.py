@@ -30,7 +30,7 @@ class View(grok.View):
     grok.name('view')
 
     def update(self):
-        self.has_dashboards = len(self.dashboards()) > 0
+        self.has_dashboards = self.dashboard_count() > 0
 
     def dashboards(self):
         context = aq_inner(self.context)
@@ -41,6 +41,9 @@ class View(grok.View):
                         sort_on='modified',
                         sort_order='reverse')
         return items
+
+    def dashboard_count(self):
+        return len(self.dashboards())
 
 
 class CreateDashboard(grok.View):
