@@ -115,27 +115,65 @@ class ReportDataCollector(grok.View):
     grok.name('report-data-collector')
 
     """ Collect data from external apis and return the report for storage
-    """
 
+        The render method mimicks the behavior of the collect funciton when
+        called directly
+
+        :param profile_id: Id of the api profile to query
+        :type profile_id: string
+    """
     def update(self, *args, **kwargs):
+        self.access_key = self.request.get('access_key', None)
         grok.View.update(self, *args, **kwargs)
 
-    def collect(self, uid=None, ga_service=None):
-        state = 'pending'
-        if uid is not None:
-            state = 'success'
-        return state
+    def render(self, *args, **kwargs):
+        start = time.time()
+        data = self._process_request()
+        end = time.time()
+        data.update(dict(_runtime=end-start))
+        self.request.response.setHeader("Content-Type", "application/json")
+        return json.dumps(data)
 
-    def _process_request(self):
-        context = aq_inner(self.context)
+    def is_equal(self, a, b):
+        """ Constant time comparison """
+        if len(a) != len(b):
+            return False
+        result = 0
+        for x, y in zip(a, b):
+            result |= ord(x) ^ ord(y)
+        return result == 0
+
+    def get_stored_records(self, token):
+        key_base = 'jobtool.jobcontent.interfaces.IJobToolSettings'
+        key = key_base + '.' + token
+        return api.portal.get_registry_record(key)
+
+    def valid_token(self):
+        if self.access_key:
+            token = self.access_key
+            key = 'xeo.cxn.xdash_api_secret'
+            secret = api.portal.get_registry_record(key)
+            return self.is_equal(token, secret)
+        return False
+
+    def _collect_metrics(self, uuid):
+        context = api.content.get(UID=uuid)
         stored_report = getattr(context, 'report', None)
         report = json.loads(stored_report)
         metrics = report['items']
-        # Build report metrics here
-        import pdb; pdb.set_trace()
         return report
 
-    def render(self, *args, **kwargs):
+    def _process_request(self, uuid):
+        context = api.content.get(UID=uuid)
+        stored_report = getattr(context, 'report', None)
+        report = json.loads(stored_report)
+        if self.valid_token():
+            metrics = report['items']
+            self._collect_metrics(metrics)
+        # Build report metrics here
+        return report
+
+    def collect(self, access_key=None, uid=None, ga_service=None):
         start = time.time()
         data = self._process_request()
         end = time.time()

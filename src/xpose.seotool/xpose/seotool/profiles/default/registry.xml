@@ -13,5 +13,6 @@
         <value key="xovi_client_key"></value>
         <value key="ac_api_uri">http://brain.xpose414.de/api.php</value>
         <value key="ac_client_key"></value>
+        <value key="xdash_api_secret"></value>
     </records>
 </registry>
