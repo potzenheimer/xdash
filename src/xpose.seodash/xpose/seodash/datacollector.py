@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+"""Module processing data collection for reports"""
+
 import json
+import time
 from Acquisition import aq_inner
 from five import grok
 from plone import api
@@ -11,6 +15,7 @@ from plone.app.contentlisting.interfaces import IContentListing
 
 from xpose.seodash.dashboardfolder import IDashboardFolder
 from xpose.seodash.dashboard import IDashboard
+from xpose.seodash.report import IReport
 
 
 class DataCollector(grok.View):
@@ -102,3 +107,38 @@ class DataCollector(grok.View):
             )
             report['getLostKeywords'] = lost_kws
         return report
+
+
+class ReportDataCollector(grok.View):
+    grok.context(IReport)
+    grok.require('zope2.View')
+    grok.name('report-data-collector')
+
+    """ Collect data from external apis and return the report for storage
+    """
+
+    def update(self, *args, **kwargs):
+        grok.View.update(self, *args, **kwargs)
+
+    def collect(self, uid=None, ga_service=None):
+        state = 'pending'
+        if uid is not None:
+            state = 'success'
+        return state
+
+    def _process_request(self):
+        context = aq_inner(self.context)
+        stored_report = getattr(context, 'report', None)
+        report = json.loads(stored_report)
+        metrics = report['items']
+        # Build report metrics here
+        import pdb; pdb.set_trace()
+        return report
+
+    def render(self, *args, **kwargs):
+        start = time.time()
+        data = self._process_request()
+        end = time.time()
+        data.update(dict(_runtime=end-start))
+        self.request.response.setHeader("Content-Type", "application/json")
+        return json.dumps(data)

@@ -16,6 +16,7 @@ from zope.lifecycleevent import modified
 from plone.dexterity.content import Container
 
 from plone.directives import form
+from plone.keyring import django_random
 from plone.namedfile.interfaces import IImageScaleTraversable
 
 from xpose.seotool.ac import IACTool
@@ -210,7 +211,10 @@ class RequestReport(grok.View):
         next_url = context.absolute_url()
         # self._build_report_ac()
         # self.postprocess_ac_record()
-        self.ga_record()
+        data = context.restrictedTraverse('@@report-data-collector').collect(
+            uid=django_random.get_random_string(length=12))
+        # self.ga_record()
+        import pdb; pdb.set_trace()
         return self.request.response.redirect(next_url)
 
     def project_info(self):
