@@ -45,6 +45,12 @@ class IReport(form.Schema, IImageScaleTraversable):
         title=_(u"Project ID"),
         required=False,
     )
+    approved = schema.Bool(
+        title=_(u"Approved?"),
+        default=False,
+        required=False
+    )
+
     report = schema.TextLine(
         title=_(u"Xovi Report"),
         description=_(u"Automatically updated report consisting of predefined "
