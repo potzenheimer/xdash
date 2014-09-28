@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object name="portal_catalog">
+    <index name="approved" meta_type="FieldIndex">
+        <indexed_attr value="approved" />
+    </index>
+    <column value="approved" />
+</object>
