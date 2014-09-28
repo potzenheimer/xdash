@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="xpose.seodash">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+    <div class="app-page-header datapanel"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1>Review Queue</h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic" tal:content="view/unapproved_report_index">{{number}}}</span>
+                    Berichte
+                </div>
+                <span class="item-date"
+                    tal:define="timestamp python:context.modified().ISO()">
+                    letztes Update:
+                    <span tal:attributes="data-livestamp timestamp"
+                        tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container app-page-content" id="content-core">
+    </div>
+  </metal:content-core>
+</metal:main>
+</body>
+</html>

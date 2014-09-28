@@ -12,6 +12,8 @@ from plone.keyring import django_random
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
+from Products.CMFCore.interfaces import IContentish
+
 from xpose.seodash.dashboard import IDashboard
 from xpose.seodash.report import IReport
 
@@ -195,3 +197,34 @@ class LinkBuilding(grok.View):
         portal_url = api.portal.get().absolute_url()
         url = '{0}/adm/'.format(portal_url)
         return self.request.response.redirect(url)
+
+
+class ReviewQueue(grok.View):
+    grok.context(IContentish)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('review-queue')
+
+    def unapproved_reports(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IReport.__identifier__,
+                        approved=False,
+                        sort_on='modified',
+                        sort_order='reverse')
+        return items
+
+    def unapproved_reports_index(self):
+        return len(self.unapproved_reports())
+
+    def breadcrumbs(self, item):
+        obj = item.getObject()
+        view = getMultiAdapter((obj, self.request), name='breadcrumbs_view')
+        # cut off the item itself
+        breadcrumbs = list(view.breadcrumbs())[:-1]
+        if len(breadcrumbs) == 0:
+            # don't show breadcrumbs if we only have a single element
+            return None
+        if len(breadcrumbs) > 3:
+            # if we have too long breadcrumbs, emit the middle elements
+            empty = {'absolute_url': '', 'Title': unicode('…', 'utf-8')}
+            breadcrumbs = [breadcrumbs[0], empty] + breadcrumbs[-2:]
+        return breadcrumbs
