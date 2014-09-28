@@ -192,7 +192,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-2">
                                 <a tal:attributes="href item/getURL"
-                                    i18n:translate="">show</a>
+                                    i18n:translate="">show</a> |
                                 <a tal:attributes="href string:${context/absolute_url}/@@manage-dashboards?uuid=${item/UID}"
                                     i18n:translate="">edit</a>
                             </div>

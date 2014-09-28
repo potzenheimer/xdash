@@ -22,6 +22,7 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from Products.statusmessages.interfaces import IStatusMessage
 
 from xpose.seodash.dashboard import IDashboard
+from xpose.seodash.report import IReport
 
 from xpose.seotool.ac import IACTool
 from xpose.seotool.ga import IGATool
@@ -67,6 +68,7 @@ class View(grok.View):
     grok.name('view')
 
     def update(self):
+        self.has_reports = self.unapproved_reports_index() > 0
         self.has_dashboards = len(self.dashboards()) > 0
 
     def available_services(self):
@@ -124,6 +126,17 @@ class View(grok.View):
             },
         }
         return data
+
+    def unapproved_reports(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IReport.__identifier__,
+                        approved=False,
+                        sort_on='modified',
+                        sort_order='reverse')
+        return items
+
+    def unapproved_reports_index(self):
+        return len(self.unapproved_reports())
 
     def dashboards(self):
         catalog = api.portal.get_tool(name='portal_catalog')
