@@ -77,6 +77,10 @@
                     <a class="rli-actions-primary"
                         tal:attributes="href string:${item/getURL}">
                         Review
+                    </a><br>
+                    <a class="rli-actions-default"
+                        tal:attributes="href string:${item/getURL}">
+                        <small>approve</small>
                     </a>
                 </div>
             </div>
