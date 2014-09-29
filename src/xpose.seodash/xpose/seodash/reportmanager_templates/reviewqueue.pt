@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-3 col-sm-3 datapanel-item">
                 <div class="item-data">
-                    <span class="numberic" tal:content="view/unapproved_report_index">{{number}}}</span>
+                    <span class="numberic" tal:content="view/unapproved_reports_index">{{number}}}</span>
                     Berichte
                 </div>
                 <span class="item-date"
@@ -32,6 +32,56 @@
     </div>
 
     <div class="container app-page-content" id="content-core">
+      <div class="report-list" tal:condition="view/has_reports">
+            <div class="report-list-item" tal:repeat="item view/unapproved_reports">
+                <div class="report-list-item-time"
+                    tal:define="item_uid item/UID;
+                                ts python:view.timestamp(item_uid)">
+                    <div class="rti-time-timestamp">
+                        <span class="rli-time-month">
+                          <i class="fa fa-file-text"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="report-list-item-meta">
+                    <a class="rli-meta-title" tal:attributes="href item/getURL">
+                        <span class="rli-meta-projectname" tal:content="item/Title">xpose414.de</span>
+                    </a>
+                    <small class="documentLocation link-location"
+                          tal:define="breadcrumbs python: view.breadcrumbs(item);
+                                      is_rtl context/@@plone_portal_state/is_rtl;"
+                          tal:condition='breadcrumbs'>
+                        <span i18n:translate="">
+                            Located in
+                        </span>
+                        <span tal:repeat="crumb breadcrumbs"
+                              tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';">
+                            <tal:item tal:define="is_last repeat/crumb/end;
+                                                  url crumb/absolute_url;
+                                                  title crumb/Title">
+                                <a href="#"
+                                   tal:omit-tag="not: url"
+                                   tal:attributes="href url"
+                                   tal:content="title">
+                                    crumb
+                                </a>
+                                <span class="breadcrumbSeparator" tal:condition="not: is_last">
+                                    <tal:ltr condition="not: is_rtl">/</tal:ltr>
+                                    <tal:rtl condition="is_rtl">/</tal:rtl>
+                                </span>
+                             </tal:item>
+                        </span>
+                    </small>
+                </div>
+                <div class="report-list-item-actions">
+                    <a class="rli-actions-primary"
+                        tal:attributes="href string:${item/getURL}">
+                        Review
+                        <i class="fa fa-check-circle-o fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
   </metal:content-core>
 </metal:main>

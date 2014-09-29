@@ -9,6 +9,7 @@ from Products.CMFPlone.utils import safe_unicode
 from five import grok
 from plone import api
 from plone.keyring import django_random
+from plone.event.utils import pydt
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
@@ -204,6 +205,9 @@ class ReviewQueue(grok.View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('review-queue')
 
+    def update(self):
+        self.has_reports = self.unapproved_reports_index() > 0
+
     def unapproved_reports(self):
         catalog = api.portal.get_tool(name='portal_catalog')
         items = catalog(object_provides=IReport.__identifier__,
@@ -214,6 +218,17 @@ class ReviewQueue(grok.View):
 
     def unapproved_reports_index(self):
         return len(self.unapproved_reports())
+
+    def timestamp(self, uid):
+        item = api.content.get(UID=uid)
+        date = item.created()
+        date = pydt(date)
+        timestamp = {}
+        timestamp['day'] = date.strftime("%d")
+        timestamp['month'] = date.strftime("%m")
+        timestamp['year'] = date.strftime("%Y")
+        timestamp['date'] = date
+        return timestamp
 
     def breadcrumbs(self, item):
         obj = item.getObject()
