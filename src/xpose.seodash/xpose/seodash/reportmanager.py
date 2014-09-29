@@ -274,3 +274,32 @@ class ReportReview(grok.View):
             item = self.report()
             data = getattr(item, 'report')
         return data
+
+
+class ReportApproval(grok.View):
+    grok.context(IDashboard)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('report-approval')
+
+    def render(self):
+        item = self.report()
+        setattr(item, 'approved', True)
+        modified(item)
+        item.reindexObject(idxs='modified')
+        portal_url = api.portal.get().absolute_url()
+        url = '{0}/adm/@@review-queue'.format(portal_url)
+        return self.request.response.redirect(url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def report(self):
+        uuid = self.traverse_subpath[0]
+        return api.content.get(UID=uuid)

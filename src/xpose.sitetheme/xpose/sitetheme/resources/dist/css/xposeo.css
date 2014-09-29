@@ -8805,7 +8805,7 @@ input[type="color"] {
     display: block;
     width: 100%;
     height: 20.85714286px;
-    height: calc(20.85714286px  + 2px);
+    height: 32px;
     padding: .42857143rem .85714286rem;
     font-size: 1rem;
     line-height: 1.42857143;
@@ -9644,7 +9644,7 @@ pre {
     height: calc(1.98928571rem  + 2px);
 }
 .form-control {
-    height: calc(20.85714286px  + 2px);
+    height: 32px;
 }
 .form-horizontal .radio,
 .form-horizontal .checkbox,
@@ -11123,7 +11123,7 @@ a:hover {
     display: block;
     width: 100%;
     height: 20.85714286px;
-    height: calc(20.85714286px  + 2px);
+    height: 32px;
     padding: .42857143rem .85714286rem;
     font-size: 1rem;
     line-height: 1.42857143;

@@ -14578,12 +14578,6 @@ if ( typeof define === 'function' && define.amd ) {
   $(document).ready(function () {
     if ($('body').hasClass('lt-ie7')) { return; }
 
-    $('[data-appui="pw-toggle"]').hideShowPassword(true, 'focus', {
-      toggle: {
-        className: 'my-toggle'
-      }
-    });
-
     $('a[data-appui="contextmenu"]').on({
       click: function (e) {
         e.preventDefault();
@@ -14595,6 +14589,12 @@ if ( typeof define === 'function' && define.amd ) {
       click: function (e) {
         e.preventDefault();
         $(this).closest('.cbp-spmenu').removeClass('cbp-spmenu-open');
+      }
+    });
+
+    $('[data-appui="pw-toggle"]').showPassword('focus', {
+      toggle: {
+        className: 'my-toggle'
       }
     });
 
