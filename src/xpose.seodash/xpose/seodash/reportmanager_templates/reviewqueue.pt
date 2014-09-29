@@ -77,7 +77,6 @@
                     <a class="rli-actions-primary"
                         tal:attributes="href string:${item/getURL}">
                         Review
-                        <i class="fa fa-check-circle-o fa-2x"></i>
                     </a>
                 </div>
             </div>

@@ -243,3 +243,34 @@ class ReviewQueue(grok.View):
             empty = {'absolute_url': '', 'Title': unicode('…', 'utf-8')}
             breadcrumbs = [breadcrumbs[0], empty] + breadcrumbs[-2:]
         return breadcrumbs
+
+
+class ReportReview(grok.View):
+    grok.context(IDashboard)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('report-review')
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def report(self):
+        uuid = self.traverse_subpath[0]
+        return api.content.get(UID=uuid)
+
+    def project_id(self):
+        report = self.report()
+        return getattr(report, 'projectId', 'undefined')
+
+    def report_data(self):
+        data = {}
+        if self.report():
+            item = self.report()
+            data = getattr(item, 'report')
+        return data

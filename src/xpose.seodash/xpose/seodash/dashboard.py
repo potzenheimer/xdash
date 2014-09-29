@@ -11,6 +11,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.app.contentlisting.interfaces import IContentListing
 from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Container
 from plone.directives import form
@@ -71,7 +72,7 @@ class View(grok.View):
                                   depth=2),
                         sort_on='modified',
                         sort_order='reverse')
-        return items
+        return IContentListing(items)
 
     def report_idx(self):
         return len(self.reports())

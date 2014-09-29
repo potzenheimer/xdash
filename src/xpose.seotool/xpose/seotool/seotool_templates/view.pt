@@ -72,7 +72,7 @@
 
     </div>
 
-    <div class="panel panel-primary">
+    <div class="panel panel-primary hidden">
       <!-- Default panel contents -->
         <div class="panel-heading">
             <a class="pull-right" tal:attributes="href string:${context/portal_url}/xd/@@create-dashboard">

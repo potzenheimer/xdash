@@ -45,6 +45,7 @@
                 </div>
                 <div class="report-list-item-meta">
                     <a class="rli-meta-title" tal:attributes="href item/getURL">
+                        <span tal:replace="item/projectId" />
                         <span class="rli-meta-projectname" tal:content="item/Title">xpose414.de</span>
                     </a>
                 </div>
