@@ -178,29 +178,33 @@
                     </div>
                 </tal:item>
             </div>
-            <div class="panel panel-primary" tal:condition="not:view/has_token">
-                <div class="panel-heading">
-                    <h3 class="panel-title">User Dashboards</h3>
-                </div>
-                <div class="list-group">
-                    <div class="list-group-item" tal:repeat="item view/dashboards">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-10">
-                                <h4 class="list-group-item-heading">
-                                    <span tal:replace="item/Title" />
-                                </h4>
-                            </div>
-                            <div class="col-xs-12 col-sm-2">
-                                <a tal:attributes="href item/getURL"
-                                    i18n:translate="">show</a> |
-                                <a tal:attributes="href string:${context/absolute_url}/@@manage-dashboards?uuid=${item/UID}"
-                                    i18n:translate="">edit</a>
-                            </div>
+            <tal:block tal:condition="not:view/has_token">
+                <div class="report-list-item" tal:repeat="item view/dashboards">
+                    <div class="report-list-item-time"
+                        tal:define="item_uid item/UID;">
+                        <div class="rti-time-timestamp">
+                            <span class="rli-time-month">
+                                <i class="fa fa-th-large"></i>
+                            </span>
                         </div>
-                        <p tal:content="item/Description">Gibt verlorene Keywords einer Domain im Vergleich zur Vorwoche zurück.</p>
+                    </div>
+                    <div class="report-list-item-meta">
+                        <a class="rli-meta-title" tal:attributes="href item/getURL">
+                            <span class="rli-meta-projectname" tal:content="item/Title">xpose414.de</span>
+                        </a>
+                    </div>
+                    <div class="report-list-item-actions">
+                        <a tal:attributes="href string:${context/absolute_url}/@@manage-dashboards?uuid=${item/UID}"
+                            i18n:translate="">
+                            bearbeiten
+                        </a> |
+                        <a class="rli-actions-primary"
+                            tal:attributes="href string:${item/getURL}">
+                            anzeigen
+                        </a>
                     </div>
                 </div>
-            </div>
+            </tal:block>
         </tal:block>
 
         <tal:block tal:condition="not:view/has_dashboards">

@@ -79,7 +79,7 @@
                         Review
                     </a><br>
                     <a class="rli-actions-default"
-                        tal:attributes="href string:${item/getURL}">
+                        tal:attributes="href string:${context/absolute_url}/@@report-approval/${item/UID}">
                         <small>approve</small>
                     </a>
                 </div>

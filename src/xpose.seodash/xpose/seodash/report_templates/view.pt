@@ -11,16 +11,14 @@
   <metal:content-core define-macro="main">
 
     <div class="app-page-header datapanel"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;
-                    report view/report;
-                    project python:report['project']">
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
         <div class="row datapanel-row">
             <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
                 <h1 tal:content="context/Title">Meine Berichte</h1>
             </div>
             <div class="col-md-3 col-sm-3 datapanel-item">
                 <div class="item-data">
-                    <span class="numberic" tal:content="project/title">xpose414.de</span>
+                    <span class="numberic" tal:content="context/projectId">xpose414.de</span>
                     Projekt
                 </div>
                 <span class="item-date"
@@ -45,64 +43,66 @@
       </p>
     </div>
 
-    <div class="container app-page-content" id="content-core">
+    <div class="container app-page-content" id="content-core" tal:condition="view/has_report">
 
       <div class="report" tal:define="report view/report;
                                       items python:report['items']">
-        <div class="report-metric" tal:repeat="item items">
-          <div class="report-metric-header">
-            <h2 class="report-metric-title">
-              <span tal:replace="item/title" />
-              <small tal:content="item/uid" />
-            </h2>
-            <p class="report-metric-lead"
-              tal:content="item/description" />
-          </div>
-          <div class="report-metric-content"
-            tal:define="metric item/dataTable;
-                        rows metric/rows;
-                        row_content python:len(rows)">
-            <table class="metric-table"
-              tal:attributes="class string:metric-table metric-table-${item/id};
-                              id string:metric-table-${item/uid}"
-              tal:condition="row_content">
-              <thead class="metric-table-head" tal:define="cols metric/cols">
-                <tr class="metric-table-row metric-table-row-primary">
-                  <tal:block tal:repeat="col cols">
-                    <th tal:attributes="class string:metric-table-cell-head metric-table-cell-head-primary;
-                                        id string:table-cell-${col/id}"
-                      tal:content="col/label"
-                      i18n:translate="" />
-                  </tal:block>
-                </tr>
-              </thead>
-              <tbody class="metric-table-body"
-                tal:define="cols metric/cols;
-                            rows metric/rows">
-                  <tal:block tal:repeat="row rows">
-                    <tr class="metric-table-row"
-                      tal:define="row_idx repeat/row/index"
-                      tal:attributes="class python:row_idx == 0 and 'metric-table-row metric-table-row-info' or 'metric-table-row'">
-                      <tal:items tal:repeat="col cols">
-                        <td tal:define="col_id col/id;
-                                        col_idx repeat/col/index;
-                                        col_type col/type;
-                                        col_value python:row[col_id]">
-                          <span tal:replace="python:view.pretty_column_value(col_idx, col_value, col_type)" />
-                          <!--<span tal:content="row" />-->
-                        </td>
-                      </tal:items>
-                    </tr>
-                  </tal:block>
-              </tbody>
-            </table>
-            <div class="app-callout app-callout-warning" tal:condition="not:row_content">
-              <h4>Bericht nicht verfügbar</h4>
-              <p>Dieser Bericht ist im Augenblick nicht verfügbar. Dies könnte bedeuten, dass
-                der Bericht noch nicht generiert wurde, oder keine aktuellen Daten vorliegen.
+        <tal:block tal:repeat="item items">
+          <div class="report-metric">
+            <div class="report-metric-header">
+              <h2 class="report-metric-title">
+                <span tal:replace="item/title" />
+                <small tal:content="item/uid" />
+              </h2>
+              <p class="report-metric-lead"
+                tal:content="item/description" />
+            </div>
+            <div class="report-metric-content"
+              tal:define="metric item/dataTable;
+                          rows metric/rows;
+                          row_content python:len(rows)">
+              <table class="metric-table"
+                tal:attributes="class string:metric-table metric-table-${item/id};
+                                id string:metric-table-${item/uid}"
+                tal:condition="row_content">
+                <thead class="metric-table-head" tal:define="cols metric/cols">
+                  <tr class="metric-table-row metric-table-row-primary">
+                    <tal:block tal:repeat="col cols">
+                      <th tal:attributes="class string:metric-table-cell-head metric-table-cell-head-primary;
+                                          id string:table-cell-${col/id}"
+                        tal:content="col/label"
+                        i18n:translate="" />
+                    </tal:block>
+                  </tr>
+                </thead>
+                <tbody class="metric-table-body"
+                  tal:define="cols metric/cols;
+                              rows metric/rows">
+                    <tal:block tal:repeat="row rows">
+                      <tr class="metric-table-row"
+                        tal:define="row_idx repeat/row/index"
+                        tal:attributes="class python:row_idx == 0 and 'metric-table-row metric-table-row-info' or 'metric-table-row'">
+                        <tal:items tal:repeat="col cols">
+                          <td tal:define="col_id col/id;
+                                          col_idx repeat/col/index;
+                                          col_type col/type;
+                                          col_value python:row[col_id]">
+                            <span tal:replace="python:view.pretty_column_value(col_idx, col_value, col_type)" />
+                            <!--<span tal:content="row" />-->
+                          </td>
+                        </tal:items>
+                      </tr>
+                    </tal:block>
+                </tbody>
+              </table>
+              <div class="app-callout app-callout-warning" tal:condition="not:row_content">
+                <h4>Bericht nicht verfügbar</h4>
+                <p>Dieser Bericht ist im Augenblick nicht verfügbar. Dies könnte bedeuten, dass
+                  der Bericht noch nicht generiert wurde, oder keine aktuellen Daten vorliegen.
+              </div>
             </div>
           </div>
-        </div>
+        </tal:block>
       </div>
 
         <pre tal:content="context/report" />
@@ -117,7 +117,20 @@
             tal:content="context/report_xovi" />-->
 
     </div>
-
+    <div class="container app-page-content" id="content-core" tal:condition="not:view/has_report">
+       <div class="statuspanel-no-data statuspanel-no-data-lg"
+            tal:define="portal_url context/portal_url">
+            <div class="no-data-sign">
+                <i class="fa fa-ellipsis-h"></i>
+            </div>
+            <h2 i18n:translate="">This report does not contain any data</h2>
+            <p class="lead" i18n:translate="">
+                This could mean that
+                no external service is reporting anything for the specific month or that
+                the data could not be retrieved
+            </p>
+        </div>
+    </div>
   </metal:content-core>
 </metal:main>
 

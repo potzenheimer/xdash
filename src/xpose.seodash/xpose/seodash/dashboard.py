@@ -70,7 +70,7 @@ class View(grok.View):
         items = catalog(object_provides=IReport.__identifier__,
                         path=dict(query='/'.join(context.getPhysicalPath()),
                                   depth=2),
-                        sort_on='modified',
+                        sort_on='created',
                         sort_order='reverse')
         return IContentListing(items)
 

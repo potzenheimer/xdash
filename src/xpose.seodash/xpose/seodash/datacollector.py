@@ -175,6 +175,8 @@ class ReportDataCollector(grok.View):
 
     def collect(self, access_key=None, uid=None, ga_service=None):
         start = time.time()
+        self.access_key = access_key
+        self.item_uid = uid
         data = self._process_request()
         end = time.time()
         data.update(dict(_runtime=end-start))

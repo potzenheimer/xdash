@@ -246,7 +246,7 @@ class ReviewQueue(grok.View):
 
 
 class ReportReview(grok.View):
-    grok.context(IDashboard)
+    grok.context(IContentish)
     grok.require('cmf.ModifyPortalContent')
     grok.name('report-review')
 
@@ -268,16 +268,13 @@ class ReportReview(grok.View):
         report = self.report()
         return getattr(report, 'projectId', 'undefined')
 
-    def report_data(self):
-        data = {}
-        if self.report():
-            item = self.report()
-            data = getattr(item, 'report')
-        return data
+    def report_modified(self):
+        report = self.report()
+        return report.modified.ISO()
 
 
 class ReportApproval(grok.View):
-    grok.context(IDashboard)
+    grok.context(IContentish)
     grok.require('cmf.ModifyPortalContent')
     grok.name('report-approval')
 

@@ -10,6 +10,10 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
     <div class="app-page-header">
+        <a class="btn btn-primary pull-right"
+                    i18n:translate=""
+                    tal:attributes="href string:${context/absolute_url}/@@create-user">
+                    Add new user</a>
         <div class="app-page-title">
             <h1 i18n:translate="">User Accounts</h1>
         </div>
@@ -21,14 +25,50 @@
 
     <div class="app-page-content" id="content-core">
         <tal:block tal:condition="view/has_users">
-            <div class="page-header">
+            <div class="page-header hidden">
                 <a class="btn btn-primary pull-right"
                     i18n:translate=""
                     tal:attributes="href string:${context/absolute_url}/@@create-user">
                     Add new user</a>
                 <h2 i18n:translate="">Registered Users</h2>
             </div>
-            <div class="list-group">
+
+            <div class="report-list-item" tal:repeat="user view/customers">
+                <tal:item tal:define="info python:view.get_userdetails(user)">
+                    <div class="report-list-item-time">
+                        <div class="rti-time-timestamp">
+                            <span class="rli-time-month">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="report-list-item-meta">
+                        <div class="rli-meta-title">
+                            <span class="rli-meta-projectname" tal:content="info/name">xpose414.de</span>
+                        </div>
+                        <small class="text-muted" tal:content="info/email" />
+                    </div>
+                    <div class="report-list-item-actions" tal:condition="info/dashboard">
+                        <tal:db tal:define="code info/dashboard;
+                                            dashboard python:view.compute_dashboard(code)">
+                            <a class="rli-actions-primary"
+                                tal:condition="dashboard"
+                                tal:attributes="href dashboard/absolute_url">
+                                Dashboard
+                                <i class="fa fa-chevron-right fa-2x"></i>
+                            </a>
+                        </tal:db>
+                    </div>
+                    <div class="report-list-item-actions" tal:condition="not:info/dashboard">
+                        <a class="text-info" tal:attributes="href string:${context/absolute_url}/@@manage-user-permissions?user=${info/user_id}">
+                            Zugriff konfigurieren
+                            <i class="fa fa-cog fa-2x"></i>
+                        </a>
+                    </div>
+                </tal:item>
+            </div>
+
+            <div class="list-group hidden">
                 <div class="list-group-item" tal:repeat="user view/customers">
                     <tal:item tal:define="info python:view.get_userdetails(user)">
                         <div class="row">

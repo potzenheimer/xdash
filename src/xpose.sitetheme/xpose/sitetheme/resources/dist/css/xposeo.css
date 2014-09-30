@@ -8805,7 +8805,7 @@ input[type="color"] {
     display: block;
     width: 100%;
     height: 20.85714286px;
-    height: 32px;
+    height: 37px;
     padding: .42857143rem .85714286rem;
     font-size: 1rem;
     line-height: 1.42857143;
@@ -9644,7 +9644,7 @@ pre {
     height: calc(1.98928571rem  + 2px);
 }
 .form-control {
-    height: 32px;
+    height: 37px;
 }
 .form-horizontal .radio,
 .form-horizontal .checkbox,
@@ -9923,7 +9923,7 @@ fieldset[disabled] .searchButton.active {
 }
 .app-signin-header-content {
     display: block;
-    max-width: 750px;
+    max-width: 480px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -9959,7 +9959,7 @@ fieldset[disabled] .searchButton.active {
 }
 .app-signin-field {
     display: block;
-    max-width: 750px;
+    max-width: 480px;
     padding: 0 .35714286rem;
     margin-right: auto;
     margin-left: auto;
@@ -9984,7 +9984,7 @@ fieldset[disabled] .searchButton.active {
 .app-signin-actions,
 .app-register-actions {
     display: block;
-    max-width: 750px;
+    max-width: 480px;
     padding: 20.00000001px 0;
     margin-right: auto;
     margin-left: auto;
@@ -11123,7 +11123,7 @@ a:hover {
     display: block;
     width: 100%;
     height: 20.85714286px;
-    height: 32px;
+    height: 37px;
     padding: .42857143rem .85714286rem;
     font-size: 1rem;
     line-height: 1.42857143;

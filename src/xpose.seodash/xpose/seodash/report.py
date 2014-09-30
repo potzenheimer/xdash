@@ -95,6 +95,9 @@ class View(grok.View):
     grok.require('zope2.View')
     grok.name('view')
 
+    def update(self):
+        self.has_report = len(self.report()) > 0
+
     def report(self):
         context = aq_inner(self.context)
         report = getattr(context, 'report', None)
@@ -217,10 +220,9 @@ class RequestReport(grok.View):
         next_url = context.absolute_url()
         # self._build_report_ac()
         # self.postprocess_ac_record()
-        data = context.restrictedTraverse('@@report-data-collector').collect(
-            uid=django_random.get_random_string(length=12))
-        # self.ga_record()
-        import pdb; pdb.set_trace()
+        # data = context.restrictedTraverse('@@report-data-collector').collect(
+        #    uid=django_random.get_random_string(length=12))
+        self.ga_record()
         return self.request.response.redirect(next_url)
 
     def project_info(self):
