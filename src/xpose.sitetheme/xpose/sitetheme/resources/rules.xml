@@ -19,7 +19,8 @@
     <rules css:if-content="#visual-portal-wrapper">
 
         <notheme if="$ajax_load" />
-        <theme href="dist/theme.html" />
+        <!-- <theme href="dist/theme.html" /> -->
+        <theme href="dist/index.html" />
 
         <!-- Add meta tags -->
         <drop theme="/html/head/meta" />
@@ -52,8 +53,8 @@
         <drop css:theme="#xapp-navbar-nav"
             css:if-content="#anon-personalbar" />
         <!--<replace css:theme-children="#editbar" css:content="#edit-bar" />-->
-        <replace css:theme="#app-navbar-nav"
-            css:content="#app-navbar-nav" />
+        <replace css:theme="#app-navbar"
+            css:content="#app-navbar" />
 
         <!-- Logo (link target) -->
         <copy attributes="href" css:content="#portal-logo" css:theme=".navbar-brand" />

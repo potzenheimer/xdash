@@ -47,6 +47,12 @@ a:hover {
     }
 }
 
+.app-navbar-nav-adm {
+  @media (min-width: @grid-float-breakpoint) {
+      margin-right: (@navbar-height);
+  }
+}
+
 // Worspace content
 
 .app-content {
@@ -61,9 +67,9 @@ a:hover {
     }
     .app-content-body {
         padding: 0;
-        @media (min-width: @screen-sm) {
-            padding: 0 @line-height-computed;
-        }
+        //@media (min-width: @screen-sm) {
+        //    padding: 0 @line-height-computed;
+        //}
     }
 }
 

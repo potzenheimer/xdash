@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Module providing a fixed top navbar"""
+
+from Acquisition import aq_inner
 from five import grok
 from plone import api
 from zope.component import getMultiAdapter
@@ -54,3 +58,23 @@ class NavbarViewlet(grok.Viewlet):
     def user_actions(self):
         actions = self.context_state.actions('user')
         return [item for item in actions if item['available']]
+
+    def show_adm_tools(self):
+        context = aq_inner(self.context)
+        admin_roles = ('Manager', 'Site Administrator', 'StaffMember')
+        admin_groups = ('Administrators', 'Site Administrators',
+                        'staff', 'Staff')
+        is_adm = False
+        user = api.user.get_current()
+        userid = user.getId()
+        if userid is 'zope-admin':
+            is_adm = True
+        roles = api.user.get_roles(username=userid, obj=context)
+        for role in roles:
+            if role in admin_roles:
+                is_adm = True
+        groups = api.group.get_groups(username=userid)
+        for group in groups:
+            if group in admin_groups:
+                is_adm = True
+        return is_adm

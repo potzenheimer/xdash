@@ -1,4 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top app-navbar" id="app-navbar" role="navigation">
+<div class="container-fluid">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="sr-only">Toggle navigation</span>
@@ -7,31 +8,48 @@
       <span class="icon-bar"></span>
     </button>
     <a class="navbar-brand navbar-right app-navbar-brand" href="/"
-        tal:attributes="href viewlet/portal_url">Xpose414</a>
+        tal:attributes="href viewlet/portal_url">xdash.io</a>
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-right" id="app-navbar-nav">
             <li class="dropdown dropdown-userinfo" id="plone-personal-actions">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" 
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"
                  tal:attributes="href viewlet/user_homeurl">
                 <span tal:content="viewlet/user_displayname">Fullname</span>
                 <b class="caret">
               </a>
               <ul class="dropdown-menu">
-                <li tal:repeat="subitem viewlet/user_actions"
-                  tal:attributes="id string:plone-personal-actions-${subitem/id};">
-                  <a href="#"
-                     tal:attributes="href subitem/url; target subitem/link_target|nothing;"
-                     tal:content="subitem/title">Link Title</a>
+                <li><a tal:attributes="href string:${viewlet/portal_url}/">
+                    Dashboard</a>
+                </li>
+                <li><a tal:attributes="href string:${viewlet/portal_url}/logout">
+                    Abmelden</a>
                 </li>
               </ul>
             </li>
         </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a tal:attributes="href string:${viewlet/portal_url}/about" 
-            i18n:translate="">About</a></li>
-        <li><a tal:attributes="href string:${viewlet/portal_url}/help"
-            i18n:translate="">Help</a></li>
+    <ul class="nav navbar-nav navbar-right app-navbar-nav-adm" id="app-navbar-nav-adm"
+      tal:condition="viewlet/show_adm_tools">
+      <tal:block tal:define="template_id context/getId">
+        <li tal:attributes="class python:template_id == 'report-queue' and 'nav-item active' or 'nav-item'">
+          <a tal:attributes="href string:${viewlet/portal_url}/adm/@@review-queue"
+                  i18n:translate="">
+                  Reports</a>
+            </li>
+            <li><a tal:attributes="href string:${viewlet/portal_url}/adm/@@manage-dashboards"
+                  i18n:translate="">
+                  Dashboards</a>
+            </li>
+            <li><a tal:attributes="href string:${viewlet/portal_url}/adm/@@manage-users"
+                  i18n:translate="">
+                  Users</a>
+            </li>
+            <li><a tal:attributes="href string:${viewlet/portal_url}/adm/@@setup-services"
+                  i18n:translate="">
+                  Services</a>
+            </li>
+        </tal:block>
     </ul>
   </div><!-- /.navbar-collapse -->
+</div>
 </nav>
