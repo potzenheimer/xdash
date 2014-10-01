@@ -10,17 +10,30 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
 
-    <div class="app-page-header">
-        <div class="app-page-title" i18n:translate="">
-            <h1>Services</h1>
+    <div class="app-page-header datapanel"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1>Services</h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic">3</span>
+                    Services
+                </div>
+                <span class="item-date" i18n:translate="">
+                    external
+                </span>
+            </div>
         </div>
+    </div>
+
+    <div class="app-page-content" id="content-core">
+
         <p class="lead app-page-lead" i18n:translate="">
             Setup and configure external services that provide data via
             a dedicated API
         </p>
-    </div>
-
-    <div class="app-page-content" id="content-core">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Services</h3>

@@ -9,21 +9,39 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="app-page-header">
-        <a class="btn btn-primary pull-right"
-                    i18n:translate=""
-                    tal:attributes="href string:${context/absolute_url}/@@create-user">
-                    Add new user</a>
-        <div class="app-page-title">
-            <h1 i18n:translate="">User Accounts</h1>
+
+    <div class="app-page-header datapanel"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1>User accounts</h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic" tal:content="view/customer_index">{{number}}}</span>
+                    Users
+                </div>
+                <span class="item-date" i18n:translate="">
+                    active accounts
+                </span>
+            </div>
         </div>
-        <p class="lead app-page-lead" i18n:translate="">
-           Manage customer user accounts and configure access to dashboards and
-           reports
-        </p>
     </div>
 
+
     <div class="app-page-content" id="content-core">
+
+        <div class="app-page-header">
+            <a class="btn btn-primary pull-right"
+                        i18n:translate=""
+                        tal:attributes="href string:${context/absolute_url}/@@create-user">
+                        Add new user</a>
+            <p class="lead app-page-lead" i18n:translate="">
+               Manage customer user accounts and configure access to dashboards and
+               reports
+            </p>
+        </div>
+
         <tal:block tal:condition="view/has_users">
             <div class="page-header hidden">
                 <a class="btn btn-primary pull-right"

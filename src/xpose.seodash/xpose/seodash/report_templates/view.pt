@@ -13,8 +13,18 @@
     <div class="app-page-header datapanel"
         tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
         <div class="row datapanel-row">
-            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+            <div class="col-sm-6 datapanel-item datapanel-item-title">
                 <h1 tal:content="context/Title">Meine Berichte</h1>
+            </div>
+            <div class="col-sm-3 datapanel-item"
+              tal:condition="view/can_edit">
+              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/@@json-view">
+                View raw report
+              </a>
+              <a class="btn btn-danger btn-sm pull-right"
+                  tal:attributes="href string:${context/absolute_url}/@@build-report">
+                  Update data (credits required)
+              </a>
             </div>
             <div class="col-md-3 col-sm-3 datapanel-item">
                 <div class="item-data">
@@ -29,18 +39,6 @@
                 </span>
             </div>
         </div>
-    </div>
-
-    <div class="app-callout app-callout-danger" tal:condition="view/can_edit">
-      <a class="btn btn-danger btn-sm pull-right"
-          tal:attributes="href string:${context/absolute_url}/@@build-report">
-          Update report data (credits required)
-      </a>
-      <p>You are logged in as administrator
-        <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/@@json-view">
-          View raw report data
-        </a>
-      </p>
     </div>
 
     <div class="container app-page-content" id="content-core" tal:condition="view/has_report">
@@ -105,16 +103,7 @@
         </tal:block>
       </div>
 
-        <pre tal:content="context/report" />
-
-        <h3>GA dynamic query</h3>
-        <pre tal:content="view/print_report" />
-
-        <h3>activeCollab</h3>
-        <!--<div tal:replace="structure view/tracking_report" />-->
-        <h3>Xovi</h3>
-        <!--<pre tal:condition="context/report_xovi"
-            tal:content="context/report_xovi" />-->
+        <!-- <pre tal:content="context/report" /> -->
 
     </div>
     <div class="container app-page-content" id="content-core" tal:condition="not:view/has_report">

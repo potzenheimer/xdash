@@ -32,6 +32,9 @@ class UserManager(grok.View):
     def customers(self):
         return api.user.get_users(groupname='customers')
 
+    def customer_index(self):
+        return len(self.customers())
+
     def get_userdetails(self, user):
         user_id = user.getId()
         user = api.user.get(username=user_id)
