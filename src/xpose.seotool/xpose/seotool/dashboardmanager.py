@@ -73,6 +73,9 @@ class ManageDashboards(grok.View):
                         sort_order='reverse')
         return items
 
+    def dashboard_index(self):
+        return len(self.dashboards())
+
     def get_field_value(self, index, key):
         settings = self.dashboard_settings()
         project = settings[int(index)]

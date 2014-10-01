@@ -13,13 +13,22 @@
     <div class="app-page-header datapanel"
         tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
         <div class="row datapanel-row">
-            <div class="col-sm-9 datapanel-item datapanel-item-title">
-                <h1 i18n:translate="">Overview</h1>
+            <div class="col-sm-6 datapanel-item datapanel-item-title">
+                <h1 i18n:translate="">Settings</h1>
             </div>
             <div class="col-sm-3 datapanel-item">
                 <div class="item-data">
-                    <span class="numberic">{}</span>
-                    Projekt
+                    <span class="numberic" tal:content="view/unapproved_reports_index">{}</span>
+                    Berichte
+                </div>
+                <span class="item-date" i18n:translate="">
+                    Waiting for review
+                </span>
+            </div>
+            <div class="col-sm-3 datapanel-item">
+                <div class="item-data" tal:define="dbs view/dashboards">
+                    <span class="numberic" tal:content="python:len(dbs)">{}</span>
+                    Projekte
                 </div>
                 <span class="item-date hidden"
                     tal:define="timestamp python:context.modified().ISO()">

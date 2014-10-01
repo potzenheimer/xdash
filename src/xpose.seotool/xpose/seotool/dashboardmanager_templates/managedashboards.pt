@@ -9,13 +9,37 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="app-page-header">
-        <div class="app-page-title">
-            <h1>Dashboards
-                <small tal:condition="view/has_token"
-                    tal:content="view/dashboard_name" />
-            </h1>
+
+     <div class="app-page-header datapanel"
+        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+        <div class="row datapanel-row">
+            <div class="col-md-9 col-sm-9 datapanel-item datapanel-item-title">
+                <h1>Dashboards
+                    <tal:filtered tal:condition="view/has_token">
+                        <small tal:define="item view/dashboard"
+                            tal:content=="item/Title" />
+                    </tal:filtered>
+                </h1>
+            </div>
+            <div class="col-md-3 col-sm-3 datapanel-item">
+                <div class="item-data">
+                    <span class="numberic" tal:content="view/dashboard_index">{{number}}}</span>
+                    Dashboards
+                </div>
+                <span class="item-date"
+                    tal:define="timestamp python:context.modified().ISO()">
+                    letztes Update:
+                    <span tal:attributes="data-livestamp timestamp"
+                        tal:content="python:toLocalizedTime(timestamp, long_format=True)" />
+                </span>
+            </div>
         </div>
+    </div>
+
+
+    <div class="app-page-content" id="content-core">
+
+        <div class="app-page-header">
         <a class="btn btn-primary pull-right"
             tal:condition="not:view/has_token"
             tal:attributes="href string:${context/portal_url}/xd/@@create-dashboard"
@@ -37,7 +61,6 @@
         </p>
     </div>
 
-    <div class="app-page-content" id="content-core">
         <tal:block tal:condition="view/has_dashboards">
             <div class="panel panel-primary" tal:condition="view/has_token">
                 <tal:item tal:define="item view/dashboard">
