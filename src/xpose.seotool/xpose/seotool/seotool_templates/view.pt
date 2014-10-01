@@ -42,6 +42,21 @@
 
         <hr>
 
+        <div class="panel-body"
+            tal:condition="not:view/has_reports">
+            <div class="statuspanel-no-data statuspanel-no-data-lg">
+                <div class="no-data-sign">
+                    <i class="fa fa-info"></i>
+                </div>
+                <h2 i18n:translate="">
+                    The review queue is currently emtpy
+                </h2>
+                <p i18n:translate="">
+                    No reports are waiting for staff approval right now.
+                </p>
+            </div>
+        </div>
+
 
     </div>
 

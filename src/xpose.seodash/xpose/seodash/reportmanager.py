@@ -270,7 +270,7 @@ class ReportReview(grok.View):
 
     def report_modified(self):
         report = self.report()
-        return report.modified.ISO()
+        return report.modified().ISO()
 
 
 class ReportApproval(grok.View):

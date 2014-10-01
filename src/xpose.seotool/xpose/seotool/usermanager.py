@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Module for user management and dashboard asignment"""
+
 from Acquisition import aq_inner
 from AccessControl import Unauthorized
 from five import grok
