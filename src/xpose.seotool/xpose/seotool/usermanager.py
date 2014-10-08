@@ -23,7 +23,7 @@ from xpose.seodash import MessageFactory as _
 
 class UserManager(grok.View):
     grok.context(ISeoTool)
-    grok.require('cmf.ManagePortal')
+    grok.require('cmf.ModifyPortalContent')
     grok.name('manage-users')
 
     def update(self):
