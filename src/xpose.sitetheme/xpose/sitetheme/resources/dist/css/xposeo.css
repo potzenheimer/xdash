@@ -10538,6 +10538,7 @@ fieldset[disabled] .searchButton.active {
     display: inline-block;
     padding-right: 11px;
     font-size: 2.15rem;
+    font-weight: 300;
     color: #5a5f64;
     border-right: 1px solid #5a5f64;
 }
@@ -11074,13 +11075,19 @@ a:hover {
 }
 .app-navbar-brand {
     padding-left: 31px;
-    font-weight: 700;
+    font-family: 'Fira Sans';
+    font-weight: 400;
     text-transform: uppercase;
     background: url(../assets/img/arrow.png) no-repeat 10px 20.00000001px transparent;
 }
 @media (min-width: 768px) {
     .app-navbar-brand {
         min-width: 375px;
+    }
+}
+@media (min-width: 768px) {
+    .app-navbar-nav-adm {
+        margin-right: 75px;
     }
 }
 .app-content {
